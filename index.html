@@ -12,6 +12,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/brand/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
 <link rel="preload" as="image" href="assets/hero/f001.webp" fetchpriority="high" media="(min-aspect-ratio: 4/5)">
 <link rel="preload" as="image" href="assets/hero-m/f001.webp" fetchpriority="high" media="(max-aspect-ratio: 4/5)">
 <style>
@@ -32,7 +34,7 @@
   --ease:cubic-bezier(.2,.7,.1,1);
 }
 *,*::before,*::after{box-sizing:border-box}
-html{background:var(--void);color-scheme:dark;-webkit-text-size-adjust:100%}
+html{background:var(--void);color-scheme:dark;-webkit-text-size-adjust:100%;overscroll-behavior-x:none}
 html.lenis,html.lenis body{height:auto}
 .lenis.lenis-smooth{scroll-behavior:auto!important}
 body{margin:0;background:var(--void);color:var(--paper);font-family:var(--font);font-size:17px;line-height:1.5;letter-spacing:-.011em;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;overflow-x:clip}
@@ -65,14 +67,23 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .btn:hover .sq{transform:rotate(90deg)}
 
 /* ---------- nav ---------- */
-.nav{position:fixed;inset:0 0 auto 0;z-index:90;transition:transform .5s var(--ease),background .4s}
-.nav.hide{transform:translateY(-100%)}
-.nav.solid{background:rgba(0,0,0,.62);backdrop-filter:saturate(1.4) blur(18px);-webkit-backdrop-filter:saturate(1.4) blur(18px);border-bottom:1px solid var(--line)}
-.nav-in{display:flex;align-items:center;justify-content:space-between;height:68px;gap:24px}
+.nav{position:fixed;top:0;left:0;right:0;z-index:90;background:rgba(0,0,0,0);border-bottom:1px solid transparent;transition:background .6s var(--ease),border-color .6s var(--ease),backdrop-filter .6s;padding-top:env(safe-area-inset-top,0px)}
+.nav.solid{background:rgba(10,10,12,.72);-webkit-backdrop-filter:saturate(1.8) blur(20px);backdrop-filter:saturate(1.8) blur(20px);border-bottom-color:rgba(255,255,255,.08)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:68px;gap:24px;transition:height .6s var(--ease)}
+.nav.solid .nav-in{height:56px}
 .brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:1.06rem;letter-spacing:-.03em}
-.brand svg{width:15px;height:auto}
+.brand img{width:26px;height:26px;transition:transform .7s var(--ease),filter .5s}
+.brand:hover img{transform:rotate(-8deg) scale(1.08);filter:drop-shadow(0 0 10px rgba(242,181,68,.35))}
+footer .brand img{width:30px;height:30px}
 .nav-links{display:flex;gap:30px;font-size:.92rem;color:rgba(245,245,247,.78)}
+.nav-links a{position:relative;padding:6px 0;transition:color .35s var(--ease)}
+.nav-links a::after{content:"";position:absolute;left:50%;right:50%;bottom:0;height:1px;background:currentColor;opacity:.6;transition:left .45s var(--ease),right .45s var(--ease)}
 .nav-links a:hover{color:var(--paper)}
+.nav-links a:hover::after,.nav-links a.cur::after{left:0;right:0}
+.nav-links a.cur{color:var(--paper)}
+.nav .btn{transition:transform .5s var(--ease),box-shadow .5s var(--ease),background .3s}
+.nav .btn-primary:hover{transform:translateY(-1px);box-shadow:0 0 0 4px rgba(245,245,247,.08),0 8px 24px rgba(242,181,68,.14)}
+.lang{transition:border-color .3s,background .3s}.lang:hover{background:rgba(255,255,255,.06)}
 .nav-r{display:flex;align-items:center;gap:14px}
 .lang{font-size:.85rem;font-weight:600;width:40px;height:36px;border-radius:999px;border:1px solid var(--line)}
 .lang:hover{border-color:var(--paper)}
@@ -210,8 +221,12 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .track{position:absolute;left:4px;top:8px;bottom:8px;width:1px;background:var(--line)}
 .track .fill{position:absolute;left:0;top:0;width:1px;height:100%;background:linear-gradient(180deg,var(--ember),var(--gold),var(--aqua),var(--cyan));transform-origin:top;transform:scaleY(0)}
 .dot{position:absolute;left:0;top:8px;width:9px;height:9px;background:var(--paper);box-shadow:0 0 8px rgba(242,181,68,.35)}
-.step{padding:0 0 clamp(12px,2.2vh,22px);opacity:.34;transition:opacity .7s var(--ease)}
+.step{padding:0 0 clamp(12px,2.2vh,22px);opacity:.34;transition:opacity .8s var(--ease),transform .6s var(--ease)}
+.step.done{opacity:.78}
 .step.on{opacity:1}
+.step b{transition:color .4s}
+.step:hover{opacity:1;transform:translateX(4px)}
+.step.on b{background:linear-gradient(90deg,var(--paper),var(--paper) 60%,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
 .step b{display:block;font-size:clamp(1.15rem,1.6vw,1.45rem);letter-spacing:-.025em;font-weight:600}
 .step small{display:block;font-size:.82rem;color:var(--gold);margin:2px 0 4px;font-variant-numeric:tabular-nums}
 .step-detail{display:grid;margin-top:clamp(18px,3vh,30px);padding-left:34px;max-width:520px}
@@ -225,7 +240,14 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .plans{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);margin-top:56px}
 .plan{padding:36px clamp(20px,2.4vw,36px) 40px 0;display:flex;flex-direction:column;gap:18px;position:relative}
 .plan+.plan{padding-left:clamp(20px,2.4vw,36px);border-left:1px solid var(--line)}
-.plan.pick::before{content:"";position:absolute;left:0;right:0;top:-1px;height:2px;background:var(--spectrum)}
+.plan{cursor:pointer;transition:background .5s var(--ease)}
+.plan::before{content:"";position:absolute;left:0;right:0;top:-1px;height:2px;background:var(--spectrum);transform:scaleX(0);transform-origin:left;transition:transform .7s var(--ease)}
+.plan.pick::before{transform:scaleX(1)}
+@media (hover:hover){.plans:hover .plan.pick:not(:hover)::before{transform:scaleX(0);transform-origin:right}.plan:hover::before{transform:scaleX(1)}.plan:hover{background:rgba(255,255,255,.025)}}
+.plan .price{transition:transform .6s var(--ease)}
+.plan:hover .price,.plan.pick .price{transform:translateY(-2px)}
+.plan .btn-ghost:hover{border-color:var(--paper);box-shadow:0 0 0 4px rgba(245,245,247,.06)}
+.plan.pick .btn-ghost{background:var(--paper);color:#000;border-color:var(--paper)}
 .plan h3{margin:0;font-size:1.3rem;letter-spacing:-.03em;display:flex;justify-content:space-between;align-items:center;gap:12px}
 .plan h3 em{font-style:normal;font-size:.78rem;font-weight:500;color:#000;background:var(--paper);padding:4px 10px;border-radius:999px;letter-spacing:0}
 .price{font-size:clamp(2.6rem,4.4vw,4rem);font-weight:600;letter-spacing:-.05em;line-height:1}
@@ -238,7 +260,9 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .plan .btn{align-self:flex-start;margin-top:8px}
 .monthly{margin-top:72px}
 .monthly h3{font-size:1.3rem;letter-spacing:-.03em;margin:0 0 18px}
-.mrow{display:grid;grid-template-columns:180px 1fr auto;gap:24px;align-items:baseline;padding:20px 0;border-top:1px solid var(--line)}
+.mrow{display:grid;grid-template-columns:180px 1fr auto;gap:24px;align-items:baseline;padding:20px 12px;margin:0 -12px;border-top:1px solid var(--line);border-radius:10px;transition:background .45s var(--ease)}
+.mrow b{transition:text-shadow .45s}
+@media (hover:hover){.mrow:hover{background:rgba(255,255,255,.035)}.mrow:hover b{text-shadow:0 0 18px rgba(46,197,255,.45)}}
 .mrow:last-child{border-bottom:1px solid var(--line)}
 .mrow b{font-size:1.15rem;letter-spacing:-.025em}
 .mrow span{color:rgba(245,245,247,.75)}
@@ -377,7 +401,7 @@ footer{overflow:hidden}
 
 <header class="nav" id="nav">
   <div class="wrap nav-in">
-    <a class="brand" href="#top" aria-label="NovaSignal, torna su"><svg aria-hidden="true"><use href="#mark"/></svg>NovaSignal</a>
+    <a class="brand" href="#top" aria-label="NovaSignal, torna su"><img src="assets/brand/mark-64.png" srcset="assets/brand/mark-64.png 1x, assets/brand/mark-128.png 2x" alt="" width="26" height="26">NovaSignal</a>
     <nav class="nav-links" aria-label="Principale">
       <a href="#servizi" data-i18n="nav.services">Servizi</a>
       <a href="#lavori" data-i18n="nav.work">Lavori</a>
@@ -441,7 +465,7 @@ footer{overflow:hidden}
       </div>
     </div>
       <article class="world" style="--c:var(--ember)">
-        <div class="panel"><video class="manual" muted playsinline loop preload="none" poster="assets/video/planet.jpg" data-src="assets/video/planet.mp4" data-poster-m="assets/video/planet-m.jpg" data-src-m="assets/video/planet-m.mp4" aria-hidden="true"></video></div>
+        <div class="panel"><video class="manual" data-once muted playsinline preload="none" poster="assets/video/planet.jpg" data-src="assets/video/planet.mp4" data-poster-m="assets/video/planet-m.jpg" data-src-m="assets/video/planet-m.mp4" aria-hidden="true"></video></div>
         <div class="copy">
         <p class="tag"><i style="--c:var(--ember)"></i><span data-i18n="s1.tag">Siti web, e-commerce e brand</span></p>
         <h3 class="h2" data-i18n="s1.h">Un sito che lavora mentre dormi.</h3>
@@ -682,7 +706,7 @@ footer{overflow:hidden}
   <div class="wrap">
     <div class="foot">
       <div>
-        <a class="brand" href="#top"><svg aria-hidden="true"><use href="#mark"/></svg>NovaSignal</a>
+        <a class="brand" href="#top"><img src="assets/brand/mark-64.png" srcset="assets/brand/mark-64.png 1x, assets/brand/mark-128.png 2x" alt="" width="30" height="30">NovaSignal</a>
         <p data-i18n="foot.p">Design &amp; Technology Studio a Roma. Clienti in Italia, Europa, Regno Unito, Stati Uniti ed Emirati.</p>
       </div>
       <div>
@@ -695,6 +719,8 @@ footer{overflow:hidden}
       </div>
     </div>
     <div class="giant" aria-hidden="true"><video muted playsinline loop preload="none" poster="assets/video/galaxy.jpg" data-src="assets/video/galaxy.mp4" data-poster-m="assets/video/galaxy-m.jpg" data-src-m="assets/video/galaxy-m.mp4"></video><span>NovaSignal</span></div>
+    <!-- P.IVA: sostituisci la riga commentata qui sotto con il numero reale, poi elimina il commento -->
+    <!-- <div class="legal-id">NovaSignal di Riccardo — P.IVA IT00000000000 — Roma</div> -->
     <div class="legal"><span>© 2026 NovaSignal</span><span data-i18n="foot.made">Progettato e sviluppato a Roma</span></div>
   </div>
 </footer>
@@ -871,7 +897,8 @@ function finishLoad() {
     .to(bar, { scaleX: 1, duration: .35, ease: 'power2.out' })
     .to(loader, { clipPath: 'inset(0 0 100% 0)', duration: 1, ease: 'expo.inOut' }, '+=.1')
     .from('.hero-a .line > span', { yPercent: 110, duration: 1.2, stagger: .08, ease: 'expo.out' }, '-=.45')
-    .from('.hero-a .tag, .cue, .nav', { opacity: 0, y: 12, duration: .8, stagger: .06, ease: 'power3.out' }, '-=.9')
+    .from('.hero-a .tag, .cue', { opacity: 0, y: 12, duration: .8, stagger: .06, ease: 'power3.out', clearProps: 'transform' }, '-=.9')
+    .from('.nav', { opacity: 0, duration: .9, ease: 'power2.out', clearProps: 'opacity' }, '<')
     .add(() => loader.remove());
 }
 hero.onProgress(f => {
@@ -888,7 +915,7 @@ const vio = new IntersectionObserver(es => es.forEach(e => want(e.target, e.isIn
 $$('video[data-src]:not(.manual):not(#galaxyVid)').forEach(v => vio.observe(v));
 // scroll-staged videos are driven by their scene
 function want(v, on) {
-  if (on) { if (!v.src) { v.preload = 'auto'; v.src = v.dataset.src; } if (!RM && v.paused) v.play().catch(() => {}); }
+  if (on) { if (!v.src) { v.preload = 'auto'; v.src = v.dataset.src; } if (!RM && v.paused && !v.ended) v.play().catch(() => {}); }
   else if (!v.paused) v.pause();
 }
 function prime(v) { if (!v.src) { v.preload = 'auto'; v.src = v.dataset.src; } }
@@ -931,7 +958,9 @@ const heroCv = $('#heroCanvas'), gx = $('#gx'), gvid = $('#galaxyVid'), veil = $
 const worlds = $$('.world'), navItems = $$('#svcNav li'), svcNav = $('#svcNav');
 const W = worlds.map(w => ({ panel: $('.panel', w), media: $('video', w), copy: $('.copy', w) }));
 // one continuous scene: 540vh of orbit + galaxy, then 500vh of the four worlds
-const A = 540 / 1040;
+const S1VH = MOBILE ? 430 : 540, S2VH = 500;           // phones reach the offer sooner
+$('.hero').style.height = (S1VH + S2VH + 100) + 'vh';
+const A = S1VH / (S1VH + S2VH);
 const anchor = $('#servizi');
 const placeAnchor = () => { const h = $('.hero'); anchor.style.top = ((A + .1 * (1 - A)) * (h.offsetHeight - innerHeight)) + 'px'; };
 placeAnchor(); ScrollTrigger.addEventListener('refresh', placeAnchor);
@@ -951,10 +980,16 @@ function damped(vars, render) {
   });
   return s;
 }
+// at rest on the first screen the station keeps turning on its own (a slow, breathing orbit);
+// it hands over to the scroll as soon as you move
+let heroBase = 0, heroP = 0;
+const ambient = () => { const k = 1 - range(heroP, 0, .05); if (k <= 0) return 0; const t = performance.now() / 1000; return k * .06 * (1 - Math.cos(t * Math.PI * 2 / 18)) / 2; };
+gsap.ticker.add(() => { if (heroP < .05) hero.set(heroBase + ambient()); });
 const S1 = damped({ trigger: '.hero', start: 'top top', end: 'bottom bottom' }, P => {
     const p = range(P, 0, A), p2 = range(P, A, 1);
     // the orbit keeps turning until the window is fully open
-    hero.set(range(p, 0, .63));
+    heroBase = range(p, 0, .63); heroP = p;
+    hero.set(heroBase + ambient());
 
     // Split: the headline parts ways
     const s = ease(range(p, .05, .16));
@@ -993,6 +1028,7 @@ const S1 = damped({ trigger: '.hero', start: 'top top', end: 'bottom bottom' }, 
     words.forEach((w, i) => { w.style.opacity = (base + (1 - base) * clamp(rp - i)) * (1 - fo); });
     mfoot.style.opacity = range(p, .84, .88) * (1 - fo);
     mwrap.style.transform = `translateY(${-fo * 60}px)`;
+    $('#mtext').style.letterSpacing = `${-.045 + ease(fo) * .05}em`;   // the words exhale as they leave
     mwrap.style.visibility = fo >= 1 ? 'hidden' : 'visible';
     mrule.style.transform = `scaleX(${range(p, .86, .92)})`;
 
@@ -1000,6 +1036,7 @@ const S1 = damped({ trigger: '.hero', start: 'top top', end: 'bottom bottom' }, 
     const hi = range(p2, .01, .07), ho = range(p2, .12, .17), ho_ = hi * (1 - ho);
     svcHead.style.opacity = ho_; svcHead.style.visibility = ho_ > .01 ? 'visible' : 'hidden';
     svcHead.style.transform = `translateY(${(1 - ease(hi)) * 40 - ho * 50}px)`;
+    $('#svcTitle').style.letterSpacing = `${.02 - ease(hi) * .068 + ease(ho) * .03}em`;   // and the title draws in with the same breath
     const nW = W.length, t = range(p2, .17, .98) * nW;
     let firstOpen = 0;
     W.forEach((w, i) => {
@@ -1014,6 +1051,7 @@ const S1 = damped({ trigger: '.hero', start: 'top top', end: 'bottom bottom' }, 
       w.copy.style.visibility = o > .01 ? 'visible' : 'hidden';
       w.copy.style.transform = `translateY(${(1 - ease(inn)) * 36 - out * 24}px)`;
       if (local > -.3) prime(w.media);
+      if (w.media.hasAttribute('data-once') && local < -.05 && w.media.currentTime > 0) { w.media.pause(); w.media.currentTime = 0; }   // rewinds only if you go back before it
       want(w.media, local > -.05 && local < 1.08 && P < 1);
     });
     const active = Math.min(nW - 1, Math.max(0, Math.floor(t)));
@@ -1064,50 +1102,69 @@ const S2 = damped({ trigger: '.process', start: 'top top', end: 'bottom bottom' 
     const a = Math.min(n - 1, Math.round(pos));
     if (a !== activeStep) {
       activeStep = a;
-      stepsEl.forEach((s, i) => s.classList.toggle('on', i === a));
+      stepsEl.forEach((s, i) => { s.classList.toggle('on', i === a); s.classList.toggle('done', i < a); });   // what is built stays lit
       details.forEach((d, i) => d.classList.toggle('on', i === a));
     }
 });
 
-/* ======================= touch: no half-states ======================= */
-// If the finger lets go in the middle of a transition (a window opening, a text handing over),
-// the page settles gently to the nearer complete state, in the direction the user was going.
-if (TOUCH) {
+/* ======================= magnetism: every scene settles where it reads best ======================= */
+// After you stop (finger lifted, wheel or trackpad at rest), the page settles to the nearest complete
+// state: a transition never stays half-done, each world comes to rest at its centre with its text lit,
+// and sections (Work, Method, Pricing, FAQ, Contact) land cleanly at their start.
+{
   const pA = v => v * A, pB = v => A + v * (1 - A);
-  const wP = l => pB(.17 + (l / 4) * .81);           // world-local → stage progress
+  const wP = l => pB(.17 + (l / 4) * .81);
   const zones = [
-    [pA(.05), pA(.16)],                                 // headline split
-    [pA(.2), pA(.28)],                                  // offer reveal
-    [pA(.42), pA(.63)],                                 // offer out + portal opening
-    [pA(.92), pB(.07)],                                 // manifesto hands over to "four worlds"
-    [pB(.12), wP(.55)],                                 // title leaves, first world opens
-    [wP(.93), wP(1.55)], [wP(1.93), wP(2.55)], [wP(2.93), wP(3.55)]  // each next world
+    [pA(.05), pA(.16)], [pA(.2), pA(.28)], [pA(.42), pA(.63)], [pA(.92), pB(.07)],
+    [pB(.12), wP(.55)], [wP(.93), wP(1.55)], [wP(1.93), wP(2.55)], [wP(2.93), wP(3.55)]
   ];
+  const stageRests = [pA(.34), pA(.88), pB(.1), wP(.74), wP(1.74), wP(2.74), wP(3.74)];
   const ease3 = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
   let idle, snapping = false, lastDir = 1;
-  const settle = () => {
-    if (snapping || lenis.isTouching || !viewerClosed()) return;
-    const st = S1.st, len = st.end - st.start; if (len <= 0) return;
-    const y = lenis.scroll; if (y <= st.start || y >= st.end) return;
-    const P = (y - st.start) / len;
-    const z = zones.find(([a, b]) => P > a + .0005 && P < b - .0005); if (!z) return;
-    const f = (P - z[0]) / (z[1] - z[0]);
-    const to = f > (lastDir > 0 ? .42 : .58) ? z[1] : z[0];
-    const ty = st.start + to * len, dist = Math.abs(ty - y);
+  const go = ty => {
+    const y = lenis.scroll, dist = Math.abs(ty - y); if (dist < 3) return;
     snapping = true;
-    lenis.scrollTo(ty, { duration: Math.min(1.4, .7 + dist / innerHeight * .5), easing: ease3, onComplete: () => { snapping = false; } });
-    setTimeout(() => { snapping = false; }, 1600);
+    lenis.scrollTo(ty, { duration: Math.min(1.25, .6 + dist / innerHeight * .45), easing: ease3, onComplete: () => { snapping = false; } });
+    setTimeout(() => { snapping = false; }, 1500);
+  };
+  const settle = () => {
+    if (snapping || lenis.isTouching || !viewerClosed() || document.activeElement?.matches('input,textarea')) return;
+    const y = lenis.scroll, ih = innerHeight, st = S1.st, len = st.end - st.start;
+    // 1. inside the cinematic stage
+    if (len > 0 && y > st.start && y < st.end) {
+      const P = (y - st.start) / len;
+      const z = zones.find(([a, b]) => P > a + .0005 && P < b - .0005);
+      if (z) { const f = (P - z[0]) / (z[1] - z[0]); return go(st.start + (f > (lastDir > 0 ? .42 : .58) ? z[1] : z[0]) * len); }
+      if (P > pA(.7)) {                                           // manifesto + worlds: magnet to the centre
+        let best = null, bd = Infinity;
+        stageRests.forEach(r => { const d = Math.abs(r - P) * len; if (d < bd) { bd = d; best = r; } });
+        if (best != null && bd < ih * .75) return go(st.start + best * len);
+      }
+      return;
+    }
+    // 2. the method: rest on each step
+    const s2 = S2.st, l2 = s2.end - s2.start;
+    if (l2 > 0 && y > s2.start - ih * .3 && y < s2.end + ih * .2) {
+      const n = $$('.step').length, rests = [...Array(n)].map((_, i) => .08 + (i / (n - 1)) * .84 + .02);
+      let best = null, bd = Infinity;
+      [0, ...rests, 1].forEach(r => { const ty = s2.start + r * l2, d = Math.abs(ty - y); if (d < bd) { bd = d; best = ty; } });
+      if (bd < ih * .5) return go(best);
+    }
+    // 3. sections land cleanly at their start
+    for (const id of ['#lavori', '#prezzi', '#faq', '#contatti']) {
+      const el = $(id); if (!el) continue;
+      const top = el.getBoundingClientRect().top + y;
+      if (Math.abs(top - y) < ih * (id === '#lavori' ? .45 : .32)) return go(top);
+    }
   };
   lenis.on('scroll', l => {
     if (l.direction) lastDir = l.direction;
-    clearTimeout(idle); idle = setTimeout(settle, 140);
+    clearTimeout(idle); idle = setTimeout(settle, TOUCH ? 140 : 190);
   });
-  // cap the glide after a flick: inside the cinematic scenes one flick moves at most ~3/4 of a screen
-  addEventListener('touchend', () => {
+  if (TOUCH) addEventListener('touchend', () => {
     const st = S1.st, y = lenis.scroll;
     const inScene = (y > st.start && y < st.end) || (y > S2.st.start && y < S2.st.end);
-    const vmax = innerHeight * (inScene ? .75 : 1.3) / INERTIA;
-    lenis.velocity = clamp(lenis.velocity, -vmax, vmax);
+    lenis.velocity = clamp(lenis.velocity, -innerHeight * (inScene ? .75 : 1.3) / INERTIA, innerHeight * (inScene ? .75 : 1.3) / INERTIA);
   }, { capture: true, passive: true });
 }
 
@@ -1128,7 +1185,14 @@ function setupCommon(lenis) {
     const y = scrollY;
     const heroEl = $('.hero'); const stageEnd = heroEl.offsetTop + heroEl.offsetHeight - innerHeight;
     nav.classList.toggle('solid', y > stageEnd);
-    nav.classList.toggle('hide', y > lastY && y > innerHeight * .9);
+    // where you are, quietly marked in the header
+    const svcY = ($('#servizi') || heroEl).getBoundingClientRect().top + y - 2;
+    const at = id => { const el = $(id); return el ? el.getBoundingClientRect().top + y - innerHeight * .35 : Infinity; };
+    let cur = null;
+    if (y >= svcY && y < stageEnd + innerHeight * .5) cur = '#servizi';
+    ['#lavori', '#metodo', '#prezzi', '#faq'].forEach(id => { if (y >= at(id)) cur = id; });
+    if (y >= at('#contatti')) cur = null;
+    $$('.nav-links a').forEach(a => a.classList.toggle('cur', a.getAttribute('href') === cur));
     fab.classList.toggle('off', y < innerHeight * 1.5);
     lastY = y;
   };
@@ -1181,6 +1245,20 @@ function setupCommon(lenis) {
   box.addEventListener('touchend', release, { passive: true });
   box.addEventListener('touchcancel', release, { passive: true });
   box.addEventListener('click', e => { if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; } }, true);
+  // two fingers sideways on a trackpad: one gesture, one slide — precise, no back-navigation
+  let wx = 0, wLock = 0, wReset;
+  box.addEventListener('wheel', e => {
+    if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;
+    e.preventDefault(); e.stopPropagation();
+    clearInterval(timer);
+    const now = performance.now();
+    clearTimeout(wReset); wReset = setTimeout(() => { wx = 0; place(0, true); restart(); }, 180);
+    if (now < wLock) return;                                    // swallow the trackpad's inertia tail
+    wx += e.deltaX;
+    const w = box.clientWidth, atEdge = (cur === 0 && wx < 0) || (cur === slides.length - 1 && wx > 0);
+    place(-wx * (atEdge ? .25 : .9), false);
+    if (Math.abs(wx) > Math.min(140, w * .12) && !atEdge) { show(cur + (wx > 0 ? 1 : -1)); wx = 0; wLock = now + 650; }
+  }, { passive: false });
   show(0);
 
   /* site viewer: the card opens into a full-screen, navigable window (brand verb: Expand) */
@@ -1228,9 +1306,16 @@ function setupCommon(lenis) {
   const sl = $('#slides'); sl.addEventListener('mouseenter', () => clearInterval(timer)); sl.addEventListener('mouseleave', restart);
   restart();
 
+  /* plans: choose / switch / select — the spectrum line follows your choice */
+  const plans = $$('.plan');
+  plans.forEach(pl => pl.addEventListener('click', e => {
+    plans.forEach(x => x.classList.toggle('pick', x === pl));
+    if (!e.target.closest('a')) { const b = $('[data-plan]', pl); if (b) { const m = $('#fMsg'); m.value = (lang === 'en' ? 'Interested in the ' : 'Mi interessa il pacchetto ') + b.dataset.plan + (lang === 'en' ? ' package.' : '.'); compose(); } }
+  }));
+
   /* plan buttons preselect type */
   $$('[data-plan]').forEach(b => b.addEventListener('click', () => {
-    const m = $('#fMsg'); if (!m.value) m.value = (lang === 'en' ? 'Interested in the ' : 'Mi interessa il pacchetto ') + b.dataset.plan + (lang === 'en' ? ' package.' : '.');
+    const m = $('#fMsg'); m.value = (lang === 'en' ? 'Interested in the ' : 'Mi interessa il pacchetto ') + b.dataset.plan + (lang === 'en' ? ' package.' : '.');
     if (b.dataset.plan === 'Supernova') $('#t3').checked = true; compose();
   }));
 
