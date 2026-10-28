@@ -60,7 +60,9 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 /* ---------- buttons ---------- */
 .btn{display:inline-flex;align-items:center;gap:10px;height:52px;padding:0 24px;border-radius:999px;font-weight:600;font-size:1rem;letter-spacing:-.01em;transition:transform .4s var(--ease),background .3s,color .3s;white-space:nowrap}
 .btn-primary{background:var(--paper);color:#000}
-.btn-primary:hover{transform:translateY(-2px)}
+.btn-primary{box-shadow:0 0 0 0 rgba(245,245,247,0);transition:transform .5s var(--ease),box-shadow .5s var(--ease),background .3s,color .3s}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 0 0 4px rgba(245,245,247,.08),0 10px 30px rgba(242,181,68,.16)}
+.btn:active{transform:scale(.97)}
 .btn-ghost{border:1px solid rgba(245,245,247,.32);color:var(--paper)}
 .btn-ghost:hover{border-color:var(--paper)}
 .btn .sq{width:8px;height:8px;background:var(--ember);transition:transform .4s var(--ease)}
@@ -195,7 +197,10 @@ footer .brand img{width:30px;height:30px}
 .work-top{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:48px;flex-wrap:wrap}
 .arrows{display:flex;gap:10px}
 .arrows button{width:52px;height:52px;border-radius:999px;border:1px solid rgba(245,245,247,.3);display:grid;place-items:center}
-.arrows button:hover{border-color:var(--paper)}
+.arrows button{transition:border-color .3s,opacity .4s var(--ease),transform .4s var(--ease)}
+.arrows button:hover:not(:disabled){border-color:var(--paper)}
+.arrows button:active:not(:disabled){transform:scale(.94)}
+.arrows button:disabled{opacity:.28;cursor:default}
 .arrows svg{width:18px;height:18px}
 .slides{position:relative;border-top:1px solid var(--line);overflow:hidden;touch-action:pan-y}
 .slides-track{display:flex;gap:var(--sgap,48px);will-change:transform}
@@ -1396,10 +1401,11 @@ function setupCommon(lenis) {
   const box = $('#slides'), track = $('#slidesTrack');
   const GAP = 48, step = () => box.clientWidth + GAP;
   const place = (dx = 0, anim = true) => { track.classList.toggle('anim', anim); track.style.transform = `translate3d(${-cur * step() + dx}px,0,0)`; };
-  const show = i => {
-    cur = Math.max(0, Math.min(slides.length - 1, i < 0 ? slides.length - 1 : i >= slides.length ? 0 : i));
+  const show = (i, anim = true) => {
+    cur = Math.max(0, Math.min(slides.length - 1, i));
     slides.forEach((s, k) => { s.classList.toggle('is-current', k === cur); s.setAttribute('aria-hidden', k === cur ? 'false' : 'true'); s.inert = k !== cur; });
-    place(0, true);
+    $('#prev').disabled = cur === 0; $('#next').disabled = cur === slides.length - 1;
+    place(0, anim);
   };
   addEventListener('resize', () => place(0, false));
 
@@ -1487,9 +1493,12 @@ function setupCommon(lenis) {
     if (e.key === 'Escape') closeViewer();
     if (e.key === 'Tab') { const f = [vOpen, vClose]; const i = f.indexOf(document.activeElement); if (e.shiftKey && i <= 0) { e.preventDefault(); vClose.focus(); } else if (!e.shiftKey && i === f.length - 1) { e.preventDefault(); vOpen.focus(); } }
   });
-  $('#prev').addEventListener('click', () => { show(cur - 1 < 0 ? slides.length - 1 : cur - 1); restart(); });
-  $('#next').addEventListener('click', () => { show(cur + 1 >= slides.length ? 0 : cur + 1); restart(); });
-  const restart = () => { clearInterval(timer); if (!RM && viewer.hidden) timer = setInterval(() => show(cur + 1 >= slides.length ? 0 : cur + 1), 9000); };
+  $('#prev').addEventListener('click', () => show(cur - 1));
+  $('#next').addEventListener('click', () => show(cur + 1));
+  const restart = () => { clearInterval(timer); };   // no autoplay: the visitor leads
+  // every fresh arrival at Work starts from the first project
+  new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting && cur !== 0 && viewer.hidden) show(0, false); })).observe(box);
+  show(0, false);
   const sl = $('#slides'); sl.addEventListener('mouseenter', () => clearInterval(timer)); sl.addEventListener('mouseleave', restart);
   restart();
 
