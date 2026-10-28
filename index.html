@@ -814,7 +814,7 @@ function Sequence(canvas, { path, count, pad = 3, ext = '.webp', step = 1 }) {
   let loaded = 0, started = false, current = 0, w = 0, h = 0;
   const listeners = [];
   function resize() {
-    const dpr = Math.min(devicePixelRatio || 1, 2);
+    const dpr = Math.min(devicePixelRatio || 1, 3);   // full density on iPhone (3x)
     const nw = canvas.clientWidth, nh = canvas.clientHeight;
     if (nw === w && nh === h && canvas.width) return;
     w = nw; h = nh;
