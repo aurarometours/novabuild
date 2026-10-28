@@ -248,7 +248,11 @@ footer .brand img{width:30px;height:30px}
 .track .fill{position:absolute;left:0;top:0;width:1px;height:100%;background:linear-gradient(180deg,var(--ember),var(--gold),var(--aqua),var(--cyan));transform-origin:top;transform:scaleY(0)}
 .dot{position:absolute;z-index:2;left:0;top:8px;width:9px;height:9px;background:var(--paper);box-shadow:0 0 8px rgba(242,181,68,.35)}
 .step{padding:0 0 clamp(12px,2.2vh,22px);opacity:.32;will-change:opacity,transform;cursor:default}
-@media (hover:hover){.step:hover{opacity:1!important}}
+.step{cursor:pointer;-webkit-tap-highlight-color:transparent;outline:none}
+.step:focus-visible{outline:1px solid rgba(245,245,247,.5);outline-offset:6px}
+.step b{transition:letter-spacing .5s var(--ease)}
+@media (hover:hover){.step:hover{opacity:1!important}.step:hover small{color:var(--paper)}}
+.step:active b{opacity:.7}
 .node{position:absolute;left:1px;width:7px;height:7px;margin-top:9px;background:#0b0b0d;border:1px solid rgba(245,245,247,.22);transition:background .5s var(--ease),border-color .5s,box-shadow .5s}
 .node.hit{background:var(--nc,var(--gold));border-color:var(--nc,var(--gold));animation:nodeHit .9s var(--ease)}
 @keyframes nodeHit{0%{box-shadow:0 0 0 0 rgba(242,181,68,.6)}100%{box-shadow:0 0 0 10px rgba(242,181,68,0)}}
@@ -360,10 +364,10 @@ footer{border-top:1px solid var(--line);padding:56px 0 calc(40px + env(safe-area
 .atmo video,.atmo img{width:100%;height:100%;object-fit:cover}
 .work .atmo{inset:-8% 0;-webkit-mask-image:linear-gradient(180deg,#000 0%,#000 74%,transparent 100%);mask-image:linear-gradient(180deg,#000 0%,#000 74%,transparent 100%);will-change:transform}
 .work .atmo video,.work .atmo img{filter:brightness(1.1)}
-.work{position:relative;z-index:2;margin-top:calc(var(--ovl) * -1);padding-top:calc(clamp(120px,18vh,200px) + var(--ovl));-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 var(--ovl));mask-image:linear-gradient(180deg,transparent 0,#000 var(--ovl))}
-:root{--ovl:40vh}
+.work{position:relative;z-index:2;margin-top:calc(var(--ovl) * -1);padding-top:calc(clamp(120px,18vh,200px) + var(--ovl));-webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,0) 0,rgba(0,0,0,.08) calc(var(--ovl)*.18),rgba(0,0,0,.32) calc(var(--ovl)*.4),rgba(0,0,0,.68) calc(var(--ovl)*.64),rgba(0,0,0,.92) calc(var(--ovl)*.85),#000 var(--ovl));mask-image:linear-gradient(180deg,rgba(0,0,0,0) 0,rgba(0,0,0,.08) calc(var(--ovl)*.18),rgba(0,0,0,.32) calc(var(--ovl)*.4),rgba(0,0,0,.68) calc(var(--ovl)*.64),rgba(0,0,0,.92) calc(var(--ovl)*.85),#000 var(--ovl))}
+:root{--ovl:52vh}
 .work>.wrap{z-index:2}
-.work .atmo::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.55),rgba(0,0,0,.05) 50%,rgba(0,0,0,0))}
+.work .atmo::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.5),rgba(0,0,0,.04) 50%,rgba(0,0,0,0))}
 .pricing .atmo{-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 120px,#000 calc(100% - 160px),transparent 100%);mask-image:linear-gradient(180deg,transparent 0,#000 120px,#000 calc(100% - 160px),transparent 100%)}
 .pricing .atmo .pin{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
 .pricing .atmo video{will-change:transform;opacity:.85}
@@ -1162,7 +1166,19 @@ const DAYS = [1, 4, 11, 15, 21], dayNum = $('#dayNum'), dayBar = $('#dayBar');
 const nodes = stepsEl.map(() => { const i = document.createElement('i'); i.className = 'node'; i.setAttribute('aria-hidden', 'true'); $('.steps-wrap').appendChild(i); return i; });
 const NODE_C = ['var(--ember)', 'var(--gold)', 'var(--gold)', 'var(--aqua)', 'var(--cyan)'];
 const placeNodes = () => nodes.forEach((nd, i) => { nd.style.top = stepsEl[i].offsetTop + 'px'; nd.style.setProperty('--nc', NODE_C[i] || 'var(--gold)'); });
-placeNodes(); addEventListener('resize', placeNodes); document.fonts && document.fonts.ready.then(placeNodes);
+placeNodes(); addEventListener('resize', placeNodes);
+// tap a step: the signal travels there, its description shows — a shortcut and a replay
+const goStep = i => {
+  const st = S2.st, l2 = st.end - st.start, n = stepsEl.length; if (l2 <= 0) return;
+  if (window.__quiet) window.__quiet();
+  const ty = st.start + (.08 + (i / (n - 1)) * .84) * l2, dist = Math.abs(ty - lenis.scroll);
+  lenis.scrollTo(ty, { duration: Math.min(1.4, .6 + dist / innerHeight * .35), easing: t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2 });
+};
+stepsEl.forEach((s, i) => {
+  s.setAttribute('role', 'button'); s.tabIndex = 0;
+  s.addEventListener('click', () => goStep(i));
+  s.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); goStep(i); } });
+}); document.fonts && document.fonts.ready.then(placeNodes);
 const S2 = damped({ trigger: '.process', start: 'top top', end: 'bottom bottom' }, p => {
     // the sand flows on its own (real-time slow motion); scroll only breathes it a little
     sand.style.transform = `scale(${1.08 - p * .08}) translate3d(0, ${(p - .5) * -3}%, 0)`;
@@ -1242,7 +1258,7 @@ const S2 = damped({ trigger: '.process', start: 'top top', end: 'bottom bottom' 
     [...stageRests, pA(.63)].forEach(r => out.push(st.start + r * len));
     const s2 = S2.st, l2 = s2.end - s2.start, n = $$('.step').length;
     for (let i = 0; i < n; i++) out.push(s2.start + (.08 + (i / (n - 1)) * .84) * l2);
-    if (dirNow > 0) ['#lavori', '#prezzi', '#faq', '#contatti'].forEach(id => { const el = $(id); if (el) out.push(el.getBoundingClientRect().top + lenis.scroll + (id === '#lavori' ? innerHeight * .4 : 0)); });   // sections are entered from above, never pulled back to their title
+    if (dirNow > 0) ['#lavori', '#prezzi', '#faq', '#contatti'].forEach(id => { const el = $(id); if (el) out.push(el.getBoundingClientRect().top + lenis.scroll + (id === '#lavori' ? innerHeight * .52 : 0)); });   // sections are entered from above, never pulled back to their title
     return out.sort((a, b) => a - b);
   };
   let lastInput = 0, tail = false, holdUntil = 0, swLast = 0, swT = 0;
@@ -1293,7 +1309,7 @@ const viewerClosed = () => { const v = document.getElementById('viewer'); return
 $$('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
   if (a.id === 'navBrand' && matchMedia('(max-width:900px)').matches) return;
   const id = a.getAttribute('href'); if (id.length < 2) return; const t = $(id); if (!t) return;
-  e.preventDefault(); lenis.scrollTo(t, { offset: id === '#top' ? 0 : id === '#lavori' ? innerHeight * .4 - 10 : -10, duration: 1.6 });
+  e.preventDefault(); lenis.scrollTo(t, { offset: id === '#top' ? 0 : id === '#lavori' ? innerHeight * .52 - 10 : -10, duration: 1.6 });
 }));
 
 setupCommon(lenis);
@@ -1307,7 +1323,7 @@ function setupCommon(lenis) {
     nav.classList.toggle('solid', y > stageEnd);
     // where you are, quietly marked in the header
     const svcY = ($('#servizi') || heroEl).getBoundingClientRect().top + y - 2;
-    const at = id => { const el = $(id); return el ? el.getBoundingClientRect().top + y + (id === '#lavori' ? innerHeight * .4 : 0) - innerHeight * .35 : Infinity; };
+    const at = id => { const el = $(id); return el ? el.getBoundingClientRect().top + y + (id === '#lavori' ? innerHeight * .52 : 0) - innerHeight * .35 : Infinity; };
     let cur = null;
     if (y >= svcY && y < stageEnd + innerHeight * .5) cur = '#servizi';
     ['#lavori', '#metodo', '#prezzi', '#faq'].forEach(id => { if (y >= at(id)) cur = id; });
