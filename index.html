@@ -90,24 +90,28 @@ footer .brand img{width:30px;height:30px}
 .nav .btn{height:40px;padding:0 18px;font-size:.9rem}
 .nav-mini{display:none;font-size:.92rem;font-weight:500}
 @media (max-width:900px){.nav-links{display:none}.nav .btn-primary{display:none}.nav-mini{display:inline}}
-.chev{display:none;width:12px;height:12px;margin-left:-4px;opacity:.6;transition:transform .5s var(--ease),opacity .3s}
-.mmenu{display:none}
-@media (max-width:900px){
-  .chev{display:block}
-  .nav.open .chev{transform:rotate(180deg);opacity:1}
-  .nav.open{background:rgba(10,10,12,.86);-webkit-backdrop-filter:saturate(1.8) blur(22px);backdrop-filter:saturate(1.8) blur(22px);border-bottom-color:rgba(255,255,255,.08)}
-  .mmenu{display:block;overflow:hidden;max-height:0;transition:max-height .6s var(--ease)}
-  .mmenu[hidden]{display:block}
-  .nav.open .mmenu{max-height:80vh}
-  .mm-worlds{list-style:none;margin:0;padding:6px 0 4px}
-  .mm-worlds li{opacity:0;transform:translateY(-8px);transition:opacity .45s var(--ease),transform .55s var(--ease)}
-  .nav.open .mm-worlds li{opacity:1;transform:none}
-  .nav.open .mm-worlds li:nth-child(2){transition-delay:.04s}.nav.open .mm-worlds li:nth-child(3){transition-delay:.08s}.nav.open .mm-worlds li:nth-child(4){transition-delay:.12s}
-  .mm-worlds button{all:unset;display:flex;align-items:center;gap:14px;width:100%;padding:13px 0;font-size:1.45rem;font-weight:600;letter-spacing:-.03em;border-bottom:1px solid rgba(255,255,255,.07);cursor:pointer}
-  .mm-worlds button i{width:9px;height:9px;background:var(--c);flex:none}
-  .mm-worlds button:active{opacity:.6}
-  .mm-links{display:flex;gap:22px;padding:16px 0 22px;font-size:.95rem;color:rgba(245,245,247,.7);opacity:0;transition:opacity .5s var(--ease) .14s}
-  .nav.open .mm-links{opacity:1}
+.chev{display:block;width:12px;height:12px;margin-left:-4px;opacity:.6;transition:transform .5s var(--ease),opacity .3s}
+.brand:hover .chev{opacity:1}
+.nav.open .chev{transform:rotate(180deg);opacity:1}
+.nav.open{background:rgba(10,10,12,.86);-webkit-backdrop-filter:saturate(1.8) blur(22px);backdrop-filter:saturate(1.8) blur(22px);border-bottom-color:rgba(255,255,255,.08)}
+.mmenu{display:block;overflow:hidden;max-height:0;transition:max-height .6s var(--ease)}
+.mmenu[hidden]{display:block}
+.nav.open .mmenu{max-height:80vh}
+.mm-worlds{list-style:none;margin:0;padding:6px 0 4px}
+.mm-worlds li{opacity:0;transform:translateY(-8px);transition:opacity .45s var(--ease),transform .55s var(--ease)}
+.nav.open .mm-worlds li{opacity:1;transform:none}
+.nav.open .mm-worlds li:nth-child(2){transition-delay:.04s}.nav.open .mm-worlds li:nth-child(3){transition-delay:.08s}.nav.open .mm-worlds li:nth-child(4){transition-delay:.12s}
+.mm-worlds button{all:unset;display:flex;align-items:center;gap:14px;width:100%;padding:13px 0;font-size:1.45rem;font-weight:600;letter-spacing:-.03em;border-bottom:1px solid rgba(255,255,255,.07);cursor:pointer;transition:opacity .3s}
+.mm-worlds button i{width:9px;height:9px;background:var(--c);flex:none;transition:transform .5s var(--ease)}
+.mm-worlds button:active{opacity:.6}
+.mm-links{display:flex;gap:22px;padding:16px 0 22px;font-size:.95rem;color:rgba(245,245,247,.7);opacity:0;transition:opacity .5s var(--ease) .14s}
+.nav.open .mm-links{opacity:1}
+@media (min-width:901px){
+  .mm-worlds{display:grid;grid-template-columns:repeat(4,1fr);gap:0 28px;padding:14px 0 28px}
+  .mm-worlds button{font-size:1.3rem;border-bottom:0;border-top:1px solid rgba(255,255,255,.1);padding:18px 0 6px}
+  .mm-worlds button:hover i{transform:rotate(90deg)}
+  .mm-worlds li:hover button{opacity:.78}
+  .mm-links{display:none}
 }
 
 /* ---------- preloader ---------- */
@@ -362,8 +366,9 @@ footer{border-top:1px solid var(--line);padding:56px 0 calc(40px + env(safe-area
 .work .tag{color:rgba(245,245,247,.82)}
 .atmo{position:absolute;inset:0;pointer-events:none}
 .atmo video,.atmo img{width:100%;height:100%;object-fit:cover}
-.work .atmo{inset:-8% 0;-webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 22%,#000 74%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0%,#000 22%,#000 74%,transparent 100%);will-change:transform}
+.work .atmo{inset:0;-webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 22%,#000 74%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0%,#000 22%,#000 74%,transparent 100%);will-change:transform}
 .work .atmo video,.work .atmo img{filter:brightness(1.1)}
+.work .atmo .pin{position:sticky;top:0;height:100vh;height:100lvh;overflow:hidden}
 .work{position:relative}.work::before{content:"";position:absolute;left:0;right:0;top:0;height:55vh;z-index:1;pointer-events:none;background:linear-gradient(180deg,#000 0%,rgba(0,0,0,.86) 22%,rgba(0,0,0,.5) 52%,rgba(0,0,0,.16) 80%,rgba(0,0,0,0) 100%)}
 @media (max-width:900px){:root{--ovl:42vh}.work{z-index:2;margin-top:calc(var(--ovl) * -1);padding-top:calc(clamp(120px,18vh,200px) + var(--ovl));pointer-events:none;-webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,0) 0,rgba(0,0,0,.08) calc(var(--ovl)*.18),rgba(0,0,0,.32) calc(var(--ovl)*.4),rgba(0,0,0,.68) calc(var(--ovl)*.64),rgba(0,0,0,.92) calc(var(--ovl)*.85),#000 var(--ovl));mask-image:linear-gradient(180deg,rgba(0,0,0,0) 0,rgba(0,0,0,.08) calc(var(--ovl)*.18),rgba(0,0,0,.32) calc(var(--ovl)*.4),rgba(0,0,0,.68) calc(var(--ovl)*.64),rgba(0,0,0,.92) calc(var(--ovl)*.85),#000 var(--ovl))}.work>*{pointer-events:auto}.work .atmo{pointer-events:none;-webkit-mask-image:linear-gradient(180deg,#000 0%,#000 74%,transparent 100%);mask-image:linear-gradient(180deg,#000 0%,#000 74%,transparent 100%)}.work::before{display:none}}
 .work>.wrap{z-index:2}
@@ -565,7 +570,7 @@ footer{overflow:hidden}
 
 <!-- ================= LAVORI ================= -->
 <section class="work" id="lavori" aria-labelledby="workTitle">
-  <div class="atmo" id="workAtmo" aria-hidden="true"><video muted playsinline loop preload="none" poster="assets/video/earth.jpg" data-src="assets/video/earth.mp4" data-poster-m="assets/video/earth-m.jpg" data-src-m="assets/video/earth-m.mp4"></video></div>
+  <div class="atmo" id="workAtmo" aria-hidden="true"><div class="pin"><video muted playsinline loop preload="none" poster="assets/video/earth.jpg" data-src="assets/video/earth.mp4" data-poster-m="assets/video/earth-m.jpg" data-src-m="assets/video/earth-m.mp4"></video></div></div>
   <div class="wrap">
     <div class="work-top">
       <div>
@@ -1150,7 +1155,7 @@ ScrollTrigger.create({
 const workAtmo = $('#workAtmo'), priceVid = $('#priceAtmo video'), faqWin = $('#faqWindow');
 faqWin.style.clipPath = squareInset(0);
 ScrollTrigger.create({ trigger: '#lavori', start: 'top bottom', end: 'bottom top', scrub: true,
-  onUpdate(st) { workAtmo.style.transform = `translateY(${(st.progress - .5) * 16}%)`; } });
+  onUpdate() {} });
 ScrollTrigger.create({ trigger: '#prezzi', start: 'top bottom', end: 'top -60%', scrub: true,
   onUpdate(st) { priceVid.style.transform = `scale(${1.25 - st.progress * .25})`; } });
 const priceDim = $('#priceDim');
@@ -1231,6 +1236,17 @@ const S2 = damped({ trigger: '.process', start: 'top top', end: 'bottom bottom' 
   const settle = () => {
     if (snapping || lenis.isTouching || !viewerClosed() || document.activeElement?.matches('input,textarea')) return;
     const y = lenis.scroll, ih = innerHeight, st = S1.st, len = st.end - st.start;
+    // 0. desktop: between the last world and Work there is only one move, in the direction you scrolled
+    if (!TOUCH && len > 0) {
+      const w4 = st.start + stageRests[stageRests.length - 1] * len, lv = $('#lavori').getBoundingClientRect().top + y + ih * OVL();
+      if (y > w4 + 2 && y < lv - 2) {
+        const f = (y - w4) / (lv - w4), ty = lastDir > 0 ? (f > .03 ? lv : w4) : (f < .97 ? w4 : lv), dd = Math.abs(ty - y);
+        snapping = true;
+        lenis.scrollTo(ty, { duration: Math.min(1.6, .7 + dd / ih * .55), easing: ease3, lock: true, onComplete: () => { snapping = false; } });
+        setTimeout(() => { snapping = false; }, 1800);
+        return;
+      }
+    }
     // 1. inside the cinematic stage
     if (len > 0 && y > st.start && y < st.end) {
       const P = (y - st.start) / len;
@@ -1260,6 +1276,8 @@ const S2 = damped({ trigger: '.process', start: 'top top', end: 'bottom bottom' 
     [...stageRests, pA(.63)].forEach(r => out.push(st.start + r * len));
     const s2 = S2.st, l2 = s2.end - s2.start, n = $$('.step').length;
     for (let i = 0; i < n; i++) out.push(s2.start + (.08 + (i / (n - 1)) * .84) * l2);
+    if (!TOUCH) { const sl = $('#slides'), lt = $('#lavori').getBoundingClientRect().top + lenis.scroll;
+      if (sl) { const r = sl.getBoundingClientRect(), v = r.bottom + lenis.scroll - innerHeight + 40; if (v > lt + 60) out.push(v); } }
     if (dirNow > 0) ['#lavori', '#prezzi', '#faq', '#contatti'].forEach(id => { const el = $(id); if (el) out.push(el.getBoundingClientRect().top + lenis.scroll + (id === '#lavori' ? innerHeight * OVL() : 0)); });   // sections are entered from above, never pulled back to their title
     return out.sort((a, b) => a - b);
   };
@@ -1273,6 +1291,10 @@ const S2 = damped({ trigger: '.process', start: 'top top', end: 'bottom bottom' 
       swT = now; swLast = d;
       if (!fresh || now < holdUntil) { e.preventDefault(); e.stopImmediatePropagation(); return; }
       tail = false;
+    }
+    if (!TOUCH && !snapping) {
+      const lead = lenis.targetScroll - lenis.scroll;
+      if (Math.sign(e.deltaY) === Math.sign(lead) && Math.abs(lead) > innerHeight * .5) { e.preventDefault(); e.stopImmediatePropagation(); lastInput = now; return; }
     }
     lastInput = now;
   }, { capture: true, passive: false });
@@ -1309,7 +1331,7 @@ const viewerClosed = () => { const v = document.getElementById('viewer'); return
 
 /* ======================= anchors via lenis ======================= */
 $$('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
-  if (a.id === 'navBrand' && matchMedia('(max-width:900px)').matches) return;
+  if (a.id === 'navBrand') return;
   const id = a.getAttribute('href'); if (id.length < 2) return; const t = $(id); if (!t) return;
   e.preventDefault(); lenis.scrollTo(t, { offset: id === '#top' ? 0 : id === '#lavori' ? innerHeight * OVL() - 10 : -10, duration: 1.6 });
 }));
@@ -1451,7 +1473,7 @@ function setupCommon(lenis) {
     nav.classList.toggle('open', open); brandBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
     mMenu.hidden = !open; menuY = lenis.scroll;
   };
-  brandBtn.addEventListener('click', e => { if (!small.matches) return; e.preventDefault(); e.stopImmediatePropagation(); setMenu(!nav.classList.contains('open')); }, true);
+  brandBtn.addEventListener('click', e => { e.preventDefault(); e.stopImmediatePropagation(); setMenu(!nav.classList.contains('open')); }, true);
   $$('#mMenu [data-w]').forEach(b => b.addEventListener('click', () => { setMenu(false); goWorld(+b.dataset.w); }));
   $$('#mMenu a').forEach(a => a.addEventListener('click', () => setMenu(false)));
   lenis.on('scroll', l => { if (nav.classList.contains('open') && Math.abs(l.scroll - menuY) > 40) setMenu(false); });
