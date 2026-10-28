@@ -852,31 +852,21 @@ function Sequence(canvas, { path, count, pad = 3, ext = '.webp', step = 1 }) {
     w = nw; h = nh;
     canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
     ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
-    draw(current + frac, true);
+    draw(current, true);
   }
   function nearest(i) {
     if (ok[i]) return i;
     for (let d = 1; d < idx.length; d++) { if (ok[i - d]) return i - d; if (ok[i + d]) return i + d; }
     return -1;
   }
-  let lastDrawn = -1, lastKey = -1, frac = 0;
-  function blit(img, a) {
-    const cw = canvas.width, ch = canvas.height;
+  let lastDrawn = -1;
+  function draw(i, force) {
+    current = i; const n = nearest(i); if (n < 0) return;
+    if (n === lastDrawn && !force) return; lastDrawn = n;
+    const img = imgs[n]; const cw = canvas.width, ch = canvas.height;
     const s = Math.max(cw / img.naturalWidth, ch / img.naturalHeight);
     const dw = img.naturalWidth * s, dh = img.naturalHeight * s;
-    ctx.globalAlpha = a; ctx.drawImage(img, (cw - dw) / 2, (ch - dh) / 2, dw, dh); ctx.globalAlpha = 1;
-  }
-  // i may be fractional: two neighbouring frames are blended, so slow motion never steps
-  function draw(i, force) {
-    const i0 = Math.floor(i), f = Math.round((i - i0) * 24) / 24;
-    current = i0; frac = f;
-    if (f > 0 && ok[i0] && ok[i0 + 1]) {
-      const key = i0 + f; if (key === lastKey && !force) return; lastKey = key; lastDrawn = -1;
-      blit(imgs[i0], 1); blit(imgs[i0 + 1], f); return;
-    }
-    const n = nearest(i0); if (n < 0) return;
-    if (n === lastDrawn && !force) return; lastDrawn = n; lastKey = -1;
-    blit(imgs[n], 1);
+    ctx.drawImage(img, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
   }
   function load() {
     if (started) return Promise.resolve(); started = true;
@@ -896,7 +886,7 @@ function Sequence(canvas, { path, count, pad = 3, ext = '.webp', step = 1 }) {
     });
   }
   addEventListener('resize', resize);
-  return { resize, load, onProgress: f => listeners.push(f), set: p => draw(clamp(p) * (idx.length - 1)), ready: n => { for (let i = 0; i < Math.min(n, idx.length); i++) if (!ok[i]) return false; return true; }, get length() { return idx.length; } };
+  return { resize, load, onProgress: f => listeners.push(f), set: p => draw(Math.round(clamp(p) * (idx.length - 1))), ready: n => { for (let i = 0; i < Math.min(n, idx.length); i++) if (!ok[i]) return false; return true; }, get length() { return idx.length; } };
 }
 
 const hero = PORTRAIT ? Sequence($('#heroCanvas'), { path: 'assets/hero-m/f', count: 160 }) : Sequence($('#heroCanvas'), { path: 'assets/hero/f', count: 240 });
@@ -986,7 +976,7 @@ const anchor = $('#servizi');
 const placeAnchor = () => { const h = $('.hero'); anchor.style.top = ((A + .1 * (1 - A)) * (h.offsetHeight - innerHeight)) + 'px'; };
 placeAnchor(); ScrollTrigger.addEventListener('refresh', placeAnchor);
 // scenes render from a damped progress: the image eases toward where the finger is, never jumps
-const TAU = TOUCH ? 150 : 90;
+const TAU = TOUCH ? 105 : 65;
 function damped(vars, render) {
   const s = { target: 0, cur: 0, init: false, dirty: true };
   s.st = ScrollTrigger.create(Object.assign({}, vars, {
@@ -1001,24 +991,11 @@ function damped(vars, render) {
   });
   return s;
 }
-// at rest on the first screen the station keeps turning on its own (a slow, breathing orbit);
-// it hands over to the scroll as soon as you move
-let heroBase = 0, heroP = 0;
-// it starts only once the first frames are all in memory, and eases in from stillness
-let ambT0 = 0, ambOn = false;
-const ambient = () => {
-  if (RM) return 0;
-  if (!ambOn) { if (!hero.ready(Math.ceil(hero.length * .09))) return 0; ambOn = true; ambT0 = performance.now(); }
-  const k = 1 - easeSine(range(heroP, 0, .05)); if (k <= 0) return 0;
-  const t = (performance.now() - ambT0) / 1000;
-  return k * .07 * (1 - Math.cos(t * Math.PI * 2 / 22)) / 2;   // a 22 s breath: out along the orbit and back
-};
-gsap.ticker.add(() => { if (heroP < .05 && done) hero.set(heroBase + ambient()); });
+
 const S1 = damped({ trigger: '.hero', start: 'top top', end: 'bottom bottom' }, P => {
     const p = range(P, 0, A), p2 = range(P, A, 1);
     // the orbit keeps turning until the window is fully open
-    heroBase = range(p, 0, .63); heroP = p;
-    hero.set(heroBase + ambient());
+    hero.set(range(p, 0, .63));
 
     // Split: the headline parts ways
     const s = ease(range(p, .05, .16));
@@ -1176,8 +1153,8 @@ const S2 = damped({ trigger: '.process', start: 'top top', end: 'bottom bottom' 
   const go = ty => {
     const y = lenis.scroll, dist = Math.abs(ty - y); if (dist < 3) return;
     snapping = true;
-    lenis.scrollTo(ty, { duration: Math.min(1.25, .6 + dist / innerHeight * .45), easing: ease3, onComplete: () => { snapping = false; } });
-    setTimeout(() => { snapping = false; }, 1500);
+    lenis.scrollTo(ty, { duration: Math.min(.9, .42 + dist / innerHeight * .32), easing: ease3, onComplete: () => { snapping = false; } });
+    setTimeout(() => { snapping = false; }, 1100);
   };
   const settle = () => {
     if (snapping || lenis.isTouching || !viewerClosed() || document.activeElement?.matches('input,textarea')) return;
@@ -1201,12 +1178,6 @@ const S2 = damped({ trigger: '.process', start: 'top top', end: 'bottom bottom' 
       let best = null, bd = Infinity;
       [0, ...rests, 1].forEach(r => { const ty = s2.start + r * l2, d = Math.abs(ty - y); if (d < bd) { bd = d; best = ty; } });
       if (bd < ih * .5) return go(best);
-    }
-    // 3. sections land cleanly at their start
-    for (const id of ['#lavori', '#prezzi', '#faq', '#contatti']) {
-      const el = $(id); if (!el) continue;
-      const top = el.getBoundingClientRect().top + y;
-      if (Math.abs(top - y) < ih * (id === '#lavori' ? .45 : .32)) return go(top);
     }
   };
   // A flick is an impulse: wherever it would carry you, it is caught at the next stop on the way —
@@ -1242,8 +1213,8 @@ const S2 = damped({ trigger: '.process', start: 'top top', end: 'bottom bottom' 
     if (s == null) return;
     snapping = true; tail = !TOUCH; holdUntil = performance.now() + 450; swT = performance.now(); swLast = 1e9;
     const dist = Math.abs(s - y);
-    lenis.scrollTo(s, { duration: Math.min(1.1, .45 + dist / innerHeight * .35), easing: t => 1 - Math.pow(1 - t, 3), lock: !TOUCH, onComplete: () => { snapping = false; } });
-    setTimeout(() => { snapping = false; }, 1300);
+    lenis.scrollTo(s, { duration: Math.min(.8, .32 + dist / innerHeight * .26), easing: t => 1 - Math.pow(1 - t, 3), lock: !TOUCH, onComplete: () => { snapping = false; } });
+    setTimeout(() => { snapping = false; }, 950);
   };
   lenis.on('scroll', l => {
     catchImpulse(l);
