@@ -90,6 +90,25 @@ footer .brand img{width:30px;height:30px}
 .nav .btn{height:40px;padding:0 18px;font-size:.9rem}
 .nav-mini{display:none;font-size:.92rem;font-weight:500}
 @media (max-width:900px){.nav-links{display:none}.nav .btn-primary{display:none}.nav-mini{display:inline}}
+.chev{display:none;width:12px;height:12px;margin-left:-4px;opacity:.6;transition:transform .5s var(--ease),opacity .3s}
+.mmenu{display:none}
+@media (max-width:900px){
+  .chev{display:block}
+  .nav.open .chev{transform:rotate(180deg);opacity:1}
+  .nav.open{background:rgba(10,10,12,.86);-webkit-backdrop-filter:saturate(1.8) blur(22px);backdrop-filter:saturate(1.8) blur(22px);border-bottom-color:rgba(255,255,255,.08)}
+  .mmenu{display:block;overflow:hidden;max-height:0;transition:max-height .6s var(--ease)}
+  .mmenu[hidden]{display:block}
+  .nav.open .mmenu{max-height:80vh}
+  .mm-worlds{list-style:none;margin:0;padding:6px 0 4px}
+  .mm-worlds li{opacity:0;transform:translateY(-8px);transition:opacity .45s var(--ease),transform .55s var(--ease)}
+  .nav.open .mm-worlds li{opacity:1;transform:none}
+  .nav.open .mm-worlds li:nth-child(2){transition-delay:.04s}.nav.open .mm-worlds li:nth-child(3){transition-delay:.08s}.nav.open .mm-worlds li:nth-child(4){transition-delay:.12s}
+  .mm-worlds button{all:unset;display:flex;align-items:center;gap:14px;width:100%;padding:13px 0;font-size:1.45rem;font-weight:600;letter-spacing:-.03em;border-bottom:1px solid rgba(255,255,255,.07);cursor:pointer}
+  .mm-worlds button i{width:9px;height:9px;background:var(--c);flex:none}
+  .mm-worlds button:active{opacity:.6}
+  .mm-links{display:flex;gap:22px;padding:16px 0 22px;font-size:.95rem;color:rgba(245,245,247,.7);opacity:0;transition:opacity .5s var(--ease) .14s}
+  .nav.open .mm-links{opacity:1}
+}
 
 /* ---------- preloader ---------- */
 .loader{position:fixed;inset:0;z-index:150;background:#000;display:grid;place-items:center}
@@ -156,6 +175,11 @@ footer .brand img{width:30px;height:30px}
 .svc-nav li i{width:8px;height:8px;background:var(--c);opacity:.35;transition:opacity .4s,transform .5s var(--ease)}
 .svc-nav li.on{color:var(--paper)}
 .svc-nav li.on i{opacity:1;transform:rotate(90deg)}
+.svc-nav{z-index:6;pointer-events:none}.svc-nav.live{pointer-events:auto}
+.svc-nav button{all:unset;display:flex;align-items:center;gap:10px;padding:3px 0;cursor:pointer;transition:transform .45s var(--ease)}
+.svc-nav button:focus-visible{outline:1px solid var(--paper);outline-offset:4px}
+@media (hover:hover){.svc-nav li:hover{color:var(--paper)}.svc-nav li:hover i{opacity:1}.svc-nav li:hover button{transform:translateX(-4px)}}
+.endveil{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none;z-index:5}
 @media (max-width:640px){.deliver{gap:0 16px;margin-bottom:24px}.deliver li{font-size:.86rem;padding:9px 0}.world .lead{font-size:1.02rem;margin-bottom:22px}.svc-nav{flex-direction:row;left:var(--gutter);right:auto;bottom:24px}.svc-nav span{display:none}}
 
 /* ---------- work ---------- */
@@ -334,8 +358,10 @@ footer{border-top:1px solid var(--line);padding:56px 0 calc(40px + env(safe-area
 .work .tag{color:rgba(245,245,247,.82)}
 .atmo{position:absolute;inset:0;pointer-events:none}
 .atmo video,.atmo img{width:100%;height:100%;object-fit:cover}
-.work .atmo{inset:-8% 0;-webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 12%,#000 74%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0%,#000 12%,#000 74%,transparent 100%);will-change:transform}
+.work .atmo{inset:-8% 0;-webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 22%,#000 74%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0%,#000 22%,#000 74%,transparent 100%);will-change:transform}
 .work .atmo video,.work .atmo img{filter:brightness(1.1)}
+.work{position:relative}.work::before{content:"";position:absolute;left:0;right:0;top:0;height:55vh;z-index:1;pointer-events:none;background:linear-gradient(180deg,#000 0%,rgba(0,0,0,.86) 22%,rgba(0,0,0,.5) 52%,rgba(0,0,0,.16) 80%,rgba(0,0,0,0) 100%)}
+.work>.wrap{z-index:2}
 .work .atmo::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.55),rgba(0,0,0,.05) 50%,rgba(0,0,0,0))}
 .pricing .atmo{-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 120px,#000 calc(100% - 160px),transparent 100%);mask-image:linear-gradient(180deg,transparent 0,#000 120px,#000 calc(100% - 160px),transparent 100%)}
 .pricing .atmo .pin{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
@@ -406,7 +432,7 @@ footer{overflow:hidden}
 
 <header class="nav" id="nav">
   <div class="wrap nav-in">
-    <a class="brand" href="#top" aria-label="NovaSignal, torna su"><img src="assets/brand/mark-64.png" srcset="assets/brand/mark-64.png 1x, assets/brand/mark-128.png 2x" alt="" width="26" height="26">NovaSignal</a>
+    <a class="brand" id="navBrand" href="#top" aria-label="NovaSignal" aria-controls="mMenu" aria-expanded="false"><img src="assets/brand/mark-64.png" srcset="assets/brand/mark-64.png 1x, assets/brand/mark-128.png 2x" alt="" width="26" height="26">NovaSignal<svg class="chev" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></a>
     <nav class="nav-links" aria-label="Principale">
       <a href="#servizi" data-i18n="nav.services">Servizi</a>
       <a href="#lavori" data-i18n="nav.work">Lavori</a>
@@ -418,6 +444,17 @@ footer{overflow:hidden}
       <a class="nav-mini" href="#prezzi" data-i18n="nav.pricing">Prezzi</a>
       <button class="lang" id="langBtn" aria-label="Switch to English">EN</button>
       <a class="btn btn-primary" href="#contatti"><span class="sq"></span>Start your project</a>
+    </div>
+  </div>
+  <div class="mmenu" id="mMenu" hidden>
+    <div class="wrap">
+      <ol class="mm-worlds">
+        <li style="--c:var(--ember)"><button type="button" data-w="0"><i></i><span data-i18n="n1">Siti e brand</span></button></li>
+        <li style="--c:var(--gold)"><button type="button" data-w="1"><i></i><span data-i18n="n2">Software</span></button></li>
+        <li style="--c:var(--aqua)"><button type="button" data-w="2"><i></i><span data-i18n="n3">App mobile</span></button></li>
+        <li style="--c:var(--cyan)"><button type="button" data-w="3"><i></i><span data-i18n="n4">Automazioni</span></button></li>
+      </ol>
+      <div class="mm-links"><a href="#lavori" data-i18n="nav.work">Lavori</a><a href="#metodo" data-i18n="nav.method">Metodo</a><a href="#prezzi" data-i18n="nav.pricing">Prezzi</a><a href="#faq">FAQ</a></div>
     </div>
   </div>
 </header>
@@ -509,11 +546,12 @@ footer{overflow:hidden}
         <a class="more" href="#prezzi" data-i18n="s4.more">Piani mensili</a>
       </div>
       </article>
-      <ol class="svc-nav" id="svcNav" aria-hidden="true">
-        <li style="--c:var(--ember)"><i></i><span data-i18n="n1">Siti e brand</span></li>
-        <li style="--c:var(--gold)"><i></i><span data-i18n="n2">Software</span></li>
-        <li style="--c:var(--aqua)"><i></i><span data-i18n="n3">App mobile</span></li>
-        <li style="--c:var(--cyan)"><i></i><span data-i18n="n4">Automazioni</span></li>
+      <div class="endveil" id="endVeil" aria-hidden="true"></div>
+      <ol class="svc-nav" id="svcNav" aria-label="Servizi">
+        <li style="--c:var(--ember)"><button type="button" data-w="0"><i></i><span data-i18n="n1">Siti e brand</span></button></li>
+        <li style="--c:var(--gold)"><button type="button" data-w="1"><i></i><span data-i18n="n2">Software</span></button></li>
+        <li style="--c:var(--aqua)"><button type="button" data-w="2"><i></i><span data-i18n="n3">App mobile</span></button></li>
+        <li style="--c:var(--cyan)"><button type="button" data-w="3"><i></i><span data-i18n="n4">Automazioni</span></button></li>
       </ol>
   </div>
 </section>
@@ -961,7 +999,7 @@ window.__lenis = lenis;
 /* ======================= STAGE 1: orbit → portal → galaxy manifesto ======================= */
 const heroA = $('#heroA'), heroB = $('#heroB'), portal = $('#portal'), cue = $('#cue'), sig = $('#heroSignal');
 const heroCv = $('#heroCanvas'), gx = $('#gx'), gvid = $('#galaxyVid'), veil = $('#veil'), mfoot = $('#mfoot'), mrule = $('#mrule'), mwrap = $('.mwrap'), svcHead = $('#svcHead');
-const worlds = $$('.world'), navItems = $$('#svcNav li'), svcNav = $('#svcNav');
+const worlds = $$('.world'), navItems = $$('#svcNav li'), svcNav = $('#svcNav'), endVeil = $('#endVeil');
 const W = worlds.map(w => ({ panel: $('.panel', w), media: $('video.intro', w) || $('video', w), loop: $('video.loopv', w), copy: $('.copy', w), looping: false }));
 // the planet: pulls out once, then keeps turning on a seamless loop of its widest view
 W.forEach(w => { if (!w.loop) return;
@@ -976,7 +1014,7 @@ const anchor = $('#servizi');
 const placeAnchor = () => { const h = $('.hero'); anchor.style.top = ((A + .1 * (1 - A)) * (h.offsetHeight - innerHeight)) + 'px'; };
 placeAnchor(); ScrollTrigger.addEventListener('refresh', placeAnchor);
 // scenes render from a damped progress: the image eases toward where the finger is, never jumps
-const TAU = TOUCH ? 105 : 65;
+const TAU = TOUCH ? 105 : 80;
 function damped(vars, render) {
   const s = { target: 0, cur: 0, init: false, dirty: true };
   s.st = ScrollTrigger.create(Object.assign({}, vars, {
@@ -1069,12 +1107,25 @@ const S1 = damped({ trigger: '.hero', start: 'top top', end: 'bottom bottom' }, 
     });
     const active = Math.min(nW - 1, Math.max(0, Math.floor(t)));
     navItems.forEach((li, i) => li.classList.toggle('on', i === active));
-    svcNav.style.opacity = range(p2, .2, .26) * (1 - range(p2, .975, .995));
+    const navO = range(p2, .2, .26) * (1 - range(p2, .975, .995));
+    svcNav.style.opacity = navO; svcNav.classList.toggle('live', navO > .5);
+    // leaving the last world: its words go first, then space dims to black so the Earth can rise out of it
+    const k = easeSine(range(p2, .955, 1)), last = W[nW - 1];
+    endVeil.style.opacity = k.toFixed(3);
+    if (k > 0) { const co = (+last.copy.style.opacity) * (1 - range(p2, .945, .975)); last.copy.style.opacity = co; last.copy.style.visibility = co > .01 ? 'visible' : 'hidden'; }
 
     // galaxy plays from just before the window opens until the first world covers it
     want(gvid, p > .4 && firstOpen < 1);
 });
 relayout.push(() => { S1.dirty = true; });
+// the scroll position where world i rests, text lit
+const worldY = i => { const st = S1.st; return st.start + (A + (.17 + ((i + .74) / 4) * .81) * (1 - A)) * (st.end - st.start); };
+const goWorld = i => {
+  if (window.__quiet) window.__quiet();
+  const ty = worldY(i), dist = Math.abs(ty - lenis.scroll);
+  lenis.scrollTo(ty, { duration: Math.min(2.2, .9 + dist / innerHeight * .12), easing: t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2 });
+};
+$$('#svcNav button').forEach(b => b.addEventListener('click', () => goWorld(+b.dataset.w)));
 
 /* ======================= WORK: lock in ======================= */
 ScrollTrigger.create({
@@ -1173,7 +1224,7 @@ const S2 = damped({ trigger: '.process', start: 'top top', end: 'bottom bottom' 
     }
     // 2. the method: rest on each step
     const s2 = S2.st, l2 = s2.end - s2.start;
-    if (l2 > 0 && y > s2.start - ih * .3 && y < s2.end + ih * .2) {
+    if (l2 > 0 && y > s2.start + 2 && y < s2.end - 2) {
       const n = $$('.step').length, rests = [...Array(n)].map((_, i) => .08 + (i / (n - 1)) * .84);
       let best = null, bd = Infinity;
       [0, ...rests, 1].forEach(r => { const ty = s2.start + r * l2, d = Math.abs(ty - y); if (d < bd) { bd = d; best = ty; } });
@@ -1182,12 +1233,13 @@ const S2 = damped({ trigger: '.process', start: 'top top', end: 'bottom bottom' 
   };
   // A flick is an impulse: wherever it would carry you, it is caught at the next stop on the way —
   // a scene's resting point, a step of the method, the start of a section. One gesture, one stop.
+  let dirNow = 1;
   const stops = () => {
     const st = S1.st, len = st.end - st.start, out = [];
     [...stageRests, pA(.63)].forEach(r => out.push(st.start + r * len));
     const s2 = S2.st, l2 = s2.end - s2.start, n = $$('.step').length;
     for (let i = 0; i < n; i++) out.push(s2.start + (.08 + (i / (n - 1)) * .84) * l2);
-    ['#lavori', '#prezzi', '#faq', '#contatti'].forEach(id => { const el = $(id); if (el) out.push(el.getBoundingClientRect().top + lenis.scroll); });
+    if (dirNow > 0) ['#lavori', '#prezzi', '#faq', '#contatti'].forEach(id => { const el = $(id); if (el) out.push(el.getBoundingClientRect().top + lenis.scroll); });   // sections are entered from above, never pulled back to their title
     return out.sort((a, b) => a - b);
   };
   let lastInput = 0, tail = false, holdUntil = 0, swLast = 0, swT = 0;
@@ -1206,15 +1258,19 @@ const S2 = damped({ trigger: '.process', start: 'top top', end: 'bottom bottom' 
   addEventListener('touchend', () => { lastInput = performance.now(); }, { passive: true });
   addEventListener('touchstart', () => { tail = false; }, { passive: true });
   $$('a[href^="#"]').forEach(a => a.addEventListener('click', () => { lastInput = 0; }, true));
+  window.__quiet = () => { lastInput = 0; };
   const catchImpulse = l => {
     if (snapping || lenis.isTouching || performance.now() - lastInput > 1400 || !viewerClosed()) return;
     const y = l.scroll, tgt = l.targetScroll, dir = Math.sign(tgt - y); if (!dir || Math.abs(tgt - y) < 24) return;
+    dirNow = dir;
     const s = stops().find(v => dir > 0 ? v > y + 4 && v < tgt - 2 : false) ?? [...stops()].reverse().find(v => dir < 0 && v < y - 4 && v > tgt + 2);
     if (s == null) return;
     snapping = true; tail = !TOUCH; holdUntil = performance.now() + 450; swT = performance.now(); swLast = 1e9;
     const dist = Math.abs(s - y);
-    lenis.scrollTo(s, { duration: Math.min(.8, .32 + dist / innerHeight * .26), easing: t => 1 - Math.pow(1 - t, 3), lock: !TOUCH, onComplete: () => { snapping = false; } });
-    setTimeout(() => { snapping = false; }, 950);
+    // phone: quick and light. desktop: the scene gets the time it needs, however hard the wheel was pushed
+    const dur = TOUCH ? Math.min(.8, .32 + dist / innerHeight * .26) : Math.min(1.9, .4 + dist / innerHeight * .55);
+    lenis.scrollTo(s, { duration: dur, easing: TOUCH ? t => 1 - Math.pow(1 - t, 3) : t => 1 - Math.pow(1 - t, 2.2), lock: !TOUCH, onComplete: () => { snapping = false; } });
+    setTimeout(() => { snapping = false; }, dur * 1000 + 150);
   };
   lenis.on('scroll', l => {
     catchImpulse(l);
@@ -1232,6 +1288,7 @@ const viewerClosed = () => { const v = document.getElementById('viewer'); return
 
 /* ======================= anchors via lenis ======================= */
 $$('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
+  if (a.id === 'navBrand' && matchMedia('(max-width:900px)').matches) return;
   const id = a.getAttribute('href'); if (id.length < 2) return; const t = $(id); if (!t) return;
   e.preventDefault(); lenis.scrollTo(t, { offset: id === '#top' ? 0 : -10, duration: 1.6 });
 }));
@@ -1365,6 +1422,19 @@ function setupCommon(lenis) {
   const restart = () => { clearInterval(timer); if (!RM && viewer.hidden) timer = setInterval(() => show(cur + 1 >= slides.length ? 0 : cur + 1), 9000); };
   const sl = $('#slides'); sl.addEventListener('mouseenter', () => clearInterval(timer)); sl.addEventListener('mouseleave', restart);
   restart();
+
+  /* phone: the logo opens the map of the site */
+  const mMenu = $('#mMenu'), brandBtn = $('#navBrand'), small = matchMedia('(max-width:900px)');
+  let menuY = 0;
+  const setMenu = open => {
+    nav.classList.toggle('open', open); brandBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    mMenu.hidden = !open; menuY = lenis.scroll;
+  };
+  brandBtn.addEventListener('click', e => { if (!small.matches) return; e.preventDefault(); e.stopImmediatePropagation(); setMenu(!nav.classList.contains('open')); }, true);
+  $$('#mMenu [data-w]').forEach(b => b.addEventListener('click', () => { setMenu(false); goWorld(+b.dataset.w); }));
+  $$('#mMenu a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+  lenis.on('scroll', l => { if (nav.classList.contains('open') && Math.abs(l.scroll - menuY) > 40) setMenu(false); });
+  document.addEventListener('click', e => { if (nav.classList.contains('open') && !e.target.closest('#nav')) setMenu(false); });
 
   /* plans: choose / switch / select — the spectrum line follows your choice */
   const plans = $$('.plan');
