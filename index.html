@@ -362,12 +362,12 @@ footer{border-top:1px solid var(--line);padding:56px 0 calc(40px + env(safe-area
 .work .tag{color:rgba(245,245,247,.82)}
 .atmo{position:absolute;inset:0;pointer-events:none}
 .atmo video,.atmo img{width:100%;height:100%;object-fit:cover}
-.work .atmo{inset:-8% 0;-webkit-mask-image:linear-gradient(180deg,#000 0%,#000 74%,transparent 100%);mask-image:linear-gradient(180deg,#000 0%,#000 74%,transparent 100%);will-change:transform}
+.work .atmo{inset:-8% 0;-webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 22%,#000 74%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0%,#000 22%,#000 74%,transparent 100%);will-change:transform}
 .work .atmo video,.work .atmo img{filter:brightness(1.1)}
-.work{position:relative;z-index:2;margin-top:calc(var(--ovl) * -1);padding-top:calc(clamp(120px,18vh,200px) + var(--ovl));-webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,0) 0,rgba(0,0,0,.08) calc(var(--ovl)*.18),rgba(0,0,0,.32) calc(var(--ovl)*.4),rgba(0,0,0,.68) calc(var(--ovl)*.64),rgba(0,0,0,.92) calc(var(--ovl)*.85),#000 var(--ovl));mask-image:linear-gradient(180deg,rgba(0,0,0,0) 0,rgba(0,0,0,.08) calc(var(--ovl)*.18),rgba(0,0,0,.32) calc(var(--ovl)*.4),rgba(0,0,0,.68) calc(var(--ovl)*.64),rgba(0,0,0,.92) calc(var(--ovl)*.85),#000 var(--ovl))}
-:root{--ovl:52vh}
+.work{position:relative}.work::before{content:"";position:absolute;left:0;right:0;top:0;height:55vh;z-index:1;pointer-events:none;background:linear-gradient(180deg,#000 0%,rgba(0,0,0,.86) 22%,rgba(0,0,0,.5) 52%,rgba(0,0,0,.16) 80%,rgba(0,0,0,0) 100%)}
+@media (max-width:900px){:root{--ovl:42vh}.work{z-index:2;margin-top:calc(var(--ovl) * -1);padding-top:calc(clamp(120px,18vh,200px) + var(--ovl));pointer-events:none;-webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,0) 0,rgba(0,0,0,.08) calc(var(--ovl)*.18),rgba(0,0,0,.32) calc(var(--ovl)*.4),rgba(0,0,0,.68) calc(var(--ovl)*.64),rgba(0,0,0,.92) calc(var(--ovl)*.85),#000 var(--ovl));mask-image:linear-gradient(180deg,rgba(0,0,0,0) 0,rgba(0,0,0,.08) calc(var(--ovl)*.18),rgba(0,0,0,.32) calc(var(--ovl)*.4),rgba(0,0,0,.68) calc(var(--ovl)*.64),rgba(0,0,0,.92) calc(var(--ovl)*.85),#000 var(--ovl))}.work>*{pointer-events:auto}.work .atmo{pointer-events:none;-webkit-mask-image:linear-gradient(180deg,#000 0%,#000 74%,transparent 100%);mask-image:linear-gradient(180deg,#000 0%,#000 74%,transparent 100%)}.work::before{display:none}}
 .work>.wrap{z-index:2}
-.work .atmo::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.5),rgba(0,0,0,.04) 50%,rgba(0,0,0,0))}
+.work .atmo::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.55),rgba(0,0,0,.05) 50%,rgba(0,0,0,0))}
 .pricing .atmo{-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 120px,#000 calc(100% - 160px),transparent 100%);mask-image:linear-gradient(180deg,transparent 0,#000 120px,#000 calc(100% - 160px),transparent 100%)}
 .pricing .atmo .pin{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
 .pricing .atmo video{will-change:transform;opacity:.85}
@@ -1005,6 +1005,7 @@ window.__lenis = lenis;
 /* ======================= STAGE 1: orbit → portal → galaxy manifesto ======================= */
 const heroA = $('#heroA'), heroB = $('#heroB'), portal = $('#portal'), cue = $('#cue'), sig = $('#heroSignal');
 const heroCv = $('#heroCanvas'), gx = $('#gx'), gvid = $('#galaxyVid'), veil = $('#veil'), mfoot = $('#mfoot'), mrule = $('#mrule'), mwrap = $('.mwrap'), svcHead = $('#svcHead');
+const OVL = () => matchMedia('(max-width:900px)').matches ? .42 : 0;   // phone: Work overlaps the end of the stage
 const worlds = $$('.world'), navItems = $$('#svcNav li'), svcNav = $('#svcNav'), endVeil = $('#endVeil');
 const W = worlds.map(w => ({ panel: $('.panel', w), media: $('video.intro', w) || $('video', w), loop: $('video.loopv', w), copy: $('.copy', w), looping: false }));
 // the planet: pulls out once, then keeps turning on a seamless loop of its widest view
@@ -1117,6 +1118,7 @@ const S1 = damped({ trigger: '.hero', start: 'top top', end: 'bottom bottom' }, 
     svcNav.style.opacity = navO; svcNav.classList.toggle('live', navO > .5);
     // leaving the last world: its words go first, then space dims to black so the Earth can rise out of it
     const k = easeSine(range(p2, .955, 1)), last = W[nW - 1];
+    endVeil.style.opacity = OVL() ? 0 : k.toFixed(3);   // desktop: dim to black; phone: the Earth rises over it instead
     if (k > 0) { const co = (+last.copy.style.opacity) * (1 - range(p2, .945, .975)); last.copy.style.opacity = co; last.copy.style.visibility = co > .01 ? 'visible' : 'hidden'; }
 
     // galaxy plays from just before the window opens until the first world covers it
@@ -1258,7 +1260,7 @@ const S2 = damped({ trigger: '.process', start: 'top top', end: 'bottom bottom' 
     [...stageRests, pA(.63)].forEach(r => out.push(st.start + r * len));
     const s2 = S2.st, l2 = s2.end - s2.start, n = $$('.step').length;
     for (let i = 0; i < n; i++) out.push(s2.start + (.08 + (i / (n - 1)) * .84) * l2);
-    if (dirNow > 0) ['#lavori', '#prezzi', '#faq', '#contatti'].forEach(id => { const el = $(id); if (el) out.push(el.getBoundingClientRect().top + lenis.scroll + (id === '#lavori' ? innerHeight * .52 : 0)); });   // sections are entered from above, never pulled back to their title
+    if (dirNow > 0) ['#lavori', '#prezzi', '#faq', '#contatti'].forEach(id => { const el = $(id); if (el) out.push(el.getBoundingClientRect().top + lenis.scroll + (id === '#lavori' ? innerHeight * OVL() : 0)); });   // sections are entered from above, never pulled back to their title
     return out.sort((a, b) => a - b);
   };
   let lastInput = 0, tail = false, holdUntil = 0, swLast = 0, swT = 0;
@@ -1309,7 +1311,7 @@ const viewerClosed = () => { const v = document.getElementById('viewer'); return
 $$('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
   if (a.id === 'navBrand' && matchMedia('(max-width:900px)').matches) return;
   const id = a.getAttribute('href'); if (id.length < 2) return; const t = $(id); if (!t) return;
-  e.preventDefault(); lenis.scrollTo(t, { offset: id === '#top' ? 0 : id === '#lavori' ? innerHeight * .52 - 10 : -10, duration: 1.6 });
+  e.preventDefault(); lenis.scrollTo(t, { offset: id === '#top' ? 0 : id === '#lavori' ? innerHeight * OVL() - 10 : -10, duration: 1.6 });
 }));
 
 setupCommon(lenis);
@@ -1323,7 +1325,7 @@ function setupCommon(lenis) {
     nav.classList.toggle('solid', y > stageEnd);
     // where you are, quietly marked in the header
     const svcY = ($('#servizi') || heroEl).getBoundingClientRect().top + y - 2;
-    const at = id => { const el = $(id); return el ? el.getBoundingClientRect().top + y + (id === '#lavori' ? innerHeight * .52 : 0) - innerHeight * .35 : Infinity; };
+    const at = id => { const el = $(id); return el ? el.getBoundingClientRect().top + y + (id === '#lavori' ? innerHeight * OVL() : 0) - innerHeight * .35 : Infinity; };
     let cur = null;
     if (y >= svcY && y < stageEnd + innerHeight * .5) cur = '#servizi';
     ['#lavori', '#metodo', '#prezzi', '#faq'].forEach(id => { if (y >= at(id)) cur = id; });
