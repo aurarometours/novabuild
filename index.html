@@ -140,6 +140,8 @@ footer .brand img{width:30px;height:30px}
 .world{position:absolute;inset:0}
 .world .panel{position:absolute;inset:0;clip-path:inset(50% 50% 50% 50%);will-change:clip-path;background:#000}
 .world .panel video,.world .panel img{width:100%;height:100%;object-fit:cover;transform:scale(1.25);will-change:transform}
+.world .panel .loopv,.world .panel .intro{position:absolute;inset:0}
+.world .panel .intro.gone{opacity:0}
 .world .panel::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.86) 0%,rgba(0,0,0,.55) 42%,rgba(0,0,0,.08) 76%),linear-gradient(0deg,rgba(0,0,0,.55),rgba(0,0,0,0) 40%)}
 .world .copy{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;max-width:var(--max);margin:0 auto;padding:0 var(--gutter);opacity:0;visibility:hidden}
 .world .copy>*{max-width:560px}
@@ -220,17 +222,20 @@ footer .brand img{width:30px;height:30px}
 .steps-wrap{position:relative;padding-left:34px;max-width:520px}.steps{list-style:none;margin:0;padding:0}
 .track{position:absolute;left:4px;top:8px;bottom:8px;width:1px;background:var(--line)}
 .track .fill{position:absolute;left:0;top:0;width:1px;height:100%;background:linear-gradient(180deg,var(--ember),var(--gold),var(--aqua),var(--cyan));transform-origin:top;transform:scaleY(0)}
-.dot{position:absolute;left:0;top:8px;width:9px;height:9px;background:var(--paper);box-shadow:0 0 8px rgba(242,181,68,.35)}
-.step{padding:0 0 clamp(12px,2.2vh,22px);opacity:.34;transition:opacity .8s var(--ease),transform .6s var(--ease)}
-.step.done{opacity:.78}
-.step.on{opacity:1}
-.step b{transition:color .4s}
-.step:hover{opacity:1;transform:translateX(4px)}
-.step.on b{background:linear-gradient(90deg,var(--paper),var(--paper) 60%,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+.dot{position:absolute;z-index:2;left:0;top:8px;width:9px;height:9px;background:var(--paper);box-shadow:0 0 8px rgba(242,181,68,.35)}
+.step{padding:0 0 clamp(12px,2.2vh,22px);opacity:.32;will-change:opacity,transform;cursor:default}
+@media (hover:hover){.step:hover{opacity:1!important}}
+.node{position:absolute;left:1px;width:7px;height:7px;margin-top:9px;background:#0b0b0d;border:1px solid rgba(245,245,247,.22);transition:background .5s var(--ease),border-color .5s,box-shadow .5s}
+.node.hit{background:var(--nc,var(--gold));border-color:var(--nc,var(--gold));animation:nodeHit .9s var(--ease)}
+@keyframes nodeHit{0%{box-shadow:0 0 0 0 rgba(242,181,68,.6)}100%{box-shadow:0 0 0 10px rgba(242,181,68,0)}}
+.dayline{display:flex;align-items:baseline;gap:8px;margin:0 0 10px;font-size:.8rem;color:rgba(245,245,247,.55);letter-spacing:.02em}
+.dayline b{font-size:1.05rem;color:var(--gold);font-variant-numeric:tabular-nums;font-weight:600;letter-spacing:0}
+.dayline i{flex:1;max-width:140px;height:1px;background:rgba(245,245,247,.14);position:relative;overflow:hidden;align-self:center}
+.dayline i::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--ember),var(--gold),var(--aqua),var(--cyan));transform:scaleX(var(--d,0));transform-origin:left}
 .step b{display:block;font-size:clamp(1.15rem,1.6vw,1.45rem);letter-spacing:-.025em;font-weight:600}
 .step small{display:block;font-size:.82rem;color:var(--gold);margin:2px 0 4px;font-variant-numeric:tabular-nums}
-.step-detail{display:grid;margin-top:clamp(18px,3vh,30px);padding-left:34px;max-width:520px}
-.step-detail p{grid-area:1/1;margin:0;color:rgba(245,245,247,.8);font-size:1rem;line-height:1.5;max-width:40ch;opacity:0;transform:translateY(8px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.step-detail{display:grid;grid-template-rows:auto 1fr;margin-top:clamp(18px,3vh,30px);padding-left:34px;max-width:520px}
+.step-detail p{grid-area:2/1;margin:0;color:rgba(245,245,247,.8);font-size:1rem;line-height:1.5;max-width:40ch;opacity:0;transform:translateY(8px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
 .step-detail p.on{opacity:1;transform:none}
 .dot{will-change:transform}
 @media (max-aspect-ratio:4/5){.process .wrap{padding-bottom:96px}.process .shade{background:linear-gradient(180deg,#000 0%,rgba(0,0,0,.62) 16%,rgba(0,0,0,.55) 50%,rgba(0,0,0,.66) 82%,#000 100%)}.process .wrap{padding-top:56px}}
@@ -465,7 +470,7 @@ footer{overflow:hidden}
       </div>
     </div>
       <article class="world" style="--c:var(--ember)">
-        <div class="panel"><video class="manual" data-once muted playsinline preload="none" poster="assets/video/planet.jpg" data-src="assets/video/planet.mp4" data-poster-m="assets/video/planet-m.jpg" data-src-m="assets/video/planet-m.mp4" aria-hidden="true"></video></div>
+        <div class="panel"><video class="manual loopv" muted playsinline loop preload="none" data-src="assets/video/planet-loop.mp4" data-src-m="assets/video/planet-m-loop.mp4" aria-hidden="true"></video><video class="manual intro" muted playsinline preload="none" poster="assets/video/planet.jpg" data-src="assets/video/planet.mp4" data-poster-m="assets/video/planet-m.jpg" data-src-m="assets/video/planet-m.mp4" aria-hidden="true"></video></div>
         <div class="copy">
         <p class="tag"><i style="--c:var(--ember)"></i><span data-i18n="s1.tag">Siti web, e-commerce e brand</span></p>
         <h3 class="h2" data-i18n="s1.h">Un sito che lavora mentre dormi.</h3>
@@ -586,6 +591,7 @@ footer{overflow:hidden}
       </ol>
       </div>
       <div class="step-detail" id="stepDetail" aria-live="polite">
+        <div class="dayline" aria-hidden="true"><span data-i18n="proc.day">Giorno</span><b id="dayNum">01</b><span>/ 21</span><i id="dayBar"></i></div>
         <p class="on" data-i18n="p1.p">Ascoltiamo il progetto e ti mostriamo una prima direzione visiva. Paghi solo se ti convince.</p>
         <p class="" data-i18n="p2.p">Struttura, testi, obiettivi di conversione. Se non hai materiale, lo prepariamo noi.</p>
         <p class="" data-i18n="p3.p">Ogni schermata disegnata per il tuo brand, desktop e mobile, con le animazioni già pensate.</p>
@@ -751,7 +757,7 @@ const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const MOBILE = matchMedia('(max-width: 760px)').matches;
 // portrait screens get assets cut natively in 9:16 from the 4K masters
 const PORTRAIT = matchMedia('(max-aspect-ratio: 4/5)').matches;
-if (PORTRAIT) document.querySelectorAll('video[data-src-m]').forEach(v => { v.dataset.src = v.dataset.srcM; v.poster = v.dataset.posterM; });
+if (PORTRAIT) document.querySelectorAll('video[data-src-m]').forEach(v => { v.dataset.src = v.dataset.srcM; if (v.dataset.posterM) v.poster = v.dataset.posterM; });
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
@@ -788,7 +794,7 @@ const EN = {
   'work.tag':'Recent work','work.h2':'Projects already in orbit.','work.visit':'Visit the site',
   'w1.h':'Private electric golf cart tours in Rome.','w1.p':'Showcase and booking site for a premium service: cinematic atmosphere, a clear path to the enquiry.','w1.chips':'<span>Website</span><span>Booking</span><span>Brand</span>',
   'w2.h':'A 3D portfolio for a photographer and graphic designer.','w2.p':'A 3D instant camera that prints photos as you scroll: the portfolio becomes an experience people remember.','w2.chips':'<span>3D</span><span>Motion</span><span>Portfolio</span>',
-  'proc.tag':'Process','proc.h2':'From idea to launch in three weeks.',
+  'proc.day':'Day','proc.tag':'Process','proc.h2':'From idea to launch in three weeks.',
   'p1.d':'Days 1–3','p1.h':'Free preview','p1.p':'We listen to your project and show you a first visual direction. You only pay if you love it.',
   'p2.d':'Days 4–10','p2.h':'Strategy and content','p2.p':'Structure, copy, conversion goals. No material yet? We prepare it.',
   'p3.d':'Days 11–18','p3.h':'Custom design','p3.p':'Every screen designed for your brand, desktop and mobile, with motion planned from the start.',
@@ -846,21 +852,31 @@ function Sequence(canvas, { path, count, pad = 3, ext = '.webp', step = 1 }) {
     w = nw; h = nh;
     canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
     ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
-    draw(current, true);
+    draw(current + frac, true);
   }
   function nearest(i) {
     if (ok[i]) return i;
     for (let d = 1; d < idx.length; d++) { if (ok[i - d]) return i - d; if (ok[i + d]) return i + d; }
     return -1;
   }
-  let lastDrawn = -1;
-  function draw(i, force) {
-    current = i; const n = nearest(i); if (n < 0) return;
-    if (n === lastDrawn && !force) return; lastDrawn = n;
-    const img = imgs[n]; const cw = canvas.width, ch = canvas.height;
+  let lastDrawn = -1, lastKey = -1, frac = 0;
+  function blit(img, a) {
+    const cw = canvas.width, ch = canvas.height;
     const s = Math.max(cw / img.naturalWidth, ch / img.naturalHeight);
     const dw = img.naturalWidth * s, dh = img.naturalHeight * s;
-    ctx.drawImage(img, (cw - dw) / 2, (ch - dh) / 2, dw, dh);
+    ctx.globalAlpha = a; ctx.drawImage(img, (cw - dw) / 2, (ch - dh) / 2, dw, dh); ctx.globalAlpha = 1;
+  }
+  // i may be fractional: two neighbouring frames are blended, so slow motion never steps
+  function draw(i, force) {
+    const i0 = Math.floor(i), f = Math.round((i - i0) * 24) / 24;
+    current = i0; frac = f;
+    if (f > 0 && ok[i0] && ok[i0 + 1]) {
+      const key = i0 + f; if (key === lastKey && !force) return; lastKey = key; lastDrawn = -1;
+      blit(imgs[i0], 1); blit(imgs[i0 + 1], f); return;
+    }
+    const n = nearest(i0); if (n < 0) return;
+    if (n === lastDrawn && !force) return; lastDrawn = n; lastKey = -1;
+    blit(imgs[n], 1);
   }
   function load() {
     if (started) return Promise.resolve(); started = true;
@@ -880,7 +896,7 @@ function Sequence(canvas, { path, count, pad = 3, ext = '.webp', step = 1 }) {
     });
   }
   addEventListener('resize', resize);
-  return { resize, load, onProgress: f => listeners.push(f), set: p => draw(Math.round(clamp(p) * (idx.length - 1))), get length() { return idx.length; } };
+  return { resize, load, onProgress: f => listeners.push(f), set: p => draw(clamp(p) * (idx.length - 1)), ready: n => { for (let i = 0; i < Math.min(n, idx.length); i++) if (!ok[i]) return false; return true; }, get length() { return idx.length; } };
 }
 
 const hero = PORTRAIT ? Sequence($('#heroCanvas'), { path: 'assets/hero-m/f', count: 160 }) : Sequence($('#heroCanvas'), { path: 'assets/hero/f', count: 240 });
@@ -956,7 +972,12 @@ window.__lenis = lenis;
 const heroA = $('#heroA'), heroB = $('#heroB'), portal = $('#portal'), cue = $('#cue'), sig = $('#heroSignal');
 const heroCv = $('#heroCanvas'), gx = $('#gx'), gvid = $('#galaxyVid'), veil = $('#veil'), mfoot = $('#mfoot'), mrule = $('#mrule'), mwrap = $('.mwrap'), svcHead = $('#svcHead');
 const worlds = $$('.world'), navItems = $$('#svcNav li'), svcNav = $('#svcNav');
-const W = worlds.map(w => ({ panel: $('.panel', w), media: $('video', w), copy: $('.copy', w) }));
+const W = worlds.map(w => ({ panel: $('.panel', w), media: $('video.intro', w) || $('video', w), loop: $('video.loopv', w), copy: $('.copy', w), looping: false }));
+// the planet: pulls out once, then keeps turning on a seamless loop of its widest view
+W.forEach(w => { if (!w.loop) return;
+  w.media.addEventListener('ended', () => { w.looping = true; w.loop.currentTime = 0; w.loop.play().catch(() => {}); });
+  w.loop.addEventListener('playing', () => { if (w.looping) w.media.classList.add('gone'); });
+});
 // one continuous scene: 540vh of orbit + galaxy, then 500vh of the four worlds
 const S1VH = MOBILE ? 430 : 540, S2VH = 500;           // phones reach the offer sooner
 $('.hero').style.height = (S1VH + S2VH + 100) + 'vh';
@@ -983,8 +1004,16 @@ function damped(vars, render) {
 // at rest on the first screen the station keeps turning on its own (a slow, breathing orbit);
 // it hands over to the scroll as soon as you move
 let heroBase = 0, heroP = 0;
-const ambient = () => { const k = 1 - range(heroP, 0, .05); if (k <= 0) return 0; const t = performance.now() / 1000; return k * .06 * (1 - Math.cos(t * Math.PI * 2 / 18)) / 2; };
-gsap.ticker.add(() => { if (heroP < .05) hero.set(heroBase + ambient()); });
+// it starts only once the first frames are all in memory, and eases in from stillness
+let ambT0 = 0, ambOn = false;
+const ambient = () => {
+  if (RM) return 0;
+  if (!ambOn) { if (!hero.ready(Math.ceil(hero.length * .09))) return 0; ambOn = true; ambT0 = performance.now(); }
+  const k = 1 - easeSine(range(heroP, 0, .05)); if (k <= 0) return 0;
+  const t = (performance.now() - ambT0) / 1000;
+  return k * .07 * (1 - Math.cos(t * Math.PI * 2 / 22)) / 2;   // a 22 s breath: out along the orbit and back
+};
+gsap.ticker.add(() => { if (heroP < .05 && done) hero.set(heroBase + ambient()); });
 const S1 = damped({ trigger: '.hero', start: 'top top', end: 'bottom bottom' }, P => {
     const p = range(P, 0, A), p2 = range(P, A, 1);
     // the orbit keeps turning until the window is fully open
@@ -1045,14 +1074,21 @@ const S1 = damped({ trigger: '.hero', start: 'top top', end: 'bottom bottom' }, 
       if (i === 0) firstOpen = e;
       w.panel.style.clipPath = squareInset(e);
       w.media.style.transform = `scale(${1.2 - e * .2})`;
+      if (w.loop) w.loop.style.transform = w.media.style.transform;
       const inn = range(local, .46, .62), out = i < nW - 1 ? range(local, .93, 1) : 0;
       const o = inn * (1 - out);
       w.copy.style.opacity = o;
       w.copy.style.visibility = o > .01 ? 'visible' : 'hidden';
       w.copy.style.transform = `translateY(${(1 - ease(inn)) * 36 - out * 24}px)`;
       if (local > -.3) prime(w.media);
-      if (w.media.hasAttribute('data-once') && local < -.05 && w.media.currentTime > 0) { w.media.pause(); w.media.currentTime = 0; }   // rewinds only if you go back before it
-      want(w.media, local > -.05 && local < 1.08 && P < 1);
+      const vis = local > -.05 && local < 1.08 && P < 1;
+      if (w.loop) {
+        if (local > -.3) prime(w.loop);
+        if (local < -.05 && (w.looping || w.media.currentTime > 0)) {   // starts over only if you go back before it
+          w.looping = false; w.media.pause(); w.media.currentTime = 0; w.media.classList.remove('gone'); w.loop.pause(); w.loop.currentTime = 0;
+        }
+        if (w.looping) { want(w.loop, vis); } else { want(w.media, vis); if (!w.loop.paused) w.loop.pause(); }
+      } else want(w.media, vis);
     });
     const active = Math.min(nW - 1, Math.max(0, Math.floor(t)));
     navItems.forEach((li, i) => li.classList.toggle('on', i === active));
@@ -1068,8 +1104,8 @@ ScrollTrigger.create({
   trigger: '#slides', start: 'top 95%', end: 'top 45%', scrub: true,
   onUpdate(st) {
     const e = ease(st.progress);
-    $$('.slide.is-current .lock-l').forEach(el => el.style.transform = `translateX(${-(1 - e) * 12}vw)`);
-    $$('.slide.is-current .lock-r').forEach(el => { el.style.transform = `translateX(${(1 - e) * 12}vw)`; el.style.opacity = .2 + .8 * e; });
+    $$('.slide .lock-l').forEach(el => el.style.transform = e > .985 ? '' : `translateX(${-(1 - e) * 12}vw)`);
+    $$('.slide .lock-r').forEach(el => { el.style.transform = `translateX(${(1 - e) * 12}vw)`; el.style.opacity = e > .985 ? '' : .2 + .8 * e; if (e > .985) el.style.transform = ''; });
   }
 });
 
@@ -1089,7 +1125,13 @@ ScrollTrigger.create({ trigger: faqWin, start: 'top 95%', end: 'top 45%', scrub:
 
 /* ======================= PROCESS: gold scrub + transmit ======================= */
 const stepsEl = $$('.step'), dot = $('#dot'), fill = $('#trackFill'), sand = $('#sand'), details = $$('#stepDetail p');
-let activeStep = 0;
+let activeStep = 0, lastDay = -1;
+const DAYS = [1, 4, 11, 15, 21], dayNum = $('#dayNum'), dayBar = $('#dayBar');
+// a node on the line for every step, coloured like the signal at that height
+const nodes = stepsEl.map(() => { const i = document.createElement('i'); i.className = 'node'; i.setAttribute('aria-hidden', 'true'); $('.steps-wrap').appendChild(i); return i; });
+const NODE_C = ['var(--ember)', 'var(--gold)', 'var(--gold)', 'var(--aqua)', 'var(--cyan)'];
+const placeNodes = () => nodes.forEach((nd, i) => { nd.style.top = stepsEl[i].offsetTop + 'px'; nd.style.setProperty('--nc', NODE_C[i] || 'var(--gold)'); });
+placeNodes(); addEventListener('resize', placeNodes); document.fonts && document.fonts.ready.then(placeNodes);
 const S2 = damped({ trigger: '.process', start: 'top top', end: 'bottom bottom' }, p => {
     // the sand flows on its own (real-time slow motion); scroll only breathes it a little
     sand.style.transform = `scale(${1.08 - p * .08}) translate3d(0, ${(p - .5) * -3}%, 0)`;
@@ -1099,10 +1141,20 @@ const S2 = damped({ trigger: '.process', start: 'top top', end: 'bottom bottom' 
     const y = stepsEl[i0].offsetTop + (stepsEl[i1].offsetTop - stepsEl[i0].offsetTop) * f;
     dot.style.transform = `translate3d(0, ${y}px, 0)`;         // Transmit: the signal travels the line
     fill.style.transform = `scaleY(${clamp(y / Math.max(1, stepsEl[n - 1].offsetTop))})`;
+    // every step lights as the signal reaches it and stays lit once built; the current one leads
+    stepsEl.forEach((s, i) => {
+      const reach = clamp((pos - i + .3) / .3), near = 1 - clamp(Math.abs(pos - i) / .5);
+      s.style.opacity = (.32 + .5 * reach + .18 * near).toFixed(3);
+      s.style.transform = `translate3d(${(near * 6).toFixed(2)}px,0,0)`;
+      if (nodes[i]) nodes[i].classList.toggle('hit', pos >= i - .02);
+    });
+    const di = Math.min(n - 2, Math.floor(pos)), day = Math.round(DAYS[di] + (DAYS[di + 1] - DAYS[di]) * clamp(pos - di));
+    if (day !== lastDay) { lastDay = day; dayNum.textContent = String(day).padStart(2, '0'); }
+    dayBar.style.setProperty('--d', (t).toFixed(4));
     const a = Math.min(n - 1, Math.round(pos));
     if (a !== activeStep) {
       activeStep = a;
-      stepsEl.forEach((s, i) => { s.classList.toggle('on', i === a); s.classList.toggle('done', i < a); });   // what is built stays lit
+      stepsEl.forEach((s, i) => { s.classList.toggle('on', i === a); s.classList.toggle('done', i < a); });
       details.forEach((d, i) => d.classList.toggle('on', i === a));
     }
 });
@@ -1145,7 +1197,7 @@ const S2 = damped({ trigger: '.process', start: 'top top', end: 'bottom bottom' 
     // 2. the method: rest on each step
     const s2 = S2.st, l2 = s2.end - s2.start;
     if (l2 > 0 && y > s2.start - ih * .3 && y < s2.end + ih * .2) {
-      const n = $$('.step').length, rests = [...Array(n)].map((_, i) => .08 + (i / (n - 1)) * .84 + .02);
+      const n = $$('.step').length, rests = [...Array(n)].map((_, i) => .08 + (i / (n - 1)) * .84);
       let best = null, bd = Infinity;
       [0, ...rests, 1].forEach(r => { const ty = s2.start + r * l2, d = Math.abs(ty - y); if (d < bd) { bd = d; best = ty; } });
       if (bd < ih * .5) return go(best);
@@ -1157,7 +1209,44 @@ const S2 = damped({ trigger: '.process', start: 'top top', end: 'bottom bottom' 
       if (Math.abs(top - y) < ih * (id === '#lavori' ? .45 : .32)) return go(top);
     }
   };
+  // A flick is an impulse: wherever it would carry you, it is caught at the next stop on the way —
+  // a scene's resting point, a step of the method, the start of a section. One gesture, one stop.
+  const stops = () => {
+    const st = S1.st, len = st.end - st.start, out = [];
+    [...stageRests, pA(.63)].forEach(r => out.push(st.start + r * len));
+    const s2 = S2.st, l2 = s2.end - s2.start, n = $$('.step').length;
+    for (let i = 0; i < n; i++) out.push(s2.start + (.08 + (i / (n - 1)) * .84) * l2);
+    ['#lavori', '#prezzi', '#faq', '#contatti'].forEach(id => { const el = $(id); if (el) out.push(el.getBoundingClientRect().top + lenis.scroll); });
+    return out.sort((a, b) => a - b);
+  };
+  let lastInput = 0, tail = false, holdUntil = 0, swLast = 0, swT = 0;
+  addEventListener('wheel', e => {
+    if (e.target.closest && e.target.closest('#slides') && Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+    const now = performance.now(), d = Math.abs(e.deltaY);
+    if (tail) {
+      // after a catch, the rest of that gesture (the trackpad's inertia tail) is absorbed; a fresh push gets through
+      const fresh = now - swT > 140 || d > swLast * 1.6 + 6;
+      swT = now; swLast = d;
+      if (!fresh || now < holdUntil) { e.preventDefault(); e.stopImmediatePropagation(); return; }
+      tail = false;
+    }
+    lastInput = now;
+  }, { capture: true, passive: false });
+  addEventListener('touchend', () => { lastInput = performance.now(); }, { passive: true });
+  addEventListener('touchstart', () => { tail = false; }, { passive: true });
+  $$('a[href^="#"]').forEach(a => a.addEventListener('click', () => { lastInput = 0; }, true));
+  const catchImpulse = l => {
+    if (snapping || lenis.isTouching || performance.now() - lastInput > 1400 || !viewerClosed()) return;
+    const y = l.scroll, tgt = l.targetScroll, dir = Math.sign(tgt - y); if (!dir || Math.abs(tgt - y) < 24) return;
+    const s = stops().find(v => dir > 0 ? v > y + 4 && v < tgt - 2 : false) ?? [...stops()].reverse().find(v => dir < 0 && v < y - 4 && v > tgt + 2);
+    if (s == null) return;
+    snapping = true; tail = !TOUCH; holdUntil = performance.now() + 450; swT = performance.now(); swLast = 1e9;
+    const dist = Math.abs(s - y);
+    lenis.scrollTo(s, { duration: Math.min(1.1, .45 + dist / innerHeight * .35), easing: t => 1 - Math.pow(1 - t, 3), lock: !TOUCH, onComplete: () => { snapping = false; } });
+    setTimeout(() => { snapping = false; }, 1300);
+  };
   lenis.on('scroll', l => {
+    catchImpulse(l);
     if (l.direction) lastDir = l.direction;
     clearTimeout(idle); idle = setTimeout(settle, TOUCH ? 140 : 190);
   });
