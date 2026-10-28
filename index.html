@@ -111,8 +111,12 @@ footer .brand img{width:30px;height:30px}
   .mm-worlds button{font-size:1.3rem;border-bottom:0;border-top:1px solid rgba(255,255,255,.1);padding:18px 0 6px}
   .mm-worlds button:hover i{transform:rotate(90deg)}
   .mm-worlds li:hover button{opacity:.78}
-  .mm-links{display:none}
+  .mm-links{display:flex;justify-content:flex-end;padding:0 0 18px;margin-top:-6px}
+  .mm-links a:not(.mm-top){display:none}
 }
+.mm-top{display:inline-flex;align-items:center;gap:6px;color:rgba(245,245,247,.7);transition:color .3s}
+.mm-top svg{width:11px;height:11px;transition:transform .5s var(--ease)}
+.mm-top:hover{color:var(--paper)}.mm-top:hover svg{transform:translateY(-2px)}
 
 /* ---------- preloader ---------- */
 .loader{position:fixed;inset:0;z-index:150;background:#000;display:grid;place-items:center}
@@ -329,19 +333,38 @@ footer .brand img{width:30px;height:30px}
 .direct{display:flex;flex-direction:column;gap:6px;margin-top:36px}
 .direct a{font-size:1.2rem;font-weight:600;letter-spacing:-.02em;width:max-content;border-bottom:1px solid transparent}
 .direct a:hover{border-color:var(--paper)}
-form{background:rgba(10,10,10,.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--line);border-radius:20px;padding:clamp(22px,3vw,36px);display:flex;flex-direction:column;gap:18px}
+form{position:relative;background:rgba(0,0,0,.5);backdrop-filter:blur(18px) saturate(1.15);-webkit-backdrop-filter:blur(18px) saturate(1.15);border:1px solid var(--line);border-radius:18px;padding:clamp(24px,3vw,40px);display:flex;flex-direction:column;gap:20px;overflow:hidden;transition:border-color .6s var(--ease),box-shadow .6s var(--ease)}
+form::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:var(--spectrum);transform:scaleX(.18);transform-origin:left;opacity:.9;transition:transform .9s var(--ease)}
+form:hover::before,form:focus-within::before{transform:scaleX(1)}
+form:focus-within{border-color:rgba(245,245,247,.2);box-shadow:0 30px 80px -40px rgba(242,181,68,.25)}
+.hint{font-style:normal;color:rgba(245,245,247,.38);margin-left:6px}
+input::placeholder,textarea::placeholder{color:rgba(245,245,247,.32);transition:color .3s}
+input:focus::placeholder,textarea:focus::placeholder{color:rgba(245,245,247,.2)}
+.pkg{display:flex;align-items:center;gap:10px;padding:10px 12px 10px 14px;border:1px solid rgba(242,181,68,.35);border-radius:12px;background:rgba(242,181,68,.06);font-size:.9rem;color:rgba(245,245,247,.7);margin-bottom:16px}
+.pkg[hidden]{display:none}
+.pkg b{color:var(--paper);font-weight:600}
+.pkg button{all:unset;margin-left:auto;width:28px;height:28px;display:grid;place-items:center;border-radius:999px;cursor:pointer;color:rgba(245,245,247,.6);transition:background .3s,color .3s}
+.pkg button svg{width:10px;height:10px}
+.pkg button:hover{background:rgba(255,255,255,.08);color:var(--paper)}
+.form-note a{color:var(--paper);border-bottom:1px solid rgba(245,245,247,.35);transition:border-color .3s}
+.form-note a:hover{border-color:var(--paper)}
 label{font-size:.85rem;color:var(--mute);display:block;margin-bottom:8px}
 input,textarea{width:100%;background:transparent;border:0;border-bottom:1px solid rgba(245,245,247,.25);color:var(--paper);font:inherit;padding:10px 0;font-size:1.05rem;border-radius:0}
 input:focus,textarea:focus{outline:none;border-color:var(--gold)}
 textarea{resize:vertical;min-height:84px}
 .pick{display:flex;flex-wrap:wrap;gap:8px}
 .pick input{position:absolute;opacity:0;width:1px;height:1px}
-.pick label{margin:0;padding:9px 14px;border-radius:999px;border:1px solid var(--line);color:rgba(245,245,247,.85);font-size:.92rem;cursor:pointer;transition:background .25s,color .25s,border-color .25s}
+.pick label{margin:0;padding:9px 14px;border-radius:999px;border:1px solid var(--line);color:rgba(245,245,247,.85);font-size:.92rem;cursor:pointer;transition:background .3s var(--ease),color .3s,border-color .3s,transform .4s var(--ease)}
+@media (hover:hover){.pick label:hover{border-color:rgba(245,245,247,.45)}}
+.pick label:active{transform:scale(.96)}
 .pick input:checked+label{background:var(--paper);color:#000;border-color:var(--paper)}
 .pick input:focus-visible+label{outline:2px solid var(--cyan);outline-offset:2px}
-form .btn{width:100%;justify-content:center;margin-top:4px}
+form .btn{width:100%;justify-content:center;margin-top:4px;transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
+form .btn-primary:hover{transform:translateY(-1px);box-shadow:0 0 0 4px rgba(245,245,247,.08),0 10px 30px rgba(242,181,68,.16)}
+form .btn-primary:active{transform:scale(.985)}
 .form-note{font-size:.82rem;color:var(--mute);margin:0;text-align:center}
-.err{font-size:.85rem;color:var(--ember);margin:0;min-height:1.2em}
+.err{font-size:.85rem;color:var(--ember);margin:0}
+.err:empty{display:none}
 @media (max-width:900px){.contact .wrap{grid-template-columns:1fr}}
 
 /* ---------- footer ---------- */
@@ -358,7 +381,7 @@ footer{border-top:1px solid var(--line);padding:56px 0 calc(40px + env(safe-area
 .wa{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:80;height:52px;padding:0 20px;border-radius:999px;background:var(--paper);color:#000;font-weight:600;display:none;align-items:center;gap:10px;box-shadow:0 10px 30px rgba(0,0,0,.4);transition:transform .5s var(--ease),opacity .4s}
 .wa.off{transform:translateY(90px);opacity:0}
 .wa svg{width:20px;height:20px}
-@media (max-width:900px){.wa{display:inline-flex}}
+@media (max-width:900px){.wa{display:inline-flex;width:52px;padding:0;justify-content:center;font-size:0;gap:0;box-shadow:0 8px 24px rgba(0,0,0,.35)}.wa svg{width:24px;height:24px}}
 
 /* ---------- atmospheres for the lower page ---------- */
 .work,.pricing,.faq{position:relative;overflow:hidden;overflow:clip}
@@ -465,7 +488,7 @@ footer{overflow:hidden}
         <li style="--c:var(--aqua)"><button type="button" data-w="2"><i></i><span data-i18n="n3">App mobile</span></button></li>
         <li style="--c:var(--cyan)"><button type="button" data-w="3"><i></i><span data-i18n="n4">Automazioni</span></button></li>
       </ol>
-      <div class="mm-links"><a href="#lavori" data-i18n="nav.work">Lavori</a><a href="#metodo" data-i18n="nav.method">Metodo</a><a href="#prezzi" data-i18n="nav.pricing">Prezzi</a><a href="#faq">FAQ</a></div>
+      <div class="mm-links"><a class="mm-top" href="#top"><span data-i18n="nav.top">Inizio</span> <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 10V2M2.5 5.5 6 2l3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></a><a href="#lavori" data-i18n="nav.work">Lavori</a><a href="#metodo" data-i18n="nav.method">Metodo</a><a href="#prezzi" data-i18n="nav.pricing">Prezzi</a><a href="#faq">FAQ</a></div>
     </div>
   </div>
 </header>
@@ -732,26 +755,27 @@ footer{overflow:hidden}
     <form id="leadForm" novalidate>
       <div>
         <label for="fName" data-i18n="f.name">Nome e azienda</label>
-        <input id="fName" name="name" autocomplete="name" required>
+        <input id="fName" name="name" autocomplete="organization" required data-ph="f.ph.name" placeholder="Es. Giulia Rossi, Studio Rossi">
       </div>
       <div>
         <span class="sr" id="typeLbl" data-i18n="f.type">Cosa ti serve</span>
-        <label aria-hidden="true" data-i18n="f.type">Cosa ti serve</label>
+        <label aria-hidden="true"><span data-i18n="f.type">Cosa ti serve</span> <em class="hint" data-i18n="f.multi">anche più di una</em></label>
         <div class="pick" role="group" aria-labelledby="typeLbl">
-          <input type="radio" name="type" id="t1" value="Sito web" checked><label for="t1" data-i18n="f.t1">Sito web</label>
-          <input type="radio" name="type" id="t2" value="E-commerce"><label for="t2">E-commerce</label>
-          <input type="radio" name="type" id="t3" value="Software / web app"><label for="t3" data-i18n="f.t3">Software</label>
-          <input type="radio" name="type" id="t4" value="App mobile"><label for="t4" data-i18n="f.t4">App mobile</label>
-          <input type="radio" name="type" id="t5" value="Automazioni"><label for="t5" data-i18n="f.t5">Automazioni</label>
+          <input type="checkbox" name="type" id="t1" value="Sito web"><label for="t1" data-i18n="f.t1">Sito web</label>
+          <input type="checkbox" name="type" id="t2" value="E-commerce"><label for="t2">E-commerce</label>
+          <input type="checkbox" name="type" id="t3" value="Software / web app"><label for="t3" data-i18n="f.t3">Software</label>
+          <input type="checkbox" name="type" id="t4" value="App mobile"><label for="t4" data-i18n="f.t4">App mobile</label>
+          <input type="checkbox" name="type" id="t5" value="Automazioni"><label for="t5" data-i18n="f.t5">Automazioni</label>
         </div>
       </div>
       <div>
+        <div class="pkg" id="fPkg" hidden><span data-i18n="f.pkg">Pacchetto</span><b id="fPkgName"></b><button type="button" id="fPkgX" aria-label="Rimuovi pacchetto"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 3l6 6M9 3l-6 6" stroke="currentColor" stroke-width="1.4"/></svg></button></div>
         <label for="fMsg" data-i18n="f.msg">Due righe sul progetto</label>
-        <textarea id="fMsg" name="msg" rows="3" data-lenis-prevent></textarea>
+        <textarea id="fMsg" name="msg" rows="3" data-lenis-prevent data-ph="f.ph.msg" placeholder="Es. Sito Nova per il mio studio: prenotazioni online, due lingue, lancio a marzo."></textarea>
       </div>
       <p class="err" id="fErr" role="alert"></p>
       <a class="btn btn-primary" id="waSend" href="https://wa.me/393206891014" target="_blank" rel="noopener"><span class="sq"></span><span data-i18n="f.send">Invia su WhatsApp</span></a>
-      <p class="form-note" data-i18n="f.note">Si apre WhatsApp con il messaggio già scritto. Preferisci l'email? Scrivi a studio@novasignal.it</p>
+      <p class="form-note" data-i18n="f.note" data-html>Si apre WhatsApp con il messaggio già scritto. Preferisci l'email? Scrivi a <a href="mailto:studio@novasignal.it">studio@novasignal.it</a></p>
     </form>
   </div>
 </section>
@@ -860,17 +884,19 @@ const EN = {
   'faq.list':'<details><summary>How long does it take?</summary><p>A Signal website takes 2–3 weeks on average from preview to launch. Software and apps get a dedicated roadmap we define together.</p></details><details><summary>I have no copy or photos. Is that a problem?</summary><p>No. We write the copy and guide you on photo and video, or use professional material that fits your brand.</p></details><details><summary>How does the free preview work?</summary><p>We show you a first visual direction before any payment. If you like it, you pay 50% and we start; the balance is due on delivery.</p></details><details><summary>Who owns the domain and the site?</summary><p>You do. Domain, content and site are in your name, with no lock-in.</p></details><details><summary>What happens after launch?</summary><p>You get 30 days of changes included. After that you can choose the Care plan or ask us for work when you need it.</p></details><details><summary>Why not a cheap template?</summary><p>Because a template looks like one. A custom site is faster, stands apart from competitors and is built to get you contacted.</p></details><details><summary>Do you work outside Italy?</summary><p>Yes. We are based in Rome and work remotely with clients in Europe, the UK, the US and the UAE, in English and Italian.</p></details>',
   'cta.h2':'Tell us about your project.','cta.lead':'We reply within 24 business hours with a proposal and the date of your free preview.',
   'f.name':'Name and company','f.type':'What you need','f.t1':'Website','f.t3':'Software','f.t4':'Mobile app','f.t5':'Automation','f.msg':'A few lines about the project','f.send':'Send on WhatsApp',
-  'f.note':'WhatsApp opens with your message ready. Prefer email? Write to studio@novasignal.it','f.err':'Add your name so we know who to reply to.',
+  'f.note':'WhatsApp opens with your message ready. Prefer email? Write to <a href="mailto:studio@novasignal.it">studio@novasignal.it</a>','nav.top':'Top','f.multi':'pick as many as you like','f.pkg':'Package','f.ph.name':'e.g. Jane Smith, Smith Studio','f.ph.msg':'e.g. A Nova website for my studio: online booking, two languages, launch in March.','f.err':'Add your name so we know who to reply to.',
   'foot.p':'Design & Technology Studio in Rome. Clients in Italy, Europe, the UK, the US and the UAE.','foot.studio':'Studio','foot.contact':'Contact','foot.privacy':'Privacy and cookies','foot.made':'Designed and built in Rome'
 };
 const IT = {};
 $$('[data-i18n]').forEach(el => { const k = el.dataset.i18n; if (!(k in IT)) IT[k] = el.hasAttribute('data-html') || /<\w/.test(EN[k] || '') ? el.innerHTML : el.textContent; });
 IT['f.err'] = 'Inserisci il tuo nome così sappiamo a chi rispondere.';
+$$('[data-ph]').forEach(el => { IT[el.dataset.ph] = el.placeholder; });
 let lang = 'it';
 const relayout = [];
 function setLang(l) {
   lang = l; const dict = l === 'en' ? EN : IT;
   $$('[data-i18n]').forEach(el => { const v = dict[el.dataset.i18n]; if (v == null) return; if (/<\w/.test(v)) el.innerHTML = v; else el.textContent = v; });
+  $$('[data-ph]').forEach(el => { const v = dict[el.dataset.ph]; if (v != null) el.placeholder = v; });
   document.documentElement.lang = l;
   const b = $('#langBtn'); b.textContent = l === 'en' ? 'IT' : 'EN'; b.setAttribute('aria-label', l === 'en' ? 'Passa all’italiano' : 'Switch to English');
   splitWords($('#mtext'));
@@ -1353,7 +1379,8 @@ function setupCommon(lenis) {
     ['#lavori', '#metodo', '#prezzi', '#faq'].forEach(id => { if (y >= at(id)) cur = id; });
     if (y >= at('#contatti')) cur = null;
     $$('.nav-links a').forEach(a => a.classList.toggle('cur', a.getAttribute('href') === cur));
-    fab.classList.toggle('off', y < innerHeight * 1.5);
+    const ct = $('#contatti'); const nearForm = ct && ct.getBoundingClientRect().top < innerHeight * .85;
+    fab.classList.toggle('off', y < innerHeight * 1.5 || nearForm || nav.classList.contains('open'));
     lastY = y;
   };
   addEventListener('scroll', onScroll, { passive: true }); onScroll();
@@ -1479,26 +1506,31 @@ function setupCommon(lenis) {
   lenis.on('scroll', l => { if (nav.classList.contains('open') && Math.abs(l.scroll - menuY) > 40) setMenu(false); });
   document.addEventListener('click', e => { if (nav.classList.contains('open') && !e.target.closest('#nav')) setMenu(false); });
 
+  const setPkg = name => { const box = $('#fPkg'); if (!box) return; box.hidden = !name; $('#fPkgName').textContent = name || ''; compose(); };
   /* plans: choose / switch / select — the spectrum line follows your choice */
   const plans = $$('.plan');
   plans.forEach(pl => pl.addEventListener('click', e => {
     plans.forEach(x => x.classList.toggle('pick', x === pl));
-    if (!e.target.closest('a')) { const b = $('[data-plan]', pl); if (b) { const m = $('#fMsg'); m.value = (lang === 'en' ? 'Interested in the ' : 'Mi interessa il pacchetto ') + b.dataset.plan + (lang === 'en' ? ' package.' : '.'); compose(); } }
+    if (!e.target.closest('a')) { const b = $('[data-plan]', pl); if (b) setPkg(b.dataset.plan); }
   }));
 
   /* plan buttons preselect type */
   $$('[data-plan]').forEach(b => b.addEventListener('click', () => {
-    const m = $('#fMsg'); m.value = (lang === 'en' ? 'Interested in the ' : 'Mi interessa il pacchetto ') + b.dataset.plan + (lang === 'en' ? ' package.' : '.');
+    setPkg(b.dataset.plan);
     if (b.dataset.plan === 'Supernova') $('#t3').checked = true; compose();
   }));
 
   /* form → WhatsApp: a real link, kept in sync with the fields */
   const form = $('#leadForm'), send = $('#waSend'), err = $('#fErr');
+  $('#fPkgX').addEventListener('click', () => setPkg(null));
   const compose = () => {
-    const name = $('#fName').value.trim(), type = $('input[name=type]:checked').value, msg = $('#fMsg').value.trim();
-    const text = lang === 'en'
-      ? `Hi NovaSignal, I'm ${name}. I need: ${type}.${msg ? '\n' + msg : ''}`
-      : `Ciao NovaSignal, sono ${name}. Mi serve: ${type}.${msg ? '\n' + msg : ''}`;
+    const name = $('#fName').value.trim(), types = $$('input[name=type]:checked').map(i => lang === 'en' ? i.nextElementSibling.textContent.trim() : i.value), msg = $('#fMsg').value.trim();
+    const pkg = $('#fPkg') && !$('#fPkg').hidden ? $('#fPkgName').textContent : '';
+    const en = lang === 'en';
+    const text = (en ? `Hi NovaSignal, I'm ${name}.` : `Ciao NovaSignal, sono ${name}.`)
+      + (types.length ? (en ? `\nI need: ${types.join(', ')}.` : `\nMi serve: ${types.join(', ')}.`) : '')
+      + (pkg ? (en ? `\nPackage: ${pkg}.` : `\nPacchetto: ${pkg}.`) : '')
+      + (msg ? '\n' + msg : '');
     send.href = 'https://wa.me/393206891014?text=' + encodeURIComponent(text);
     return name;
   };
