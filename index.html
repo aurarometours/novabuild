@@ -49,7 +49,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
 /* ---------- type ---------- */
-.display{font-size:clamp(3rem,8.6vw,9rem);line-height:.9;letter-spacing:-.055em;font-weight:600;margin:0}
+.display{font-size:clamp(2.9rem,6.8vw,7.2rem);line-height:.9;letter-spacing:-.055em;font-weight:600;margin:0}
 .h2{font-size:clamp(2.4rem,5.4vw,5.4rem);line-height:.95;letter-spacing:-.048em;font-weight:600;margin:0}
 .h3{font-size:clamp(1.7rem,2.8vw,2.6rem);line-height:1.02;letter-spacing:-.035em;font-weight:600;margin:0}
 .lead{font-size:clamp(1.12rem,1.5vw,1.4rem);line-height:1.42;letter-spacing:-.018em;color:rgba(245,245,247,.82);max-width:34em;margin:0}
@@ -190,6 +190,10 @@ footer .brand img{width:30px;height:30px}
 .svc-nav button:focus-visible{outline:1px solid var(--paper);outline-offset:4px}
 @media (hover:hover){.svc-nav li:hover{color:var(--paper)}.svc-nav li:hover i{opacity:1}.svc-nav li:hover button{transform:translateX(-4px)}}
 .endveil{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none;z-index:5}
+/* stage layers never swallow clicks: only what is visible and interactive takes them */
+.world,.portal,.svc-head,.hero-shade,.signal{pointer-events:none}
+.world .copy,.svc-head a,.svc-head button{pointer-events:auto}
+.hero-copy{pointer-events:none}.hero-copy a,.hero-copy button{pointer-events:auto}
 @media (max-width:640px){.deliver{gap:0 16px;margin-bottom:24px}.deliver li{font-size:.86rem;padding:9px 0}.world .lead{font-size:1.02rem;margin-bottom:22px}.svc-nav{flex-direction:row;left:var(--gutter);right:auto;bottom:24px}.svc-nav span{display:none}}
 
 /* ---------- work ---------- */
@@ -305,6 +309,47 @@ footer .brand img{width:30px;height:30px}
 .plan li::before{content:"";position:absolute;left:0;top:19px;width:6px;height:6px;background:var(--c,var(--paper))}
 .plan .btn{align-self:flex-start;margin-top:8px}
 .plan .buy{display:flex;flex-direction:column;align-items:flex-start;gap:12px;margin-top:8px}
+.ck{position:fixed;inset:0;z-index:150;display:grid;place-items:center;padding:16px;background:rgba(0,0,0,.62);-webkit-backdrop-filter:blur(10px) saturate(1.2);backdrop-filter:blur(10px) saturate(1.2);animation:ckFade .4s var(--ease) both}
+.ck[hidden]{display:none}
+@keyframes ckFade{from{opacity:0}}
+.ck-panel{position:relative;width:min(560px,100%);max-height:calc(100svh - 32px);overflow-y:auto;overscroll-behavior:contain;background:#0a0a0b;border:1px solid rgba(245,245,247,.16);border-radius:22px;padding:clamp(24px,5vw,40px);box-shadow:0 40px 120px rgba(0,0,0,.6);animation:ckPop .55s var(--ease) both}
+.ck-panel::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:var(--spectrum)}
+.ck-panel.wide{width:min(720px,100%)}
+@keyframes ckPop{from{opacity:0;transform:translateY(16px) scale(.985)}}
+.ck-x{position:absolute;right:14px;top:14px;width:38px;height:38px;border-radius:999px;border:0;background:transparent;color:var(--mute);cursor:pointer;display:grid;place-items:center;transition:background .25s,color .25s;z-index:2}
+.ck-x:hover{background:rgba(255,255,255,.07);color:var(--paper)}
+.ck-x svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.6}
+.ck .tag{margin-bottom:14px}.ck .tag i{width:8px;height:8px;background:var(--c,var(--gold))}
+.ck h3{margin:0 0 8px;font-size:clamp(1.8rem,5vw,2.4rem);letter-spacing:-.045em;line-height:1;font-weight:600}
+.ck-lead{margin:0 0 22px;color:rgba(245,245,247,.72);line-height:1.5}
+.ck-opts{display:grid;gap:10px;margin-bottom:16px}
+.ck-opt{position:relative;display:grid;grid-template-columns:20px 1fr auto;gap:14px;align-items:center;padding:16px 18px;border:1px solid rgba(245,245,247,.14);border-radius:16px;cursor:pointer;transition:border-color .3s,background .3s}
+.ck-opt:hover{border-color:rgba(245,245,247,.35)}
+.ck-opt input{position:absolute;opacity:0}
+.ck-opt i{width:18px;height:18px;border-radius:99px;border:1.5px solid rgba(245,245,247,.4);transition:all .3s}
+.ck-opt b{display:block;font-weight:600;letter-spacing:-.01em}
+.ck-opt small{display:block;color:var(--mute);font-size:.84rem;margin-top:2px}
+.ck-opt strong{font-size:1.15rem;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.ck-opt:has(input:checked){border-color:var(--paper);background:rgba(255,255,255,.04)}
+.ck-opt:has(input:checked) i{border-color:var(--paper);box-shadow:inset 0 0 0 4px #0a0a0b;background:var(--paper)}
+.ck-opt:has(input:focus-visible){outline:2px solid var(--cyan);outline-offset:2px}
+.ck-sum{display:flex;justify-content:space-between;align-items:baseline;padding:14px 0;margin-bottom:18px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);color:rgba(245,245,247,.7)}
+.ck-sum b{color:var(--paper);font-size:1.5rem;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.ck-go{width:100%;justify-content:center}
+.ck-go[disabled]{opacity:.6;pointer-events:none}
+.ck-err{color:var(--ember);font-size:.9rem;margin:0 0 12px}.ck-err:empty{display:none}
+.ck-note{margin:14px 0 0;font-size:.82rem;color:var(--mute);text-align:center;line-height:1.5}
+.ck-note a{color:var(--paper);border-bottom:1px solid rgba(245,245,247,.3)}
+.ck-back{display:flex;align-items:center;gap:12px;margin:-6px 40px 16px 0;color:var(--mute);font-size:.9rem}
+.ck-back button{border:0;background:transparent;color:var(--paper);cursor:pointer;padding:6px 0;font:inherit;border-bottom:1px solid rgba(245,245,247,.3)}
+.ck-mount{min-height:420px;border-radius:14px;overflow:hidden;background:#fff}
+.ck-mount.loading{background:rgba(255,255,255,.04);display:grid;place-items:center}
+.ck-mount.loading::after{content:"";width:22px;height:22px;border-radius:99px;border:2px solid rgba(245,245,247,.2);border-top-color:var(--paper);animation:ckSpin .8s linear infinite}
+@keyframes ckSpin{to{transform:rotate(360deg)}}
+.ck-done{text-align:center;padding:12px 0}
+.ck-tick{display:grid;place-items:center;width:58px;height:58px;margin:0 auto 18px;border-radius:99px;background:rgba(63,224,181,.12);border:1px solid rgba(63,224,181,.35)}
+.ck-tick svg{width:26px;height:26px;fill:none;stroke:var(--aqua);stroke-width:2;stroke-dasharray:30;stroke-dashoffset:30;animation:ckDraw .7s var(--ease) .3s forwards}
+@keyframes ckDraw{to{stroke-dashoffset:0}}
 .plan .buy .btn{margin-top:0}
 .buy-full{font-size:.88rem;color:rgba(245,245,247,.7);border-bottom:1px solid rgba(245,245,247,.25);padding-bottom:1px;transition:color .3s,border-color .3s}
 .buy-full:hover{color:var(--paper);border-color:var(--paper)}
@@ -488,7 +533,7 @@ footer{overflow:hidden}
     <div class="nav-r">
       <a class="nav-mini" href="#prezzi" data-i18n="nav.pricing">Prezzi</a>
       <button class="lang" id="langBtn" aria-label="Switch to English">EN</button>
-      <a class="btn btn-primary" href="#contatti"><span class="sq"></span>Start your project</a>
+      <a class="btn btn-primary" href="#contatti"><span class="sq"></span><span data-i18n="cta.start">Inizia il tuo progetto</span></a>
     </div>
   </div>
   <div class="mmenu" id="mMenu" hidden>
@@ -525,7 +570,7 @@ footer{overflow:hidden}
         <h2 class="h2" data-i18n="hero.h2">Siti, software, app e automazioni.</h2>
         <p class="lead" data-i18n="hero.lead">Un solo team per strategia, design, sviluppo e crescita. Studio a Roma, clienti in tutto il mondo. Ti mostriamo un'anteprima gratuita prima che tu paghi.</p>
         <div class="ctas">
-          <a class="btn btn-primary" href="#contatti"><span class="sq"></span>Start your project</a>
+          <a class="btn btn-primary" href="#contatti"><span class="sq"></span><span data-i18n="cta.start">Inizia il tuo progetto</span></a>
           <a class="btn btn-ghost" href="#prezzi" data-i18n="hero.prices">Vedi i prezzi</a>
         </div>
       </div>
@@ -699,14 +744,14 @@ footer{overflow:hidden}
         <div class="price">€1.900<small data-i18n="price.vat">+IVA</small></div>
         <p data-i18n="pl1.p">Il sito su misura che presenta il tuo business come merita.</p>
         <ul data-i18n="pl1.list" data-html><li>Fino a 6 pagine su misura</li><li>Animazioni premium</li><li>Testi e SEO locale</li><li>Dominio e hosting primo anno</li><li>30 giorni di modifiche</li></ul>
-        <div class="buy"><a class="btn btn-ghost" href="https://novasignal-backend-production.up.railway.app/buy/signal?opt=deposit&amp;lang=it" data-buy="signal" data-opt="deposit" rel="nofollow"><span data-i18n="buy.dep1">Paga l’acconto · €950</span></a><a class="buy-full" href="https://novasignal-backend-production.up.railway.app/buy/signal?opt=full&amp;lang=it" data-buy="signal" data-opt="full" rel="nofollow" data-i18n="buy.full1">oppure paga tutto · €1.900</a></div>
+        <a class="btn btn-ghost" href="https://novasignal-backend-production.up.railway.app/buy/signal?opt=deposit&amp;lang=it" data-buy="signal" rel="nofollow"><span data-i18n="buy.start">Inizia il progetto</span></a>
       </div>
       <div class="plan pick" style="--c:var(--gold)">
         <h3>Nova <em data-i18n="price.pick">Il più scelto</em></h3>
         <div class="price">€4.900<small data-i18n="price.vat">+IVA</small></div>
         <p data-i18n="pl2.p">Per chi vende online, prenota clienti o parla a più mercati.</p>
         <ul data-i18n="pl2.list" data-html><li>E-commerce o prenotazioni</li><li>Multilingua</li><li>Motion e 3D allo scroll</li><li>Pagamenti, CRM, calendario</li><li>Tracciamento conversioni</li></ul>
-        <div class="buy"><a class="btn btn-primary" href="https://novasignal-backend-production.up.railway.app/buy/nova?opt=deposit&amp;lang=it" data-buy="nova" data-opt="deposit" rel="nofollow"><span class="sq"></span><span data-i18n="buy.dep2">Paga l’acconto · €2.450</span></a><a class="buy-full" href="https://novasignal-backend-production.up.railway.app/buy/nova?opt=full&amp;lang=it" data-buy="nova" data-opt="full" rel="nofollow" data-i18n="buy.full2">oppure paga tutto · €4.900</a></div>
+        <a class="btn btn-primary" href="https://novasignal-backend-production.up.railway.app/buy/nova?opt=deposit&amp;lang=it" data-buy="nova" rel="nofollow"><span class="sq"></span><span data-i18n="buy.start">Inizia il progetto</span></a>
       </div>
       <div class="plan" style="--c:var(--cyan)">
         <h3>Supernova</h3>
@@ -755,7 +800,7 @@ footer{overflow:hidden}
   <div class="bg"><video muted playsinline loop preload="none" poster="assets/video/grid.jpg" data-src="assets/video/grid.mp4" data-poster-m="assets/video/grid-m.jpg" data-src-m="assets/video/grid-m.mp4" aria-hidden="true"></video></div>
   <div class="wrap">
     <div>
-      <p class="tag"><i style="--c:var(--ember)"></i>Start your project</p>
+      <p class="tag"><i style="--c:var(--ember)"></i><span data-i18n="cta.start">Inizia il tuo progetto</span></p>
       <h2 class="h2" id="ctaTitle" data-i18n="cta.h2">Raccontaci il progetto.</h2>
       <p class="lead" data-i18n="cta.lead">Ti rispondiamo entro 24 ore lavorative con una proposta e la data della tua anteprima gratuita.</p>
       <div class="direct">
@@ -814,6 +859,28 @@ footer{overflow:hidden}
     <div class="legal"><span>© 2026 NovaSignal</span><span data-i18n="foot.made">Progettato e sviluppato a Roma</span></div>
   </div>
 </footer>
+
+<div class="ck" id="ck" role="dialog" aria-modal="true" aria-labelledby="ckTitle" hidden>
+  <div class="ck-panel" data-lenis-prevent>
+    <button class="ck-x" id="ckX" type="button" aria-label="Chiudi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <div class="ck-step" data-step="choose">
+      <p class="tag"><i id="ckDot"></i><span id="ckTag"></span></p>
+      <h3 id="ckTitle"></h3>
+      <p class="ck-lead" id="ckLead"></p>
+      <div class="ck-opts" id="ckOpts"></div>
+      <div class="ck-sum"><span id="ckSumL"></span><b id="ckSum"></b></div>
+      <p class="ck-err" id="ckErr" role="alert"></p>
+      <button class="btn btn-primary ck-go" id="ckGo" type="button"><span class="sq"></span><span id="ckGoT"></span></button>
+      <p class="ck-note" id="ckNote"></p>
+    </div>
+    <div class="ck-step" data-step="pay" hidden><div class="ck-back"><button type="button" id="ckBack"></button><span id="ckPayT"></span></div><div class="ck-mount" id="ckMount"></div></div>
+    <div class="ck-step ck-done" data-step="done" hidden>
+      <span class="ck-tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+      <h3 id="ckDoneH"></h3><p class="ck-lead" id="ckDoneP"></p>
+      <button class="btn btn-primary" id="ckDoneX" type="button"><span class="sq"></span><span id="ckDoneB"></span></button>
+    </div>
+  </div>
+</div>
 
 <div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-labelledby="viewerDom" hidden>
   <div class="viewer-bar">
@@ -885,7 +952,7 @@ const EN = {
   'p4.d':'In parallel','p4.h':'Engineering and speed','p4.p':'Clean code, fast loading, technical SEO and conversion tracking.',
   'p5.d':'Launch','p5.h':'Live, and not alone','p5.p':'Domain, Google Business and 30 days of changes included after launch.',
   'price.tag':'Pricing','price.h2':'Clear pricing, before we start.','price.lead':'Free preview, then 50% to start and the balance on delivery. Your domain and site stay yours.',
-  'price.vat':'+VAT','price.pick':'Most chosen','price.from':'from','price.cta':'Choose Signal','price.cta2':'Choose Nova','price.cta3':'Let’s talk','buy.dep1':'Pay the deposit · €950','buy.full1':'or pay in full · €1,900','buy.dep2':'Pay the deposit · €2,450','buy.full2':'or pay in full · €4,900','buy.act':'Start','buy.note':'Rather see the free preview first? <a href="#contatti">Write to us</a>: you only pay if you love it.',
+  'price.vat':'+VAT','price.pick':'Most chosen','price.from':'from','price.cta':'Choose Signal','price.cta2':'Choose Nova','price.cta3':'Let’s talk','buy.start':'Start your project','cta.start':'Start your project','buy.act':'Start','buy.note':'Rather see the free preview first? <a href="#contatti">Write to us</a>: you only pay if you love it.',
   'pl1.p':'The custom website that presents your business the way it deserves.','pl1.list':'<li>Up to 6 custom pages</li><li>Premium animation</li><li>Copy and local SEO</li><li>First-year domain and hosting</li><li>30 days of changes</li>',
   'pl2.p':'For brands that sell online, take bookings or speak to several markets.','pl2.list':'<li>E-commerce or booking</li><li>Multilingual</li><li>Scroll motion and 3D</li><li>Payments, CRM, calendar</li><li>Conversion tracking</li>',
   'pl3.p':'Software, web apps and mobile apps built around your process.','pl3.list':'<li>Custom web app or SaaS</li><li>iOS and Android app</li><li>Admin panel and database</li><li>Automation and AI</li><li>Ongoing roadmap</li>',
@@ -1530,9 +1597,103 @@ function setupCommon(lenis) {
     if (!e.target.closest('a')) { const b = $('[data-plan]', pl); if (b) setPkg(b.dataset.plan); }
   }));
 
-  /* buy buttons: Stripe checkout in the visitor's language */
-  $$('[data-buy]').forEach(a => a.addEventListener('click', () => {
-    const u = new URL(a.href); u.searchParams.set('lang', lang === 'en' ? 'en' : 'it'); a.href = u.toString();
+  /* buy: a NovaSignal window with Stripe's checkout inside. Any problem → the same checkout on Stripe's page. */
+  const API = 'https://novasignal-backend-production.up.railway.app';
+  const CK = {
+    it: { pkgTag: 'Inizia il progetto', planTag: 'Piano mensile', half: 'Avvia con il 50%', halfS: 'il resto alla consegna', full: 'Unica soluzione', fullS: 'niente da saldare dopo',
+      leadPkg: 'Scegli come partire. Dopo il pagamento ti scriviamo entro 24 ore lavorative per l’avvio.', leadPlan: 'Rinnovo automatico ogni mese, disdici quando vuoi.',
+      today: 'Oggi paghi', month: 'al mese', go: 'Continua al pagamento', back: '← Indietro', secure: 'Pagamento sicuro con Stripe',
+      note: 'Preferisci prima l’anteprima gratuita? <a href="#contatti" data-ck-close>Scrivici</a>: paghi solo se ti convince.',
+      doneH: 'Grazie. Si parte.', doneP: 'Pagamento ricevuto: la ricevuta arriva via email e ti scriviamo noi entro 24 ore lavorative.', donePlan: 'Il piano è attivo: la ricevuta arriva via email, ti scriviamo noi per l’avvio.', close: 'Chiudi', err: 'Il pagamento non è partito, riprova.' },
+    en: { pkgTag: 'Start your project', planTag: 'Monthly plan', half: 'Start with 50%', halfS: 'the rest on delivery', full: 'Pay in full', fullS: 'nothing left to pay later',
+      leadPkg: 'Choose how to start. After payment we will write to you within one business day to kick off.', leadPlan: 'Renews automatically every month, cancel any time.',
+      today: 'Today you pay', month: 'per month', go: 'Continue to payment', back: '← Back', secure: 'Secure payment with Stripe',
+      note: 'Rather see the free preview first? <a href="#contatti" data-ck-close>Write to us</a>: you only pay if you love it.',
+      doneH: 'Thank you. We are on.', doneP: 'Payment received: your receipt is on its way and we will write to you within one business day.', donePlan: 'Your plan is active: your receipt is on its way and we will be in touch to get started.', close: 'Close', err: 'The payment did not start, please try again.' }
+  };
+  const ITEMS = { signal: { name: 'Signal', net: 1900, c: 'var(--ember)' }, nova: { name: 'Nova', net: 4900, c: 'var(--gold)' },
+    orbit: { name: 'Orbit', net: 490, c: 'var(--cyan)', plan: true }, pulse: { name: 'Pulse', net: 590, c: 'var(--cyan)', plan: true }, care: { name: 'Care', net: 79, c: 'var(--cyan)', plan: true } };
+  const ck = $('#ck'), ckPanel = $('.ck-panel', ck);
+  const money = n => '€' + n.toLocaleString(lang === 'en' ? 'en-GB' : 'it-IT', { useGrouping: 'always' });
+  let ckItem = null, ckInst = null, ckFrom = null, stripeJs = null;
+  const ckStep = n => $$('.ck-step', ck).forEach(s => { s.hidden = s.dataset.step !== n; });
+  const loadStripe = () => stripeJs || (stripeJs = new Promise((res, rej) => {
+    if (window.Stripe) return res(window.Stripe);
+    const sc = document.createElement('script'); sc.src = 'https://js.stripe.com/v3/'; sc.async = true;
+    sc.onload = () => window.Stripe ? res(window.Stripe) : rej(new Error('stripe')); sc.onerror = () => { stripeJs = null; rej(new Error('stripe')); };
+    document.head.appendChild(sc);
+  }));
+  function sum() {
+    const it = ITEMS[ckItem], t = CK[lang === 'en' ? 'en' : 'it'];
+    const full = it.plan || ($('input[name=ckOpt]:checked', ck) || {}).value === 'full';
+    $('#ckSum').textContent = money(full ? it.net : it.net / 2) + (it.plan ? ' ' + t.month : '');
+  }
+  function openCk(item, from) {
+    const it = ITEMS[item]; if (!it) return false;
+    const t = CK[lang === 'en' ? 'en' : 'it'];
+    ckItem = item; ckFrom = from;
+    ck.style.setProperty('--c', it.c); $('#ckDot').style.setProperty('--c', it.c);
+    $('#ckTag').textContent = it.plan ? t.planTag : t.pkgTag;
+    $('#ckTitle').textContent = it.name;
+    $('#ckLead').textContent = it.plan ? t.leadPlan : t.leadPkg;
+    $('#ckOpts').innerHTML = it.plan ? '' : `
+      <label class="ck-opt"><input type="radio" name="ckOpt" value="half" checked><i></i><span><b>${t.half}</b><small>${t.halfS}</small></span><strong>${money(it.net / 2)}</strong></label>
+      <label class="ck-opt"><input type="radio" name="ckOpt" value="full"><i></i><span><b>${t.full}</b><small>${t.fullS}</small></span><strong>${money(it.net)}</strong></label>`;
+    $$('input[name=ckOpt]', ck).forEach(r => r.onchange = sum);
+    $('#ckSumL').textContent = t.today; sum();
+    $('#ckGoT').textContent = t.go; $('#ckNote').innerHTML = t.note; $('#ckErr').textContent = '';
+    $('#ckBack').textContent = t.back; $('#ckPayT').textContent = t.secure;
+    $('#ckDoneB').textContent = t.close;
+    $('#ckGo').disabled = false; ckPanel.classList.remove('wide');
+    ckStep('choose'); ck.hidden = false; lenis.stop(); document.documentElement.style.overflow = 'hidden';
+    setTimeout(() => ($('input[name=ckOpt]:checked', ck) || $('#ckGo')).focus(), 60);
+    loadStripe().catch(() => {}); // warm up
+    return true;
+  }
+  function destroyCk() { if (ckInst) { try { ckInst.destroy(); } catch (e) {} ckInst = null; } $('#ckMount').innerHTML = ''; }
+  function closeCk() { destroyCk(); ck.hidden = true; lenis.start(); document.documentElement.style.overflow = ''; ckFrom && ckFrom.focus && ckFrom.focus(); }
+  function fallback() { // same purchase on Stripe's own page
+    const it = ITEMS[ckItem], full = it.plan || ($('input[name=ckOpt]:checked', ck) || {}).value === 'full';
+    location.href = `${API}/buy/${ckItem}?opt=${full ? 'full' : 'deposit'}&lang=${lang === 'en' ? 'en' : 'it'}`;
+  }
+  $('#ckGo').addEventListener('click', async () => {
+    const it = ITEMS[ckItem], t = CK[lang === 'en' ? 'en' : 'it'];
+    const full = it.plan || ($('input[name=ckOpt]:checked', ck) || {}).value === 'full';
+    $('#ckGo').disabled = true; $('#ckErr').textContent = '';
+    try {
+      const [r, StripeCtor] = await Promise.all([
+        fetch(`${API}/public/checkout`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ item: ckItem, opt: full ? 'full' : 'deposit', lang: lang === 'en' ? 'en' : 'it' }) }),
+        loadStripe()
+      ]);
+      if (r.status === 503) return fallback();
+      if (!r.ok) throw new Error('checkout');
+      const j = await r.json();
+      const stripe = StripeCtor(j.publishableKey, { locale: lang === 'en' ? 'en' : 'it' });
+      destroyCk(); ckPanel.classList.add('wide'); ckStep('pay'); $('#ckMount').classList.add('loading');
+      ckInst = await stripe.initEmbeddedCheckout({
+        fetchClientSecret: () => Promise.resolve(j.clientSecret),
+        onComplete: () => {
+          destroyCk(); ckPanel.classList.remove('wide');
+          $('#ckDoneH').textContent = t.doneH; $('#ckDoneP').textContent = it.plan ? t.donePlan : t.doneP;
+          ckStep('done'); $('#ckDoneX').focus();
+        }
+      });
+      $('#ckMount').classList.remove('loading');
+      ckInst.mount('#ckMount');
+    } catch (e) {
+      $('#ckGo').disabled = false; ckStep('choose'); ckPanel.classList.remove('wide');
+      if (!window.Stripe) return fallback(); // Stripe.js blocked (e.g. by an extension): use the hosted page
+      $('#ckErr').textContent = t.err;
+    }
+  });
+  $('#ckBack').addEventListener('click', () => { destroyCk(); ckPanel.classList.remove('wide'); ckStep('choose'); $('#ckGo').disabled = false; });
+  $('#ckX').addEventListener('click', closeCk); $('#ckDoneX').addEventListener('click', closeCk);
+  ck.addEventListener('mousedown', e => { if (e.target === ck && $('[data-step=pay]', ck).hidden) closeCk(); });   // during payment only the × closes
+  ck.addEventListener('click', e => { if (e.target.closest('[data-ck-close]')) closeCk(); });
+  addEventListener('keydown', e => { if (e.key === 'Escape' && !ck.hidden) closeCk(); });
+  $$('[data-buy]').forEach(a => a.addEventListener('click', e => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey) return;
+    if (openCk(a.dataset.buy, a)) e.preventDefault();
   }));
 
   /* plan buttons preselect type */
