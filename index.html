@@ -67,6 +67,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .btn-ghost:hover{border-color:var(--paper)}
 .btn .sq{width:8px;height:8px;background:var(--ember);transition:transform .4s var(--ease)}
 .btn:hover .sq{transform:rotate(90deg)}
+@media (max-width:600px){.btn{height:46px;padding:0 20px;gap:9px;font-size:.94rem}.btn .sq{width:7px;height:7px}.ctas{gap:10px}}
 
 /* ---------- nav ---------- */
 .nav{position:fixed;top:0;left:0;right:0;z-index:90;background:rgba(0,0,0,0);border-bottom:1px solid transparent;transition:background .6s var(--ease),border-color .6s var(--ease),backdrop-filter .6s;padding-top:env(safe-area-inset-top,0px)}
@@ -311,6 +312,37 @@ footer .brand img{width:30px;height:30px}
 .plan .buy{display:flex;flex-direction:column;align-items:flex-start;gap:12px;margin-top:8px}
 .ck{position:fixed;inset:0;z-index:150;display:grid;place-items:center;padding:16px;background:rgba(0,0,0,.62);-webkit-backdrop-filter:blur(10px) saturate(1.2);backdrop-filter:blur(10px) saturate(1.2);animation:ckFade .4s var(--ease) both}
 .ck[hidden]{display:none}
+/* ---------- world sheet: the details of a world, without leaving it ---------- */
+.wi .ck-panel{width:min(760px,100%);padding:0}
+.wi-media{position:relative;height:clamp(150px,27vh,240px);overflow:hidden;border-radius:21px 21px 0 0}
+.wi-media img{width:100%;height:100%;object-fit:cover;transform:scale(1.08);transition:transform 1.8s var(--ease)}
+.wi:not([hidden]) .wi-media img.in{transform:scale(1)}
+.wi-media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,11,0) 30%,rgba(10,10,11,.7) 72%,#0a0a0b)}
+.wi-body{position:relative;padding:0 clamp(22px,5vw,40px) clamp(24px,5vw,36px);margin-top:-56px}
+.wi .ck-lead{margin-bottom:24px}
+.wi-h{margin:0 0 12px;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);font-weight:600}
+.wi-list{list-style:none;margin:0 0 28px;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:10px 18px}
+.wi-list li{display:flex;align-items:center;gap:10px;font-size:.95rem;color:rgba(245,245,247,.86)}
+.wi-list li::before{content:"";flex:none;width:6px;height:6px;background:var(--c,var(--gold))}
+.wi-prev{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:28px}
+.wi-shot{position:relative;display:block;aspect-ratio:16/10;border-radius:14px;overflow:hidden;border:1px solid rgba(245,245,247,.14);background:#111}
+.wi-shot img{width:100%;height:100%;object-fit:cover;object-position:top;transition:transform .8s var(--ease)}
+.wi-shot:hover img{transform:scale(1.04)}
+.wi-shot span{position:absolute;left:10px;bottom:10px;padding:6px 11px;border-radius:99px;background:rgba(0,0,0,.66);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);font-size:.8rem;font-weight:500}
+.wi-offer{display:grid;gap:10px;margin-bottom:24px}
+.wi-row{display:grid;grid-template-columns:1fr auto 18px;gap:16px;align-items:center;width:100%;padding:15px 18px;border:1px solid rgba(245,245,247,.14);border-radius:16px;background:transparent;color:var(--paper);font:inherit;text-align:left;cursor:pointer;transition:border-color .3s,background .3s}
+.wi-row:hover{border-color:rgba(245,245,247,.4);background:rgba(255,255,255,.03)}
+.wi-row:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+.wi-row b{display:block;font-weight:600;letter-spacing:-.01em}
+.wi-row small{display:block;color:var(--mute);font-size:.84rem;margin-top:3px;line-height:1.4}
+.wi-row strong{font-size:1.05rem;letter-spacing:-.02em;font-variant-numeric:tabular-nums;white-space:nowrap}
+.wi-row svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.6;opacity:.6;transition:transform .4s var(--ease),opacity .3s}
+.wi-row:hover svg{transform:translateX(3px);opacity:1}
+.wi-acts{display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px}
+.wi-link{border:0;background:none;padding:4px 0;color:var(--paper);font:inherit;font-weight:500;cursor:pointer;border-bottom:1px solid rgba(245,245,247,.35)}
+.wi-link:hover{border-color:var(--paper)}
+@media (max-width:600px){.wi-list{grid-template-columns:1fr 1fr;gap:9px 14px}.wi-list li{font-size:.9rem}.wi-prev{gap:10px}.wi-shot{border-radius:11px}.wi-shot span{left:7px;bottom:7px;padding:4px 8px;font-size:.66rem;max-width:calc(100% - 14px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.wi-acts{justify-content:center}.wi-acts .btn{width:100%;justify-content:center}.wi-link{font-size:.94rem}.wi-row{padding:14px 15px;gap:12px}.wi-row small{font-size:.8rem}}
+
 @keyframes ckFade{from{opacity:0}}
 .ck-panel{position:relative;width:min(560px,100%);max-height:calc(100svh - 32px);overflow-y:auto;overscroll-behavior:contain;background:#0a0a0b;border:1px solid rgba(245,245,247,.16);border-radius:22px;padding:clamp(24px,5vw,40px);box-shadow:0 40px 120px rgba(0,0,0,.6);animation:ckPop .55s var(--ease) both}
 .ck-panel::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:var(--spectrum)}
@@ -449,7 +481,8 @@ footer{border-top:1px solid var(--line);padding:56px 0 calc(40px + env(safe-area
 .work .atmo video,.work .atmo img{filter:brightness(1.1)}
 .work .atmo .pin{position:sticky;top:0;height:100vh;height:100lvh;overflow:hidden}
 .work{position:relative}.work::before{content:"";position:absolute;left:0;right:0;top:0;height:55vh;z-index:1;pointer-events:none;background:linear-gradient(180deg,#000 0%,rgba(0,0,0,.86) 22%,rgba(0,0,0,.5) 52%,rgba(0,0,0,.16) 80%,rgba(0,0,0,0) 100%)}
-@media (max-width:900px){:root{--ovl:42vh}.work{z-index:2;margin-top:calc(var(--ovl) * -1);padding-top:calc(clamp(120px,18vh,200px) + var(--ovl));pointer-events:none;-webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,0) 0,rgba(0,0,0,.08) calc(var(--ovl)*.18),rgba(0,0,0,.32) calc(var(--ovl)*.4),rgba(0,0,0,.68) calc(var(--ovl)*.64),rgba(0,0,0,.92) calc(var(--ovl)*.85),#000 var(--ovl));mask-image:linear-gradient(180deg,rgba(0,0,0,0) 0,rgba(0,0,0,.08) calc(var(--ovl)*.18),rgba(0,0,0,.32) calc(var(--ovl)*.4),rgba(0,0,0,.68) calc(var(--ovl)*.64),rgba(0,0,0,.92) calc(var(--ovl)*.85),#000 var(--ovl))}.work>*{pointer-events:auto}.work .atmo{pointer-events:none;-webkit-mask-image:linear-gradient(180deg,#000 0%,#000 74%,transparent 100%);mask-image:linear-gradient(180deg,#000 0%,#000 74%,transparent 100%)}.work::before{display:none}}
+/* every size: Work rises over the end of the stage */
+:root{--ovl:42vh}.work{z-index:2;margin-top:calc(var(--ovl) * -1);padding-top:calc(clamp(120px,18vh,200px) + var(--ovl));pointer-events:none;-webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,0) 0,rgba(0,0,0,.08) calc(var(--ovl)*.18),rgba(0,0,0,.32) calc(var(--ovl)*.4),rgba(0,0,0,.68) calc(var(--ovl)*.64),rgba(0,0,0,.92) calc(var(--ovl)*.85),#000 var(--ovl));mask-image:linear-gradient(180deg,rgba(0,0,0,0) 0,rgba(0,0,0,.08) calc(var(--ovl)*.18),rgba(0,0,0,.32) calc(var(--ovl)*.4),rgba(0,0,0,.68) calc(var(--ovl)*.64),rgba(0,0,0,.92) calc(var(--ovl)*.85),#000 var(--ovl))}.work>*{pointer-events:auto}.work .atmo{pointer-events:none;-webkit-mask-image:linear-gradient(180deg,#000 0%,#000 74%,transparent 100%);mask-image:linear-gradient(180deg,#000 0%,#000 74%,transparent 100%)}.work::before{display:none}
 .work>.wrap{z-index:2}
 .work .atmo::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.55),rgba(0,0,0,.05) 50%,rgba(0,0,0,0))}
 .pricing .atmo{-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 120px,#000 calc(100% - 160px),transparent 100%);mask-image:linear-gradient(180deg,transparent 0,#000 120px,#000 calc(100% - 160px),transparent 100%)}
@@ -531,9 +564,9 @@ footer{overflow:hidden}
       <a href="#faq">FAQ</a>
     </nav>
     <div class="nav-r">
-      <a class="nav-mini" href="#prezzi" data-i18n="nav.pricing">Prezzi</a>
+      <a class="nav-mini" href="#lavori" data-i18n="nav.work">Lavori</a>
       <button class="lang" id="langBtn" aria-label="Switch to English">EN</button>
-      <a class="btn btn-primary" href="#contatti"><span class="sq"></span><span data-i18n="cta.start">Inizia il tuo progetto</span></a>
+      <a class="btn btn-primary" href="#servizi" data-go="next"><span class="sq"></span><span data-i18n="cta.start">Inizia il tuo progetto</span></a>
     </div>
   </div>
   <div class="mmenu" id="mMenu" hidden>
@@ -570,8 +603,8 @@ footer{overflow:hidden}
         <h2 class="h2" data-i18n="hero.h2">Siti, software, app e automazioni.</h2>
         <p class="lead" data-i18n="hero.lead">Un solo team per strategia, design, sviluppo e crescita. Studio a Roma, clienti in tutto il mondo. Ti mostriamo un'anteprima gratuita prima che tu paghi.</p>
         <div class="ctas">
-          <a class="btn btn-primary" href="#contatti"><span class="sq"></span><span data-i18n="cta.start">Inizia il tuo progetto</span></a>
-          <a class="btn btn-ghost" href="#prezzi" data-i18n="hero.prices">Vedi i prezzi</a>
+          <a class="btn btn-primary" href="#servizi" data-go="manifesto"><span class="sq"></span><span data-i18n="cta.start">Inizia il tuo progetto</span></a>
+          <a class="btn btn-ghost" href="#servizi" data-go="world0" data-i18n="hero.what">Cosa facciamo</a>
         </div>
       </div>
     </div>
@@ -603,7 +636,7 @@ footer{overflow:hidden}
         <h3 class="h2" data-i18n="s1.h">Un sito che lavora mentre dormi.</h3>
         <p class="lead" data-i18n="s1.p">Siti vetrina, e-commerce e identità visive progettati da zero, veloci su ogni telefono e scritti per trasformare visite in richieste.</p>
         <ul class="deliver" data-i18n="s1.list" data-html><li>Design su misura</li><li>Motion allo scroll</li><li>E-commerce e prenotazioni</li><li>Logo e identità</li><li>Testi e SEO</li><li>Multilingua</li></ul>
-        <a class="more" href="#prezzi" data-i18n="s1.more">Da €1.900</a>
+        <a class="more" href="#servizi" data-wi="0" data-i18n="s1.more">Scopri di più</a>
       </div>
       </article>
       <article class="world" style="--c:var(--gold)">
@@ -613,7 +646,7 @@ footer{overflow:hidden}
         <h3 class="h2" data-i18n="s2.h">Il software che il tuo processo aspettava.</h3>
         <p class="lead" data-i18n="s2.p">Gestionali, piattaforme SaaS, pannelli admin e portali clienti costruiti intorno a come lavori davvero, non intorno a un modello preconfezionato.</p>
         <ul class="deliver" data-i18n="s2.list" data-html><li>Web app e SaaS</li><li>Pannelli admin</li><li>Database e API</li><li>Pagamenti e abbonamenti</li><li>Area clienti</li><li>Dashboard e report</li></ul>
-        <a class="more" href="#prezzi" data-i18n="s2.more">Vedi i pacchetti</a>
+        <a class="more" href="#servizi" data-wi="1" data-i18n="s2.more">Scopri di più</a>
       </div>
       </article>
       <article class="world" style="--c:var(--aqua)">
@@ -623,7 +656,7 @@ footer{overflow:hidden}
         <h3 class="h2" data-i18n="s3.h">In tasca ai tuoi clienti.</h3>
         <p class="lead" data-i18n="s3.p">App iOS e Android dal concept alla pubblicazione sugli store: prenotazioni, fidelizzazione, strumenti interni per il tuo team.</p>
         <ul class="deliver" data-i18n="s3.list" data-html><li>iOS e Android</li><li>UX e prototipo</li><li>Notifiche push</li><li>Login e profili</li><li>Pubblicazione store</li><li>Manutenzione</li></ul>
-        <a class="more" href="#prezzi" data-i18n="s3.more">Vedi i pacchetti</a>
+        <a class="more" href="#servizi" data-wi="2" data-i18n="s3.more">Scopri di più</a>
       </div>
       </article>
       <article class="world" style="--c:var(--cyan)">
@@ -633,7 +666,7 @@ footer{overflow:hidden}
         <h3 class="h2" data-i18n="s4.h">Meno lavoro ripetitivo, più tempo per vendere.</h3>
         <p class="lead" data-i18n="s4.p">Colleghiamo sito, CRM, email, WhatsApp e calendario. Lead che arrivano già qualificati, preventivi che partono da soli, report che non devi più compilare.</p>
         <ul class="deliver" data-i18n="s4.list" data-html><li>Flussi automatici</li><li>Assistenti AI</li><li>CRM e lead</li><li>Integrazioni WhatsApp</li><li>SEO continuativa</li><li>Campagne Ads</li></ul>
-        <a class="more" href="#prezzi" data-i18n="s4.more">Piani mensili</a>
+        <a class="more" href="#servizi" data-wi="3" data-i18n="s4.more">Piani mensili</a>
       </div>
       </article>
       <div class="endveil" id="endVeil" aria-hidden="true"></div>
@@ -882,6 +915,25 @@ footer{overflow:hidden}
   </div>
 </div>
 
+<div class="ck wi" id="wi" role="dialog" aria-modal="true" aria-labelledby="wiTitle" hidden>
+  <div class="ck-panel" data-lenis-prevent>
+    <button class="ck-x" id="wiX" type="button" aria-label="Chiudi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <div class="wi-media"><img id="wiImg" alt="" decoding="async"></div>
+    <div class="wi-body">
+      <p class="tag"><i id="wiDot"></i><span id="wiTag"></span></p>
+      <h3 id="wiTitle"></h3>
+      <p class="ck-lead" id="wiLead"></p>
+      <p class="wi-h" id="wiIncH"></p>
+      <ul class="wi-list" id="wiList"></ul>
+      <div id="wiPrevBox"><p class="wi-h" id="wiPrevH"></p><div class="wi-prev" id="wiPrev"></div></div>
+      <p class="wi-h" id="wiOffH"></p>
+      <div class="wi-offer" id="wiOffer"></div>
+      <div class="wi-acts"><button class="btn btn-primary" id="wiAsk" type="button"><span class="sq"></span><span id="wiAskT"></span></button><button class="wi-link" id="wiAll" type="button"></button></div>
+      <p class="ck-note" id="wiNote" style="text-align:left"></p>
+    </div>
+  </div>
+</div>
+
 <div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-labelledby="viewerDom" hidden>
   <div class="viewer-bar">
     <span class="viewer-dom" id="viewerDom"></span>
@@ -923,20 +975,20 @@ const EN = {
   'hero.h1':'<span class="line"><span>We build</span></span><span class="line"><span>the signal</span></span><span class="line"><span>of your business.</span></span>',
   'hero.h2':'Websites, software, apps and automation.',
   'hero.lead':'One team for strategy, design, engineering and growth. Based in Rome, working worldwide. You see a free preview before you pay.',
-  'hero.prices':'See pricing','hero.cue':'Scroll',
+  'hero.what':'What we do','hero.cue':'Scroll',
   'manifesto':'Your website is the first signal you send to the market. Before a call, before a quote, before a handshake. We make sure it lands loud, clear and before anyone else.',
   'manifesto.sign':'NovaSignal, Rome',
   'svc.tag':'What we build','svc.h2':'Four worlds, one studio.',
   'svc.lead':'Every project starts with one question: what should your customer do after seeing you? Everything else is design and code serving that answer.',
   's1.tag':'Websites, e-commerce and brand','s1.h':'A website that works while you sleep.',
   's1.p':'Websites, online stores and visual identities designed from scratch, fast on every phone and written to turn visits into enquiries.',
-  's1.list':'<li>Custom design</li><li>Scroll motion</li><li>E-commerce and booking</li><li>Logo and identity</li><li>Copy and SEO</li><li>Multilingual</li>','s1.more':'From €1,900',
+  's1.list':'<li>Custom design</li><li>Scroll motion</li><li>E-commerce and booking</li><li>Logo and identity</li><li>Copy and SEO</li><li>Multilingual</li>','s1.more':'Learn more',
   's2.tag':'Software and web apps','s2.h':'The software your workflow has been waiting for.',
   's2.p':'Management tools, SaaS platforms, admin panels and client portals built around how you actually work, not around a boxed template.',
-  's2.list':'<li>Web apps and SaaS</li><li>Admin panels</li><li>Databases and APIs</li><li>Payments and subscriptions</li><li>Client area</li><li>Dashboards and reports</li>','s2.more':'See packages',
+  's2.list':'<li>Web apps and SaaS</li><li>Admin panels</li><li>Databases and APIs</li><li>Payments and subscriptions</li><li>Client area</li><li>Dashboards and reports</li>','s2.more':'Learn more',
   's3.tag':'Mobile apps','s3.h':'In your customers’ pocket.',
   's3.p':'iOS and Android apps from concept to store release: bookings, loyalty, internal tools for your team.',
-  's3.list':'<li>iOS and Android</li><li>UX and prototype</li><li>Push notifications</li><li>Login and profiles</li><li>Store release</li><li>Maintenance</li>','s3.more':'See packages',
+  's3.list':'<li>iOS and Android</li><li>UX and prototype</li><li>Push notifications</li><li>Login and profiles</li><li>Store release</li><li>Maintenance</li>','s3.more':'Learn more',
   's4.tag':'Automation and AI','s4.h':'Less busywork, more time to sell.',
   's4.p':'We connect your site, CRM, email, WhatsApp and calendar. Leads arrive qualified, quotes go out on their own, reports fill themselves.',
   's4.list':'<li>Automated workflows</li><li>AI assistants</li><li>CRM and leads</li><li>WhatsApp integrations</li><li>Ongoing SEO</li><li>Ad campaigns</li>','s4.more':'Monthly plans',
@@ -1114,7 +1166,7 @@ window.__lenis = lenis;
 /* ======================= STAGE 1: orbit → portal → galaxy manifesto ======================= */
 const heroA = $('#heroA'), heroB = $('#heroB'), portal = $('#portal'), cue = $('#cue'), sig = $('#heroSignal');
 const heroCv = $('#heroCanvas'), gx = $('#gx'), gvid = $('#galaxyVid'), veil = $('#veil'), mfoot = $('#mfoot'), mrule = $('#mrule'), mwrap = $('.mwrap'), svcHead = $('#svcHead');
-const OVL = () => matchMedia('(max-width:900px)').matches ? .42 : 0;   // phone: Work overlaps the end of the stage
+const OVL = () => .42;   // Work overlaps the end of the stage and dissolves in over it
 const worlds = $$('.world'), navItems = $$('#svcNav li'), svcNav = $('#svcNav'), endVeil = $('#endVeil');
 const W = worlds.map(w => ({ panel: $('.panel', w), media: $('video.intro', w) || $('video', w), loop: $('video.loopv', w), copy: $('.copy', w), looping: false }));
 // the planet: pulls out once, then keeps turning on a seamless loop of its widest view
@@ -1325,12 +1377,22 @@ const S2 = damped({ trigger: '.process', start: 'top top', end: 'bottom bottom' 
   const pA = v => v * A, pB = v => A + v * (1 - A);
   const wP = l => pB(.17 + (l / 4) * .81);
   const zones = [
-    [pA(.05), pA(.16)], [pA(.2), pA(.28)], [pA(.42), pA(.63)], [pA(.92), pB(.07)],
+    [pA(.05), pA(.16)], [pA(.2), pA(.28)], [pA(.42), pA(.88)], [pA(.92), pB(.07)],
     [pB(.12), wP(.55)], [wP(.93), wP(1.55)], [wP(1.93), wP(2.55)], [wP(2.93), wP(3.55)]
   ];
   const stageRests = [pA(.34), pA(.88), pB(.1), wP(.74), wP(1.74), wP(2.74), wP(3.74)];
   const ease3 = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
   let idle, snapping = false, lastDir = 1;
+  const MANI = pA(.88), maniY = () => S1.st.start + MANI * (S1.st.end - S1.st.start);
+  // the window opens and the manifesto writes itself: soft start, then the words get most of the time
+  const cineEase = t => { const u = t * t * (3 - 2 * t); return 1 - Math.pow(1 - u, 3); };
+  const cine = (ty, after) => {
+    const y = lenis.scroll, dist = Math.abs(ty - y); if (dist < 3) { after && after(); return; }
+    snapping = true;
+    const dur = Math.min(3.4, Math.max(1.8, 1 + dist / innerHeight * .75));
+    lenis.scrollTo(ty, { duration: dur, easing: cineEase, onComplete: () => { snapping = false; after && after(); } });
+    setTimeout(() => { snapping = false; }, dur * 1000 + 200);
+  };
   const go = ty => {
     const y = lenis.scroll, dist = Math.abs(ty - y); if (dist < 3) return;
     snapping = true;
@@ -1355,7 +1417,9 @@ const S2 = damped({ trigger: '.process', start: 'top top', end: 'bottom bottom' 
     if (len > 0 && y > st.start && y < st.end) {
       const P = (y - st.start) / len;
       const z = zones.find(([a, b]) => P > a + .0005 && P < b - .0005);
-      if (z) { const f = (P - z[0]) / (z[1] - z[0]); return go(st.start + (f > (lastDir > 0 ? .42 : .58) ? z[1] : z[0]) * len); }
+      if (z) { const f = (P - z[0]) / (z[1] - z[0]), fwd = f > (lastDir > 0 ? .42 : .58);
+        if (z[1] === MANI) return fwd || lastDir > 0 ? cine(maniY()) : go(st.start + z[0] * len);   // no half-written manifesto: it completes itself
+        return go(st.start + (fwd ? z[1] : z[0]) * len); }
       if (P > pA(.7)) {                                           // manifesto + worlds: magnet to the centre
         let best = null, bd = Infinity;
         stageRests.forEach(r => { const d = Math.abs(r - P) * len; if (d < bd) { bd = d; best = r; } });
@@ -1377,7 +1441,7 @@ const S2 = damped({ trigger: '.process', start: 'top top', end: 'bottom bottom' 
   let dirNow = 1;
   const stops = () => {
     const st = S1.st, len = st.end - st.start, out = [];
-    [...stageRests, pA(.63)].forEach(r => out.push(st.start + r * len));
+    stageRests.forEach(r => out.push(st.start + r * len));
     const s2 = S2.st, l2 = s2.end - s2.start, n = $$('.step').length;
     for (let i = 0; i < n; i++) out.push(s2.start + (.08 + (i / (n - 1)) * .84) * l2);
     if (!TOUCH) { const sl = $('#slides'), lt = $('#lavori').getBoundingClientRect().top + lenis.scroll;
@@ -1412,6 +1476,7 @@ const S2 = damped({ trigger: '.process', start: 'top top', end: 'bottom bottom' 
     dirNow = dir;
     const s = stops().find(v => dir > 0 ? v > y + 4 && v < tgt - 2 : false) ?? [...stops()].reverse().find(v => dir < 0 && v < y - 4 && v > tgt + 2);
     if (s == null) return;
+    if (dir > 0 && Math.abs(s - maniY()) < 2 && y < s - innerHeight * .3) { tail = !TOUCH; holdUntil = performance.now() + 450; swT = performance.now(); swLast = 1e9; return cine(s); }
     snapping = true; tail = !TOUCH; holdUntil = performance.now() + 450; swT = performance.now(); swLast = 1e9;
     const dist = Math.abs(s - y);
     // phone: quick and light. desktop: the scene gets the time it needs, however hard the wheel was pushed
@@ -1424,6 +1489,38 @@ const S2 = damped({ trigger: '.process', start: 'top top', end: 'bottom bottom' 
     if (l.direction) lastDir = l.direction;
     clearTimeout(idle); idle = setTimeout(settle, TOUCH ? 140 : 190);
   });
+  // buttons lead into the story, never past it: manifesto, first world, then chapter by chapter
+  const secTop = id => $(id).getBoundingClientRect().top + lenis.scroll + (id === '#lavori' ? innerHeight * OVL() : 0);
+  const story = key => {
+    stopTour(); lastInput = 0;
+    if (key === 'manifesto') return lenis.scroll < maniY() - 4 ? cine(maniY()) : goWorld(0);
+    if (key === 'world0') return goWorld(0);
+    const y = lenis.scroll + innerHeight * .25;
+    if (y < maniY()) return cine(maniY());
+    if (y < worldY(0)) return goWorld(0);
+    const next = ['#lavori', '#metodo', '#prezzi', '#contatti'].find(id => secTop(id) > y);
+    lenis.scrollTo(next ? secTop(next) : secTop('#contatti'), { duration: 1.6 });
+  };
+  window.__story = story;
+  // nobody scrolling? the page moves by itself, once: the offer appears, then the window opens onto the manifesto
+  let tourT = 0, touring = false, tourOff = false;
+  const stopTour = () => { tourOff = true; clearTimeout(tourT); tourT = 0; if (touring) { touring = false; lenis.stop(); lenis.start(); } };
+  const calm = () => !document.hidden && viewerClosed() && $('#ck').hidden && (!$('#wi') || $('#wi').hidden) && $('#mMenu').hidden;
+  const tour = () => {
+    const st = S1.st, len = st.end - st.start; if (len <= 0) return;
+    const heroB = st.start + pA(.34) * len;
+    if (lenis.scroll > 4 || !calm()) return stopTour();
+    tourT = 0; touring = true; snapping = true;
+    lenis.scrollTo(heroB, { duration: 2.6, easing: t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2, onComplete: () => {
+      snapping = false; if (!touring) return;
+      tourT = setTimeout(() => { if (!touring || Math.abs(lenis.scroll - heroB) > 6 || !calm()) return stopTour(); cine(maniY(), () => { touring = false; }); }, 6500);
+    } });
+  };
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const arm = () => { if (tourOff) return; if (document.getElementById('loader')) return setTimeout(arm, 250); tourT = setTimeout(tour, 4200); };
+    arm();
+    ['wheel', 'touchstart', 'keydown', 'mousedown', 'pointerdown'].forEach(ev => addEventListener(ev, () => { if (!tourOff || touring) stopTour(); }, { capture: true, passive: true }));
+  }
   if (TOUCH) addEventListener('touchend', () => {
     const st = S1.st, y = lenis.scroll;
     const inScene = (y > st.start && y < st.end) || (y > S2.st.start && y < S2.st.end);
@@ -1431,11 +1528,12 @@ const S2 = damped({ trigger: '.process', start: 'top top', end: 'bottom bottom' 
   }, { capture: true, passive: true });
 }
 
+$$('[data-go]').forEach(a => a.addEventListener('click', e => { if (e.metaKey || e.ctrlKey) return; e.preventDefault(); window.__story(a.dataset.go); }));
 const viewerClosed = () => { const v = document.getElementById('viewer'); return !v || v.hidden; };
 
 /* ======================= anchors via lenis ======================= */
 $$('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
-  if (a.id === 'navBrand') return;
+  if (a.id === 'navBrand' || a.dataset.go || a.dataset.wi != null) return;
   const id = a.getAttribute('href'); if (id.length < 2) return; const t = $(id); if (!t) return;
   e.preventDefault(); lenis.scrollTo(t, { offset: id === '#top' ? 0 : id === '#lavori' ? innerHeight * OVL() - 10 : -10, duration: 1.6 });
 }));
@@ -1695,6 +1793,71 @@ function setupCommon(lenis) {
     if (e.metaKey || e.ctrlKey || e.shiftKey) return;
     if (openCk(a.dataset.buy, a)) e.preventDefault();
   }));
+
+
+  /* world sheets: what a world includes, real work, where to start — without leaving the story */
+  const WI = {
+    it: { inc: 'Cosa include', work: 'Già in orbita', pick: 'Da dove partire', plans: 'Piani mensili', ask: 'Richiedi l’anteprima gratuita', all: 'Confronta i pacchetti', allM: 'Tutti i prezzi', talk: 'Parliamone' },
+    en: { inc: 'What’s included', work: 'Already in orbit', pick: 'Where to start', plans: 'Monthly plans', ask: 'Get your free preview', all: 'Compare packages', allM: 'All pricing', talk: 'Let’s talk' }
+  };
+  const WCFG = [
+    { img: 'assets/video/planet.jpg', form: 't1', rows: ['signal', 'nova'], prev: true },
+    { img: 'assets/video/corridor.jpg', form: 't3', rows: ['supernova'] },
+    { img: 'assets/video/grid.jpg', form: 't4', rows: ['supernova'] },
+    { img: 'assets/video/nebula.jpg', form: 't5', rows: ['orbit', 'pulse', 'care'], monthly: true }
+  ];
+  const wi = $('#wi'), arrow = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>';
+  const esc = v => String(v).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const row = key => {   // the offer, read from the pricing on the page, so it is always the same price and language
+    const pk = { signal: 0, nova: 1, supernova: 2 }[key];
+    if (pk != null) {
+      const pl = plans[pk], pr = $('.price', pl).cloneNode(true); $$('small', pr).forEach(x => x.remove());
+      const pre = $('.pre', pr); const preT = pre ? pre.textContent.trim() + ' ' : ''; if (pre) pre.remove();
+      return { name: $('h3', pl).firstChild.textContent.trim(), desc: $('p', pl).textContent.trim(), price: preT + pr.textContent.trim() };
+    }
+    const mr = $$('.mrow').find(r => $('[data-buy]', r) && $('[data-buy]', r).dataset.buy === key);
+    return { name: $('b', mr).textContent.trim(), desc: $('span', mr).textContent.trim(), price: $('strong', mr).textContent.trim() };
+  };
+  let wiFrom = null, wiCfg = null;
+  function openWi(i, from) {
+    const w = worlds[i], c = WCFG[i], t = WI[lang === 'en' ? 'en' : 'it']; if (!w || !c) return;
+    wiFrom = from; wiCfg = c;
+    const col = getComputedStyle(w).getPropertyValue('--c').trim() || 'var(--gold)';
+    wi.style.setProperty('--c', col); $('#wiDot').style.setProperty('--c', col);
+    const img = $('#wiImg'); img.classList.remove('in'); img.src = c.img;
+    $('#wiTag').textContent = $('.copy .tag', w).textContent.trim();
+    $('#wiTitle').textContent = $('.copy .h2', w).textContent.trim();
+    $('#wiLead').textContent = $('.copy .lead', w).textContent.trim();
+    $('#wiIncH').textContent = t.inc; $('#wiList').innerHTML = $('.copy .deliver', w).innerHTML;
+    $('#wiPrevBox').hidden = !c.prev;
+    if (c.prev) { $('#wiPrevH').textContent = t.work; $('#wiPrev').innerHTML = $$('#slides .slide').map(sl => { const o = $('.shot-open', sl), im = $('.shot-img', sl); return `<a class="wi-shot" href="${esc(o.href)}" target="_blank" rel="noopener"><img src="${esc(im.getAttribute('src'))}" alt="${esc(im.alt)}" loading="lazy"><span>${esc(o.dataset.dom)}</span></a>`; }).join(''); }
+    $('#wiOffH').textContent = c.monthly ? t.plans : t.pick;
+    $('#wiOffer').innerHTML = c.rows.map(k => { const r = row(k); return `<button class="wi-row" type="button" data-k="${k}"><span><b>${esc(r.name)}</b><small>${esc(r.desc)}</small></span><strong>${esc(r.price)}</strong>${arrow}</button>`; }).join('');
+    $('#wiAskT').textContent = c.monthly ? t.talk : t.ask; $('#wiAll').textContent = c.monthly ? t.allM : t.all;
+    $('#wiNote').textContent = c.monthly ? '' : $('#prezzi .lead').textContent.trim();
+    wi.hidden = false; $('.ck-panel', wi).scrollTop = 0; lenis.stop(); document.documentElement.style.overflow = 'hidden';
+    requestAnimationFrame(() => requestAnimationFrame(() => img.classList.add('in')));
+    setTimeout(() => $('#wiX').focus({ preventScroll: true }), 60);
+  }
+  function closeWi(back = true) { if (wi.hidden) return; wi.hidden = true; lenis.start(); document.documentElement.style.overflow = ''; if (back && wiFrom) wiFrom.focus({ preventScroll: true }); }
+  const toContact = (pkg, box) => {
+    closeWi(false);
+    const cb = box && $('#' + box); if (cb) cb.checked = true;
+    if (pkg) setPkg(pkg); else compose();
+    lenis.scrollTo($('#contatti'), { offset: -10, duration: 1.8 });
+  };
+  $('#wiOffer').addEventListener('click', e => {
+    const b = e.target.closest('.wi-row'); if (!b) return;
+    const k = b.dataset.k;
+    if (k === 'supernova') return toContact('Supernova', wiCfg.form);
+    closeWi(false); openCk(k, wiFrom);
+  });
+  $('#wiAsk').addEventListener('click', () => toContact(null, wiCfg.form));
+  $('#wiAll').addEventListener('click', () => { closeWi(false); lenis.scrollTo($(wiCfg.monthly ? '.monthly' : '#prezzi') || $('#prezzi'), { offset: -10, duration: 1.8 }); });
+  $('#wiX').addEventListener('click', () => closeWi());
+  wi.addEventListener('mousedown', e => { if (e.target === wi) closeWi(); });
+  addEventListener('keydown', e => { if (e.key === 'Escape' && !wi.hidden) closeWi(); });
+  $$('[data-wi]').forEach(a => a.addEventListener('click', e => { if (e.metaKey || e.ctrlKey) return; e.preventDefault(); openWi(+a.dataset.wi, a); }));
 
   /* plan buttons preselect type */
   $$('[data-plan]').forEach(b => b.addEventListener('click', () => {
