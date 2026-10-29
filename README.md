@@ -29,7 +29,8 @@ poi in `index.html`, nella card di Aura, cambia `data-frame="blocked"` in `data-
 (Se pubblichi l'anteprima su un dominio github.io, aggiungi anche quell'indirizzo a `frame-ancestors`.)
 
 ## Presentazione commerciale
-- `presentazione/index.html` (IT) e `presentazione/en/index.html` (EN): online su `/presentazione` e `/presentazione/en`
-- `presentazione/a/`: immagini della presentazione; video e screenshot dei lavori riusano `assets/`
+- `signum/index.html` (IT) e `signum/en.html` (EN): un solo link, `/signum`. La lingua segue il telefono di chi apre (italiano → IT, altrimenti EN); il tasto IT/EN la cambia e la ricorda. L'indirizzo resta sempre `/signum`. Il vecchio `/presentazione` rimanda qui.
+- `signum/a/`: immagini della presentazione; video e screenshot dei lavori riusano `assets/`
 - Header di sicurezza dedicati in `vercel.json` (CSP, niente iframe, noindex)
+- `og-image.jpg`: immagine di anteprima quando si condivide il link della home
 - La guida per chi presenta è cifrata (AES-GCM): nel codice pubblico c'è solo il testo cifrato

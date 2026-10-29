@@ -12,7 +12,7 @@
       ]
     },
     {
-      "source": "/presentazione/a/(.*)",
+      "source": "/signum/a/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -34,7 +34,7 @@
       ]
     },
     {
-      "source": "/presentazione(.*)",
+      "source": "/signum(.*)",
       "headers": [
         {
           "key": "Content-Security-Policy",
@@ -57,6 +57,18 @@
           "value": "same-origin"
         }
       ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/presentazione",
+      "destination": "/signum",
+      "permanent": false
+    },
+    {
+      "source": "/presentazione/:path*",
+      "destination": "/signum",
+      "permanent": false
     }
   ]
 }
