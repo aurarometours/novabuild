@@ -304,9 +304,15 @@ footer .brand img{width:30px;height:30px}
 .plan li{padding:11px 0 11px 20px;border-top:1px solid var(--line);font-size:.96rem;position:relative}
 .plan li::before{content:"";position:absolute;left:0;top:19px;width:6px;height:6px;background:var(--c,var(--paper))}
 .plan .btn{align-self:flex-start;margin-top:8px}
+.plan .buy{display:flex;flex-direction:column;align-items:flex-start;gap:12px;margin-top:8px}
+.plan .buy .btn{margin-top:0}
+.buy-full{font-size:.88rem;color:rgba(245,245,247,.7);border-bottom:1px solid rgba(245,245,247,.25);padding-bottom:1px;transition:color .3s,border-color .3s}
+.buy-full:hover{color:var(--paper);border-color:var(--paper)}
+.btn-sm{height:36px;padding:0 16px;font-size:.86rem}
+.small.vat a{color:var(--paper);border-bottom:1px solid rgba(245,245,247,.3)}
 .monthly{margin-top:72px}
 .monthly h3{font-size:1.3rem;letter-spacing:-.03em;margin:0 0 18px}
-.mrow{display:grid;grid-template-columns:180px 1fr auto;gap:24px;align-items:baseline;padding:20px 12px;margin:0 -12px;border-top:1px solid var(--line);border-radius:10px;transition:background .45s var(--ease)}
+.mrow{display:grid;grid-template-columns:180px 1fr auto auto;gap:24px;align-items:baseline;padding:20px 12px;margin:0 -12px;border-top:1px solid var(--line);border-radius:10px;transition:background .45s var(--ease)}
 .mrow b{transition:text-shadow .45s}
 @media (hover:hover){.mrow:hover{background:rgba(255,255,255,.035)}.mrow:hover b{text-shadow:0 0 18px rgba(46,197,255,.45)}}
 .mrow:last-child{border-bottom:1px solid var(--line)}
@@ -314,7 +320,7 @@ footer .brand img{width:30px;height:30px}
 .mrow span{color:rgba(245,245,247,.75)}
 .mrow strong{font-size:1.15rem;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
 .vat{margin-top:18px}
-@media (max-width:900px){.plans{grid-template-columns:1fr}.plan,.plan+.plan{padding:32px 0;border-left:0}.plan+.plan{border-top:1px solid var(--line)}.mrow{grid-template-columns:1fr auto}.mrow span{grid-column:1/-1;order:3}}
+@media (max-width:900px){.plans{grid-template-columns:1fr}.plan,.plan+.plan{padding:32px 0;border-left:0}.plan+.plan{border-top:1px solid var(--line)}.mrow{grid-template-columns:1fr auto auto;gap:14px;align-items:center}.mrow span{grid-column:1/-1;order:3}}
 
 /* ---------- faq ---------- */
 .faq{padding:clamp(100px,14vh,160px) 0}
@@ -693,14 +699,14 @@ footer{overflow:hidden}
         <div class="price">€1.900<small data-i18n="price.vat">+IVA</small></div>
         <p data-i18n="pl1.p">Il sito su misura che presenta il tuo business come merita.</p>
         <ul data-i18n="pl1.list" data-html><li>Fino a 6 pagine su misura</li><li>Animazioni premium</li><li>Testi e SEO locale</li><li>Dominio e hosting primo anno</li><li>30 giorni di modifiche</li></ul>
-        <a class="btn btn-ghost" href="#contatti" data-plan="Signal" data-i18n="price.cta">Scegli Signal</a>
+        <div class="buy"><a class="btn btn-ghost" href="https://novasignal-backend-production.up.railway.app/buy/signal?opt=deposit&amp;lang=it" data-buy="signal" data-opt="deposit" rel="nofollow"><span data-i18n="buy.dep1">Paga l’acconto · €950</span></a><a class="buy-full" href="https://novasignal-backend-production.up.railway.app/buy/signal?opt=full&amp;lang=it" data-buy="signal" data-opt="full" rel="nofollow" data-i18n="buy.full1">oppure paga tutto · €1.900</a></div>
       </div>
       <div class="plan pick" style="--c:var(--gold)">
         <h3>Nova <em data-i18n="price.pick">Il più scelto</em></h3>
         <div class="price">€4.900<small data-i18n="price.vat">+IVA</small></div>
         <p data-i18n="pl2.p">Per chi vende online, prenota clienti o parla a più mercati.</p>
         <ul data-i18n="pl2.list" data-html><li>E-commerce o prenotazioni</li><li>Multilingua</li><li>Motion e 3D allo scroll</li><li>Pagamenti, CRM, calendario</li><li>Tracciamento conversioni</li></ul>
-        <a class="btn btn-primary" href="#contatti" data-plan="Nova" data-i18n="price.cta2">Scegli Nova</a>
+        <div class="buy"><a class="btn btn-primary" href="https://novasignal-backend-production.up.railway.app/buy/nova?opt=deposit&amp;lang=it" data-buy="nova" data-opt="deposit" rel="nofollow"><span class="sq"></span><span data-i18n="buy.dep2">Paga l’acconto · €2.450</span></a><a class="buy-full" href="https://novasignal-backend-production.up.railway.app/buy/nova?opt=full&amp;lang=it" data-buy="nova" data-opt="full" rel="nofollow" data-i18n="buy.full2">oppure paga tutto · €4.900</a></div>
       </div>
       <div class="plan" style="--c:var(--cyan)">
         <h3>Supernova</h3>
@@ -713,11 +719,11 @@ footer{overflow:hidden}
 
     <div class="monthly">
       <h3 data-i18n="m.h">Piani mensili</h3>
-      <div class="mrow"><b>Orbit</b><span data-i18n="m1">SEO continuativa: contenuti, ottimizzazione tecnica e report mensile.</span><strong data-i18n="m1p">€490/mese</strong></div>
-      <div class="mrow"><b>Pulse</b><span data-i18n="m2">Gestione campagne Google e Meta Ads, con report sui risultati.</span><strong data-i18n="m2p">€590/mese</strong></div>
-      <div class="mrow"><b>Care</b><span data-i18n="m3">Hosting, backup, aggiornamenti e piccole modifiche.</span><strong data-i18n="m3p">€79/mese</strong></div>
+      <div class="mrow"><b>Orbit</b><span data-i18n="m1">SEO continuativa: contenuti, ottimizzazione tecnica e report mensile.</span><strong data-i18n="m1p">€490/mese</strong><a class="btn btn-ghost btn-sm" href="https://novasignal-backend-production.up.railway.app/buy/orbit?lang=it" data-buy="orbit" rel="nofollow" data-i18n="buy.act">Attiva</a></div>
+      <div class="mrow"><b>Pulse</b><span data-i18n="m2">Gestione campagne Google e Meta Ads, con report sui risultati.</span><strong data-i18n="m2p">€590/mese</strong><a class="btn btn-ghost btn-sm" href="https://novasignal-backend-production.up.railway.app/buy/pulse?lang=it" data-buy="pulse" rel="nofollow" data-i18n="buy.act">Attiva</a></div>
+      <div class="mrow"><b>Care</b><span data-i18n="m3">Hosting, backup, aggiornamenti e piccole modifiche.</span><strong data-i18n="m3p">€79/mese</strong><a class="btn btn-ghost btn-sm" href="https://novasignal-backend-production.up.railway.app/buy/care?lang=it" data-buy="care" rel="nofollow" data-i18n="buy.act">Attiva</a></div>
     </div>
-    <p class="small vat" data-i18n="price.note">Tutti i prezzi sono IVA esclusa.</p>
+    <p class="small vat"><span data-i18n="price.note">Tutti i prezzi sono IVA esclusa.</span> <span data-i18n="buy.note">Preferisci prima l’anteprima gratuita? <a href="#contatti">Scrivici</a>: paghi solo se ti convince.</span></p>
   </div>
 </section>
 
@@ -879,7 +885,7 @@ const EN = {
   'p4.d':'In parallel','p4.h':'Engineering and speed','p4.p':'Clean code, fast loading, technical SEO and conversion tracking.',
   'p5.d':'Launch','p5.h':'Live, and not alone','p5.p':'Domain, Google Business and 30 days of changes included after launch.',
   'price.tag':'Pricing','price.h2':'Clear pricing, before we start.','price.lead':'Free preview, then 50% to start and the balance on delivery. Your domain and site stay yours.',
-  'price.vat':'+VAT','price.pick':'Most chosen','price.from':'from','price.cta':'Choose Signal','price.cta2':'Choose Nova','price.cta3':'Let’s talk',
+  'price.vat':'+VAT','price.pick':'Most chosen','price.from':'from','price.cta':'Choose Signal','price.cta2':'Choose Nova','price.cta3':'Let’s talk','buy.dep1':'Pay the deposit · €950','buy.full1':'or pay in full · €1,900','buy.dep2':'Pay the deposit · €2,450','buy.full2':'or pay in full · €4,900','buy.act':'Start','buy.note':'Rather see the free preview first? <a href="#contatti">Write to us</a>: you only pay if you love it.',
   'pl1.p':'The custom website that presents your business the way it deserves.','pl1.list':'<li>Up to 6 custom pages</li><li>Premium animation</li><li>Copy and local SEO</li><li>First-year domain and hosting</li><li>30 days of changes</li>',
   'pl2.p':'For brands that sell online, take bookings or speak to several markets.','pl2.list':'<li>E-commerce or booking</li><li>Multilingual</li><li>Scroll motion and 3D</li><li>Payments, CRM, calendar</li><li>Conversion tracking</li>',
   'pl3.p':'Software, web apps and mobile apps built around your process.','pl3.list':'<li>Custom web app or SaaS</li><li>iOS and Android app</li><li>Admin panel and database</li><li>Automation and AI</li><li>Ongoing roadmap</li>',
@@ -1384,7 +1390,8 @@ function setupCommon(lenis) {
     ['#lavori', '#metodo', '#prezzi', '#faq'].forEach(id => { if (y >= at(id)) cur = id; });
     if (y >= at('#contatti')) cur = null;
     $$('.nav-links a').forEach(a => a.classList.toggle('cur', a.getAttribute('href') === cur));
-    const ct = $('#contatti'); const nearForm = ct && ct.getBoundingClientRect().top < innerHeight * .85;
+    const ct = $('#contatti'); const pz = $('#prezzi') && $('#prezzi').getBoundingClientRect();
+    const nearForm = (ct && ct.getBoundingClientRect().top < innerHeight * .85) || (pz && pz.top < innerHeight * .85 && pz.bottom > innerHeight * .15);   // pricing and form have their own buttons
     fab.classList.toggle('off', y < innerHeight * 1.5 || nearForm || nav.classList.contains('open'));
     lastY = y;
   };
@@ -1521,6 +1528,11 @@ function setupCommon(lenis) {
   plans.forEach(pl => pl.addEventListener('click', e => {
     plans.forEach(x => x.classList.toggle('pick', x === pl));
     if (!e.target.closest('a')) { const b = $('[data-plan]', pl); if (b) setPkg(b.dataset.plan); }
+  }));
+
+  /* buy buttons: Stripe checkout in the visitor's language */
+  $$('[data-buy]').forEach(a => a.addEventListener('click', () => {
+    const u = new URL(a.href); u.searchParams.set('lang', lang === 'en' ? 'en' : 'it'); a.href = u.toString();
   }));
 
   /* plan buttons preselect type */
