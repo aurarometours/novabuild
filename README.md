@@ -27,3 +27,9 @@ Per renderla navigabile dentro la card, nel `.htaccess` di aurarometours.it:
 
 poi in `index.html`, nella card di Aura, cambia `data-frame="blocked"` in `data-frame="ok"`.
 (Se pubblichi l'anteprima su un dominio github.io, aggiungi anche quell'indirizzo a `frame-ancestors`.)
+
+## Presentazione commerciale
+- `presentazione/index.html` (IT) e `presentazione/en/index.html` (EN): online su `/presentazione` e `/presentazione/en`
+- `presentazione/a/`: immagini della presentazione; video e screenshot dei lavori riusano `assets/`
+- Header di sicurezza dedicati in `vercel.json` (CSP, niente iframe, noindex)
+- La guida per chi presenta è cifrata (AES-GCM): nel codice pubblico c'è solo il testo cifrato
