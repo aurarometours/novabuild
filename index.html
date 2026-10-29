@@ -312,6 +312,17 @@ footer .brand img{width:30px;height:30px}
 .plan .buy{display:flex;flex-direction:column;align-items:flex-start;gap:12px;margin-top:8px}
 .ck{position:fixed;inset:0;z-index:150;display:grid;place-items:center;padding:16px;background:rgba(0,0,0,.62);-webkit-backdrop-filter:blur(10px) saturate(1.2);backdrop-filter:blur(10px) saturate(1.2);animation:ckFade .4s var(--ease) both}
 .ck[hidden]{display:none}
+
+/* ---------- reading pilot (phones): words light at reading pace, then the page moves on ---------- */
+.rw{transition:opacity .42s ease}
+.pacing .rw{opacity:.24}.pacing .rw.on{opacity:1}
+.pilot{position:fixed;left:50%;bottom:calc(25px + env(safe-area-inset-bottom));z-index:79;display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 14px 0 11px;border-radius:999px;border:1px solid rgba(245,245,247,.16);background:rgba(16,16,18,.62);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);color:rgba(245,245,247,.88);font:500 .76rem/1 inherit;letter-spacing:-.005em;overflow:hidden;transform:translate(-50%,0);opacity:1;transition:opacity .45s var(--ease),transform .55s var(--ease);-webkit-tap-highlight-color:transparent;cursor:pointer}
+.pilot[hidden]{display:inline-flex;opacity:0;transform:translate(-50%,14px);pointer-events:none}
+.pilot svg{width:12px;height:12px;fill:currentColor}
+.pilot .pp{display:none}.pilot.paused .pp{display:block}.pilot.paused .pz{display:none}
+.pilot b{position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--spectrum);transform-origin:left;transform:scaleX(0)}
+.pilot.paused b{opacity:.35}
+@media (min-width:901px),(prefers-reduced-motion:reduce){.pilot{display:none!important}}
 /* ---------- world sheet: the details of a world, without leaving it ---------- */
 .wi .ck-panel{width:min(760px,100%);padding:0}
 .wi-media{position:relative;height:clamp(150px,27vh,240px);overflow:hidden;border-radius:21px 21px 0 0}
@@ -945,6 +956,8 @@ footer{overflow:hidden}
   <div class="viewer-frame" id="viewerFrame"><span class="viewer-wait"><i></i><span data-i18n="viewer.wait">Carico il sito</span></span></div>
 </div>
 
+<button class="pilot" id="pilot" type="button" hidden aria-live="polite"><svg class="pz" viewBox="0 0 12 12" aria-hidden="true"><rect x="2.5" y="2" width="2.3" height="8" rx=".6"/><rect x="7.2" y="2" width="2.3" height="8" rx=".6"/></svg><svg class="pp" viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 2.2v7.6a.5.5 0 0 0 .76.43l6.1-3.8a.5.5 0 0 0 0-.86l-6.1-3.8a.5.5 0 0 0-.76.43Z"/></svg><span id="pilotT">Lettura guidata</span><b id="pilotBar"></b></button>
+
 <a class="wa off" id="waFab" href="https://wa.me/393206891014" target="_blank" rel="noopener" aria-label="Scrivici su WhatsApp">
   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.7.3-.2.3-.9.9-.9 2.2s1 2.6 1.1 2.7c.1.2 1.9 2.9 4.6 4 1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg>
   WhatsApp
@@ -1516,10 +1529,144 @@ const S2 = damped({ trigger: '.process', start: 'top top', end: 'bottom bottom' 
       tourT = setTimeout(() => { if (!touring || Math.abs(lenis.scroll - heroB) > 6 || !calm()) return stopTour(); cine(maniY(), () => { touring = false; }); }, 6500);
     } });
   };
-  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  if (!TOUCH && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
     const arm = () => { if (tourOff) return; if (document.getElementById('loader')) return setTimeout(arm, 250); tourT = setTimeout(tour, 4200); };
     arm();
     ['wheel', 'touchstart', 'keydown', 'mousedown', 'pointerdown'].forEach(ev => addEventListener(ev, () => { if (!tourOff || touring) stopTour(); }, { capture: true, passive: true }));
+  }
+
+  /* ===== reading pilot (phones) =====
+     Every scene waits exactly the time a reader needs for its words (≈230 words a minute, longer words and
+     full stops take longer), lights them as they are read, then moves on by itself. Touch the screen and you
+     drive; stop, and it picks up from where you are. Phone put down flat and still (motion sensor): it waits. */
+  if (TOUCH && !RM) {
+    const WPM = 230, MSW = 60000 / WPM;
+    const wordMs = w => { const L = w.replace(/[^\p{L}\p{N}]/gu, '').length; let ms = MSW * (Math.max(2, L) + 1) / 6.2; if (/[.!?:…]["»”)]?$/.test(w)) ms += 320; else if (/[,;–—]$/.test(w)) ms += 150; return ms; };
+    const words = el => el.textContent.trim().split(/\s+/).filter(Boolean);
+    const readMs = els => els.reduce((t, el) => t + (el ? words(el).reduce((a, w) => a + wordMs(w), 0) : 0), 0);
+    const escH = v => v.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+    const wrap = el => {   // words into spans, once per text (a language switch rewrites the text: it is wrapped again)
+      if (el.__rwText === el.textContent && el.querySelector('.rw')) return $$('.rw', el);
+      el.innerHTML = el.textContent.split(/(\s+)/).map(t => /\S/.test(t) ? `<span class="rw">${escH(t)}</span>` : t).join('');
+      el.__rwText = el.textContent; return $$('.rw', el);
+    };
+    const pilotEl = $('#pilot'), pilotT = $('#pilotT'), pilotBar = $('#pilotBar');
+    const T = { it: ['Lettura guidata', 'In pausa'], en: ['Guided reading', 'Paused'] };
+    let gen = 0, running = false, paused = false, touching = false, gliding = 0, held = true, vt = 0, lastT = 0, lastScrollT = 0;
+    let curStart = 0, curTotal = 0, pacingEls = [];
+    const visited = new Set(), waiters = [];
+    const label = () => { const t = T[lang === 'en' ? 'en' : 'it']; pilotT.textContent = paused ? t[1] : t[0]; pilotEl.classList.toggle('paused', paused); };
+    const inField = () => document.activeElement && document.activeElement.matches('input,textarea,select');
+    const live = () => !paused && held && !touching && !document.hidden && calm() && !inField();
+    const waitV = (ms, g) => new Promise(res => waiters.push({ t: vt + ms, res, g }));
+    const unpace = () => { pacingEls.forEach(e => e.classList.remove('pacing')); pacingEls = []; };
+    const dimFor = st => { if (!st || !st.els || visited.has(st.id)) return; st.els().forEach(el => { if (!el) return; wrap(el).forEach(w => w.classList.remove('on')); el.classList.add('pacing'); pacingEls.push(el); }); };
+    const glide = (y, dur, easing, g) => new Promise(res => {
+      const id = ++gliding; snapping = true;
+      const done = ok => { if (gliding === id) { gliding = 0; snapping = false; } res(ok && g === gen); };
+      lenis.scrollTo(y, { duration: dur, easing, force: true, onComplete: () => done(true) });
+      setTimeout(() => done(true), dur * 1000 + 400);
+    });
+    const io3 = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    const durFor = y => clamp(1.2 + Math.abs(y - lenis.scroll) / innerHeight * .3, 1.3, 2.8);
+    // the story, in reading order
+    const sY = r => S1.st.start + r * (S1.st.end - S1.st.start);
+    const slideY = () => { const sl = $$('#slides .slide')[0]; if (!sl) return secTop('#lavori'); const b = sl.getBoundingClientRect().bottom + lenis.scroll - innerHeight + 84; return Math.max(secTop('#lavori') + 40, b); };
+    const curSlide = () => $$('#slides .slide').findIndex(sl => { const r = sl.getBoundingClientRect(); return r.left > -innerWidth * .3 && r.left < innerWidth * .5; });
+    const stepY = i => { const s2 = S2.st, n = $$('.step').length; return s2.start + (.08 + (i / (n - 1)) * .84) * (s2.end - s2.start); };
+    const STOPS = () => {
+      const out = [
+        { id: 'top', y: 0, hold: () => 1500 + readMs([$('#heroA .display')]) },
+        { id: 'offer', y: sY(pA(.34)), dur: 2.4, els: () => [$('#heroB .h2'), $('#heroB .lead')], hold: () => 1500 },
+        { id: 'mani', y: maniY(), mani: true, hold: () => 1400 },
+        { id: 'svc', y: sY(pB(.1)), els: () => [$('#svcTitle'), $('#svcHead .lead')], hold: () => 900 }
+      ];
+      W.forEach((w, i) => out.push({ id: 'w' + i, y: sY(wP(i + .74)), els: () => [$('.h2', w.copy), $('.lead', w.copy)], hold: () => 1100 + readMs([$('.deliver', w.copy)]) * .55 }));
+      out.push({ id: 'work', y: secTop('#lavori'), hold: () => 900 + readMs([$('#workTitle')]) });
+      out.push({ id: 'slides', y: slideY(), slides: true });
+      $$('.step').forEach((st, i) => out.push({ id: 's' + i, y: stepY(i), els: () => [$$('#stepDetail p')[i]], hold: () => 900 + readMs([st]) }));
+      out.push({ id: 'end', y: secTop('#prezzi'), end: true });
+      return out;
+    };
+    async function read(st, g) {   // light the words at reading pace (first visit), or just give them the time
+      const els = st.els ? st.els().filter(Boolean) : [];
+      const first = !visited.has(st.id); visited.add(st.id);
+      const total = readMs(els) + (st.hold ? st.hold() : 0); curStart = vt; curTotal = total || 1;
+      if (first && els.length) {
+        els.forEach(el => { if (!el.classList.contains('pacing')) { wrap(el).forEach(w => w.classList.remove('on')); el.classList.add('pacing'); pacingEls.push(el); } });
+        for (const el of els) for (const w of wrap(el)) { if (g !== gen) return false; w.classList.add('on'); if (!(await waitV(wordMs(w.textContent), g))) return false; }
+        els.forEach(el => el.classList.remove('pacing'));
+      } else if (els.length && !(await waitV(readMs(els), g))) return false;
+      return waitV(st.hold ? st.hold() : 0, g);
+    }
+    async function run(i) {
+      const g = ++gen; running = true; label(); pilotEl.hidden = false;
+      try {
+        let list = STOPS();
+        while (g === gen) {
+          const st = list[i]; if (!st || st.end) break;
+          if (Math.abs(lenis.scroll - st.y) > 3 && !(await glide(st.y, .7, io3, g))) return;
+          if (!(await waitV(350, g))) return;                                   // the scene finishes drawing
+          if (st.slides) {                                                         // the projects, one by one
+            let k = Math.max(0, curSlide()); const sl = $$('#slides .slide');
+            while (g === gen) {
+              const m = $('.meta', sl[k]); const s2 = { id: 'slide' + k, els: () => [$('.h3', m), $('.lead', m)], hold: () => 1300 };
+              if (!(await read(s2, g))) return;
+              if (k >= sl.length - 1 || $('#next').disabled) break;
+              $('#next').click(); k++; if (!(await waitV(900, g))) return;
+            }
+          } else if (!(await read(st, g))) return;
+          list = STOPS(); const nx = list[i + 1]; if (!nx) break;
+          dimFor(nx);
+          if (nx.mani) {                                                          // the window opens, the manifesto is written at reading pace
+            const ws = $$('.mtext .w'), n = ws.length || 1, mt = readMs([$('#mtext')]) * (n + 3) / n;
+            if (!(await glide(sY(pA(.64)), 2.2, io3, g))) return;
+            curStart = vt; curTotal = mt;
+            if (!(await glide(sY(pA(.86)), mt / 1000, t => t, g))) return;
+            if (!(await glide(nx.y, .8, t => 1 - Math.pow(1 - t, 3), g))) return;
+          } else if (!(await glide(nx.y, nx.dur || durFor(nx.y), io3, g))) return;
+          if (nx.end) break;
+          i++;
+        }
+      } finally { if (g === gen) { running = false; unpace(); pilotEl.hidden = !paused; } }
+    }
+    const interrupt = () => { gen++; running = false; unpace(); if (gliding) { gliding = 0; snapping = false; lenis.stop(); lenis.start(); } waiters.splice(0).forEach(w => w.res(false)); };
+    // the clock only runs while the page is being read
+    const tick = now => {
+      const dt = Math.min(100, now - (lastT || now)); lastT = now;
+      if (live() && !gliding) vt += dt;
+      for (let k = waiters.length - 1; k >= 0; k--) { const w = waiters[k]; if (w.g !== gen) { waiters.splice(k, 1); w.res(false); } else if (vt >= w.t) { waiters.splice(k, 1); w.res(true); } }
+      if (running) pilotBar.style.transform = `scaleX(${clamp((vt - curStart) / curTotal).toFixed(4)})`;
+      // stopped where a scene rests? the pilot takes it from there
+      if (!running && !paused && live() && !snapping && !document.getElementById('loader') && now - lastScrollT > 450) {
+        const y = lenis.scroll, tol = innerHeight * .12, list = STOPS();
+        const i = list.findIndex(s => !s.end && Math.abs(s.y - y) < (s.id === 'top' ? 4 : tol));
+        if (i >= 0) run(i);
+      }
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+    lenis.on('scroll', () => { if (!gliding) lastScrollT = performance.now(); });
+    addEventListener('touchstart', e => { if (e.target.closest && e.target.closest('#pilot')) return; touching = true; if (running) interrupt(); }, { capture: true, passive: true });
+    addEventListener('touchend', () => { touching = false; lastScrollT = performance.now(); }, { capture: true, passive: true });
+    addEventListener('touchcancel', () => { touching = false; }, { capture: true, passive: true });
+    pilotEl.addEventListener('click', () => {
+      paused = !paused; label();
+      if (paused) { interrupt(); pilotEl.hidden = false; pilotBar.style.transform = 'scaleX(0)'; } else { pilotEl.hidden = true; lastScrollT = 0; }
+    });
+    document.addEventListener('visibilitychange', () => { lastT = 0; });
+    // in hand or on the table? (Android: automatic; iPhone Safari asks permission, so it is not requested)
+    if ('DeviceMotionEvent' in window && typeof DeviceMotionEvent.requestPermission !== 'function') {
+      let px = null, j = .2, flatSince = 0;
+      addEventListener('devicemotion', e => {
+        const a = e.accelerationIncludingGravity; if (!a || a.z == null) return;
+        if (px) j = j * .92 + (Math.abs(a.x - px.x) + Math.abs(a.y - px.y) + Math.abs(a.z - px.z)) * .08;
+        px = { x: a.x, y: a.y, z: a.z };
+        const flat = Math.abs(a.z) > 9.2 && Math.hypot(a.x, a.y) < 1.4, now = performance.now();
+        if (flat && j < .05) { flatSince = flatSince || now; if (now - flatSince > 1500) held = false; } else { flatSince = 0; held = true; }
+      }, { passive: true });
+    }
+    window.__pilot = { get vt() { return vt; }, get running() { return running; }, get held() { return held; }, set held(v) { held = v; } };
   }
   if (TOUCH) addEventListener('touchend', () => {
     const st = S1.st, y = lenis.scroll;
