@@ -14,8 +14,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/brand/favicon-32.png">
 <link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
-<link rel="preload" as="image" href="assets/hero/f001.webp" fetchpriority="high" media="(min-aspect-ratio: 4/5)">
-<link rel="preload" as="image" href="assets/hero-m/f001.webp" fetchpriority="high" media="(max-aspect-ratio: 4/5)">
+<link rel="preload" as="image" href="assets/hero/f001.webp" type="image/webp" fetchpriority="high" media="(min-aspect-ratio: 4/5)">
+<link rel="preload" as="image" href="assets/hero-m/f001.webp" type="image/webp" fetchpriority="high" media="(max-aspect-ratio: 4/5)">
 <style>
 :root{
   --void:#000;
@@ -225,7 +225,7 @@ footer .brand img{width:30px;height:30px}
 .shot-open{position:absolute;top:0;right:0;bottom:0;left:0;z-index:2;border-radius:inherit;display:flex;align-items:flex-end;justify-content:center;padding:18px}
 .shot-open .pill{display:inline-flex;align-items:center;gap:10px;height:44px;padding:0 18px;border-radius:999px;background:rgba(0,0,0,.72);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border:1px solid rgba(245,245,247,.2);font-weight:600;font-size:.92rem;transform:translateY(8px);opacity:.92;transition:transform .5s var(--ease),opacity .4s,background .3s}
 .shot-open .pill i{width:7px;height:7px;background:var(--c)}
-.shot-open:hover .pill,.shot-open:focus-visible .pill{transform:none;opacity:1;background:rgba(0,0,0,.85)}
+.shot-open:hover .pill{transform:none;opacity:1;background:rgba(0,0,0,.85)}.shot-open:focus-visible .pill{transform:none;opacity:1;background:rgba(0,0,0,.85)}
 /* ---------- site viewer ---------- */
 .viewer{position:fixed;top:0;right:0;bottom:0;left:0;z-index:120;background:#000;display:flex;flex-direction:column;-webkit-clip-path:inset(0);clip-path:inset(0);transition:-webkit-clip-path .85s var(--ease), clip-path .85s var(--ease)}
 .viewer[hidden]{display:none}
@@ -316,8 +316,11 @@ footer .brand img{width:30px;height:30px}
 /* ---------- reading pilot (phones): words light at reading pace, then the page moves on ---------- */
 .rw{transition:opacity .42s ease}
 .pacing .rw{opacity:.24}.pacing .rw.on{opacity:1}
-.pilot{position:fixed;left:50%;bottom:calc(25px + env(safe-area-inset-bottom));z-index:79;display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 14px 0 11px;border-radius:999px;border:1px solid rgba(245,245,247,.16);background:rgba(16,16,18,.62);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);color:rgba(245,245,247,.88);font:500 .76rem/1 inherit;letter-spacing:-.005em;overflow:hidden;transform:translate(-50%,0);opacity:1;transition:opacity .45s var(--ease),transform .55s var(--ease);-webkit-tap-highlight-color:transparent;cursor:pointer}
+.pilot{position:fixed;left:50%;bottom:calc(25px + env(safe-area-inset-bottom));z-index:79;display:inline-flex;align-items:stretch;height:34px;padding:0;border-radius:999px;border:1px solid rgba(245,245,247,.16);background:rgba(16,16,18,.62);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);color:rgba(245,245,247,.88);font:500 .76rem/1 inherit;letter-spacing:-.005em;overflow:hidden;transform:translate(-50%,0);opacity:1;transition:opacity .45s var(--ease),transform .55s var(--ease);-webkit-tap-highlight-color:transparent;cursor:pointer}
 .pilot[hidden]{display:inline-flex;opacity:0;transform:translate(-50%,14px);pointer-events:none}
+.pilot button{all:unset;display:inline-flex;align-items:center;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.pilot .pmain{padding:0 12px 0 11px}.pilot .pmain svg{margin-right:8px}
+.pilot .pspd{padding:0 13px 0 12px;border-left:1px solid rgba(245,245,247,.16);font-variant-numeric:tabular-nums;font-weight:600;min-width:24px;justify-content:center}
 .pilot svg{width:12px;height:12px;fill:currentColor}
 .pilot .pp{display:none}.pilot.paused .pp{display:block}.pilot.paused .pz{display:none}
 .pilot b{position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--spectrum);transform-origin:left;transform:scaleX(0)}
@@ -373,6 +376,7 @@ footer .brand img{width:30px;height:30px}
 .ck-opt b{display:block;font-weight:600;letter-spacing:-.01em}
 .ck-opt small{display:block;color:var(--mute);font-size:.84rem;margin-top:2px}
 .ck-opt strong{font-size:1.15rem;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.ck-opt.on{border-color:var(--paper);background:rgba(255,255,255,.04)}.ck-opt.on i{border-color:var(--paper);box-shadow:inset 0 0 0 4px #0a0a0b;background:var(--paper)}
 .ck-opt:has(input:checked){border-color:var(--paper);background:rgba(255,255,255,.04)}
 .ck-opt:has(input:checked) i{border-color:var(--paper);box-shadow:inset 0 0 0 4px #0a0a0b;background:var(--paper)}
 .ck-opt:has(input:focus-visible){outline:2px solid var(--cyan);outline-offset:2px}
@@ -964,13 +968,38 @@ footer{overflow:hidden}
   <div class="viewer-frame" id="viewerFrame"><span class="viewer-wait"><i></i><span data-i18n="viewer.wait">Carico il sito</span></span></div>
 </div>
 
-<button class="pilot" id="pilot" type="button" hidden aria-live="polite"><svg class="pz" viewBox="0 0 12 12" aria-hidden="true"><rect x="2.5" y="2" width="2.3" height="8" rx=".6"/><rect x="7.2" y="2" width="2.3" height="8" rx=".6"/></svg><svg class="pp" viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 2.2v7.6a.5.5 0 0 0 .76.43l6.1-3.8a.5.5 0 0 0 0-.86l-6.1-3.8a.5.5 0 0 0-.76.43Z"/></svg><span id="pilotT">Lettura guidata</span><b id="pilotBar"></b></button>
+<div class="pilot" id="pilot" hidden><button class="pmain" id="pilotBtn" type="button" aria-live="polite"><svg class="pz" viewBox="0 0 12 12" aria-hidden="true"><rect x="2.5" y="2" width="2.3" height="8" rx=".6"/><rect x="7.2" y="2" width="2.3" height="8" rx=".6"/></svg><svg class="pp" viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 2.2v7.6a.5.5 0 0 0 .76.43l6.1-3.8a.5.5 0 0 0 0-.86l-6.1-3.8a.5.5 0 0 0-.76.43Z"/></svg><span id="pilotT">Lettura guidata</span></button><button class="pspd" id="pilotSpd" type="button" aria-label="Velocità">1×</button><b id="pilotBar"></b></div>
 
 <a class="wa off" id="waFab" href="https://wa.me/393206891014" target="_blank" rel="noopener" aria-label="Scrivici su WhatsApp">
   <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.7.3-.2.3-.9.9-.9 2.2s1 2.6 1.1 2.7c.1.2 1.9 2.9 4.6 4 1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg>
   WhatsApp
 </a>
 
+<script>
+/* iOS 12: Lenis needs ResizeObserver (Safari 13.1+), MediaQueryList.addEventListener arrived in Safari 14. Without these the page stops after the hero. */
+(function () {
+  window.__LEGACY = !(window.CSS && CSS.supports && CSS.supports('inset', '0'));
+  if (window.__LEGACY) document.documentElement.className += ' legacy';
+  if (!window.ResizeObserver) {
+    window.ResizeObserver = function (cb) {
+      var els = [], self = this, t = 0, last = '';
+      function fire() { cb(els.map(function (e) { return { target: e, contentRect: e.getBoundingClientRect() }; }), self); }
+      function soon() { clearTimeout(t); t = setTimeout(fire, 60); }
+      addEventListener('resize', soon); addEventListener('orientationchange', soon);
+      setInterval(function () { var k = els.map(function (e) { return e.scrollWidth + 'x' + e.scrollHeight; }).join(); if (k !== last) { last = k; fire(); } }, 400);
+      this.observe = function (e) { els.push(e); soon(); };
+      this.unobserve = function (e) { els = els.filter(function (x) { return x !== e; }); };
+      this.disconnect = function () { els = []; };
+    };
+  }
+  var mq = window.matchMedia && matchMedia('all');
+  if (mq && !mq.addEventListener && mq.addListener) {
+    var P = Object.getPrototypeOf(mq);
+    P.addEventListener = function (t, f) { if (t === 'change') this.addListener(f); };
+    P.removeEventListener = function (t, f) { if (t === 'change') this.removeListener(f); };
+  }
+})();
+</script>
 <script src="assets/js/gsap.min.js"></script>
 <script src="assets/js/ScrollTrigger.min.js"></script>
 <script src="assets/js/lenis.min.js"></script>
@@ -1015,6 +1044,8 @@ const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const MOBILE = matchMedia('(max-width: 760px)').matches;
 // portrait screens get assets cut natively in 9:16 from the 4K masters
 const PORTRAIT = matchMedia('(max-aspect-ratio: 4/5)').matches;
+// old devices: hardware decoders stop at 1080p, so the biggest films come as 720p copies
+if (window.__LEGACY) { const BIG = /\/(corridor|earth|galaxy|nebula|sand)\.mp4$/; document.querySelectorAll('video[data-src]').forEach(v => { if (BIG.test(v.dataset.src)) v.dataset.src = v.dataset.src.replace(/\.mp4$/, '-l.mp4'); delete v.dataset.srcM; delete v.dataset.posterM; }); }
 if (PORTRAIT) document.querySelectorAll('video[data-src-m]').forEach(v => { v.dataset.src = v.dataset.srcM; if (v.dataset.posterM) v.poster = v.dataset.posterM; });
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -1589,8 +1620,10 @@ const S2 = damped({ trigger: '.process', start: 'top top', end: 'bottom bottom' 
      full stops take longer), lights them as they are read, then moves on by itself. Touch the screen and you
      drive; stop, and it picks up from where you are. Phone put down flat and still (motion sensor): it waits. */
   if (TOUCH && !RM) {
-    const WPM = 230, MSW = 60000 / WPM;
-    const wordMs = w => { const L = w.replace(/[^\p{L}\p{N}]/gu, '').length; let ms = MSW * (Math.max(2, L) + 1) / 6.2; if (/[.!?:…]["»”)]?$/.test(w)) ms += 320; else if (/[,;–—]$/.test(w)) ms += 150; return ms; };
+    const WPM = 320, MSW = 60000 / WPM;
+    const SPEEDS = [1, 1.5, 2]; let speed = 1; try { const v = +localStorage.getItem('ns-speed'); if (SPEEDS.includes(v)) speed = v; } catch (e) {}
+    const gs = d => d / Math.sqrt(speed);   // glides quicken gently; reading time scales exactly
+    const wordMs = w => { const L = w.replace(/[^\p{L}\p{N}]/gu, '').length; let ms = MSW * (Math.max(2, L) + 1) / 6.2; if (/[.!?:…]["»”)]?$/.test(w)) ms += 220; else if (/[,;–—]$/.test(w)) ms += 100; return ms; };
     const words = el => el.textContent.trim().split(/\s+/).filter(Boolean);
     const readMs = els => els.reduce((t, el) => t + (el ? words(el).reduce((a, w) => a + wordMs(w), 0) : 0), 0);
     const escH = v => v.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
@@ -1617,7 +1650,7 @@ const S2 = damped({ trigger: '.process', start: 'top top', end: 'bottom bottom' 
       setTimeout(() => done(true), dur * 1000 + 400);
     });
     const io3 = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-    const durFor = y => clamp(1.2 + Math.abs(y - lenis.scroll) / innerHeight * .3, 1.3, 2.8);
+    const durFor = y => clamp(.95 + Math.abs(y - lenis.scroll) / innerHeight * .25, 1.05, 2.2);
     // the story, in reading order
     const sY = r => S1.st.start + r * (S1.st.end - S1.st.start);
     const slideY = () => { const sl = $$('#slides .slide')[0]; if (!sl) return secTop('#lavori'); const b = sl.getBoundingClientRect().bottom + lenis.scroll - innerHeight + 84; return Math.max(secTop('#lavori') + 40, b); };
@@ -1625,15 +1658,15 @@ const S2 = damped({ trigger: '.process', start: 'top top', end: 'bottom bottom' 
     const stepY = i => { const s2 = S2.st, n = $$('.step').length; return s2.start + (.08 + (i / (n - 1)) * .84) * (s2.end - s2.start); };
     const STOPS = () => {
       const out = [
-        { id: 'top', y: 0, hold: () => 1500 + readMs([$('#heroA .display')]) },
-        { id: 'offer', y: sY(pA(.34)), dur: 2.4, els: () => [$('#heroB .h2'), $('#heroB .lead')], hold: () => 1500 },
-        { id: 'mani', y: maniY(), mani: true, hold: () => 1400 },
-        { id: 'svc', y: sY(pB(.1)), els: () => [$('#svcTitle'), $('#svcHead .lead')], hold: () => 900 }
+        { id: 'top', y: 0, hold: () => 1000 + readMs([$('#heroA .display')]) },
+        { id: 'offer', y: sY(pA(.34)), dur: 1.9, els: () => [$('#heroB .h2'), $('#heroB .lead')], hold: () => 900 },
+        { id: 'mani', y: maniY(), mani: true, hold: () => 900 },
+        { id: 'svc', y: sY(pB(.1)), els: () => [$('#svcTitle'), $('#svcHead .lead')], hold: () => 600 }
       ];
-      W.forEach((w, i) => out.push({ id: 'w' + i, y: sY(wP(i + .74)), els: () => [$('.h2', w.copy), $('.lead', w.copy)], hold: () => 1100 + readMs([$('.deliver', w.copy)]) * .55 }));
-      out.push({ id: 'work', y: secTop('#lavori'), hold: () => 900 + readMs([$('#workTitle')]) });
+      W.forEach((w, i) => out.push({ id: 'w' + i, y: sY(wP(i + .74)), els: () => [$('.h2', w.copy), $('.lead', w.copy)], hold: () => 700 + readMs([$('.deliver', w.copy)]) * .4 }));
+      out.push({ id: 'work', y: secTop('#lavori'), hold: () => 500 + readMs([$('#workTitle')]) });
       out.push({ id: 'slides', y: slideY(), slides: true });
-      $$('.step').forEach((st, i) => out.push({ id: 's' + i, y: stepY(i), els: () => [$$('#stepDetail p')[i]], hold: () => 900 + readMs([st]) }));
+      $$('.step').forEach((st, i) => out.push({ id: 's' + i, y: stepY(i), els: () => [$$('#stepDetail p')[i]], hold: () => 600 + readMs([st]) }));
       out.push({ id: 'end', y: secTop('#prezzi'), end: true });
       return out;
     };
@@ -1654,26 +1687,26 @@ const S2 = damped({ trigger: '.process', start: 'top top', end: 'bottom bottom' 
         let list = STOPS();
         while (g === gen) {
           const st = list[i]; if (!st || st.end) break;
-          if (Math.abs(lenis.scroll - st.y) > 3 && !(await glide(st.y, .7, io3, g))) return;
-          if (!(await waitV(350, g))) return;                                   // the scene finishes drawing
+          if (Math.abs(lenis.scroll - st.y) > 3 && !(await glide(st.y, .6, io3, g))) return;
+          if (!(await waitV(220, g))) return;                                   // the scene finishes drawing
           if (st.slides) {                                                         // the projects, one by one
             let k = Math.max(0, curSlide()); const sl = $$('#slides .slide');
             while (g === gen) {
-              const m = $('.meta', sl[k]); const s2 = { id: 'slide' + k, els: () => [$('.h3', m), $('.lead', m)], hold: () => 1300 };
+              const m = $('.meta', sl[k]); const s2 = { id: 'slide' + k, els: () => [$('.h3', m), $('.lead', m)], hold: () => 800 };
               if (!(await read(s2, g))) return;
               if (k >= sl.length - 1 || $('#next').disabled) break;
-              $('#next').click(); k++; if (!(await waitV(900, g))) return;
+              $('#next').click(); k++; if (!(await waitV(700, g))) return;
             }
           } else if (!(await read(st, g))) return;
           list = STOPS(); const nx = list[i + 1]; if (!nx) break;
           dimFor(nx);
           if (nx.mani) {                                                          // the window opens, the manifesto is written at reading pace
             const ws = $$('.mtext .w'), n = ws.length || 1, mt = readMs([$('#mtext')]) * (n + 3) / n;
-            if (!(await glide(sY(pA(.64)), 2.2, io3, g))) return;
+            if (!(await glide(sY(pA(.64)), gs(1.8), io3, g))) return;
             curStart = vt; curTotal = mt;
-            if (!(await glide(sY(pA(.86)), mt / 1000, t => t, g))) return;
-            if (!(await glide(nx.y, .8, t => 1 - Math.pow(1 - t, 3), g))) return;
-          } else if (!(await glide(nx.y, nx.dur || durFor(nx.y), io3, g))) return;
+            if (!(await glide(sY(pA(.86)), mt / 1000 / speed, t => t, g))) return;
+            if (!(await glide(nx.y, gs(.6), t => 1 - Math.pow(1 - t, 3), g))) return;
+          } else if (!(await glide(nx.y, gs(nx.dur || durFor(nx.y)), io3, g))) return;
           if (nx.end) break;
           i++;
         }
@@ -1683,11 +1716,11 @@ const S2 = damped({ trigger: '.process', start: 'top top', end: 'bottom bottom' 
     // the clock only runs while the page is being read
     const tick = now => {
       const dt = Math.min(100, now - (lastT || now)); lastT = now;
-      if (live() && !gliding) vt += dt;
+      if (live() && !gliding) vt += dt * speed;
       for (let k = waiters.length - 1; k >= 0; k--) { const w = waiters[k]; if (w.g !== gen) { waiters.splice(k, 1); w.res(false); } else if (vt >= w.t) { waiters.splice(k, 1); w.res(true); } }
       if (running) pilotBar.style.transform = `scaleX(${clamp((vt - curStart) / curTotal).toFixed(4)})`;
       // stopped where a scene rests? the pilot takes it from there
-      if (!running && !paused && live() && !snapping && !document.getElementById('loader') && now - lastScrollT > 450) {
+      if (!running && !paused && live() && !snapping && !document.getElementById('loader') && now - lastScrollT > 350) {
         const y = lenis.scroll, tol = innerHeight * .12, list = STOPS();
         const i = list.findIndex(s => !s.end && Math.abs(s.y - y) < (s.id === 'top' ? 4 : tol));
         if (i >= 0) run(i);
@@ -1699,7 +1732,10 @@ const S2 = damped({ trigger: '.process', start: 'top top', end: 'bottom bottom' 
     addEventListener('touchstart', e => { if (e.target.closest && e.target.closest('#pilot')) return; touching = true; if (running) interrupt(); }, { capture: true, passive: true });
     addEventListener('touchend', () => { touching = false; lastScrollT = performance.now(); }, { capture: true, passive: true });
     addEventListener('touchcancel', () => { touching = false; }, { capture: true, passive: true });
-    pilotEl.addEventListener('click', () => {
+    const spd = $('#pilotSpd'), showSpd = () => { spd.textContent = String(speed).replace('.', lang === 'en' ? '.' : ',') + '×'; };
+    showSpd();
+    spd.addEventListener('click', () => { speed = SPEEDS[(SPEEDS.indexOf(speed) + 1) % SPEEDS.length]; showSpd(); try { localStorage.setItem('ns-speed', speed); } catch (e) {} });
+    $('#pilotBtn').addEventListener('click', () => {
       paused = !paused; label();
       if (paused) { interrupt(); pilotEl.hidden = false; pilotBar.style.transform = 'scaleX(0)'; } else { pilotEl.hidden = true; lastScrollT = 0; }
     });
@@ -1933,7 +1969,8 @@ function setupCommon(lenis) {
     $('#ckOpts').innerHTML = it.plan ? '' : `
       <label class="ck-opt"><input type="radio" name="ckOpt" value="half" checked><i></i><span><b>${t.half}</b><small>${t.halfS}</small></span><strong>${money(it.net / 2)}</strong></label>
       <label class="ck-opt"><input type="radio" name="ckOpt" value="full"><i></i><span><b>${t.full}</b><small>${t.fullS}</small></span><strong>${money(it.net)}</strong></label>`;
-    $$('input[name=ckOpt]', ck).forEach(r => r.onchange = sum);
+    const mark = () => $$('.ck-opt', ck).forEach(l => l.classList.toggle('on', $('input', l).checked));   // old Safari has no :has()
+    $$('input[name=ckOpt]', ck).forEach(r => r.onchange = () => { mark(); sum(); }); mark();
     $('#ckSumL').textContent = t.today; sum();
     $('#ckGoT').textContent = t.go; $('#ckNote').innerHTML = t.note; $('#ckErr').textContent = '';
     $('#ckBack').textContent = t.back; $('#ckPayT').textContent = t.secure;
