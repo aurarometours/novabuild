@@ -325,7 +325,8 @@ footer .brand img{width:30px;height:30px}
 .pilot .pp{display:none}.pilot.paused .pp{display:block}.pilot.paused .pz{display:none}
 .pilot b{position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--spectrum);transform-origin:left;transform:scaleX(0)}
 .pilot.paused b{opacity:.35}
-@media (min-width:901px),(prefers-reduced-motion:reduce){.pilot{display:none!important}}
+@media (prefers-reduced-motion:reduce){.pilot{display:none!important}}
+@media (hover:hover){.pilot button:hover{color:var(--paper)}}
 /* ---------- world sheet: the details of a world, without leaving it ---------- */
 .wi .ck-panel{width:min(760px,100%);padding:0}
 .wi-media{position:relative;height:max(150px, min(27vh, 240px));height:clamp(150px,27vh,240px);overflow:hidden;border-radius:21px 21px 0 0}
@@ -1609,7 +1610,7 @@ const S2 = damped({ trigger: '.process', start: 'top top', end: 'bottom bottom' 
       tourT = setTimeout(() => { if (!touring || Math.abs(lenis.scroll - heroB) > 6 || !calm()) return stopTour(); cine(maniY(), () => { touring = false; }); }, 6500);
     } });
   };
-  if (!TOUCH && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  if (false) {   // superseded by the reading pilot below, on every device
     const arm = () => { if (tourOff) return; if (document.getElementById('loader')) return setTimeout(arm, 250); tourT = setTimeout(tour, 4200); };
     arm();
     ['wheel', 'touchstart', 'keydown', 'mousedown', 'pointerdown'].forEach(ev => addEventListener(ev, () => { if (!tourOff || touring) stopTour(); }, { capture: true, passive: true }));
@@ -1619,7 +1620,7 @@ const S2 = damped({ trigger: '.process', start: 'top top', end: 'bottom bottom' 
      Every scene waits exactly the time a reader needs for its words (≈230 words a minute, longer words and
      full stops take longer), lights them as they are read, then moves on by itself. Touch the screen and you
      drive; stop, and it picks up from where you are. Phone put down flat and still (motion sensor): it waits. */
-  if (TOUCH && !RM) {
+  if (!RM) {
     const WPM = 320, MSW = 60000 / WPM;
     const SPEEDS = [1, 1.5, 2]; let speed = 1; try { const v = +localStorage.getItem('ns-speed'); if (SPEEDS.includes(v)) speed = v; } catch (e) {}
     const gs = d => d / Math.sqrt(speed);   // glides quicken gently; reading time scales exactly
@@ -1639,7 +1640,7 @@ const S2 = damped({ trigger: '.process', start: 'top top', end: 'bottom bottom' 
     const visited = new Set(), waiters = [];
     const label = () => { const t = T[lang === 'en' ? 'en' : 'it']; pilotT.textContent = paused ? t[1] : t[0]; pilotEl.classList.toggle('paused', paused); };
     const inField = () => document.activeElement && document.activeElement.matches('input,textarea,select');
-    const live = () => !paused && held && !touching && !document.hidden && calm() && !inField();
+    const live = () => !paused && held && !touching && !document.hidden && (TOUCH || document.hasFocus()) && calm() && !inField();
     const waitV = (ms, g) => new Promise(res => waiters.push({ t: vt + ms, res, g }));
     const unpace = () => { pacingEls.forEach(e => e.classList.remove('pacing')); pacingEls = []; };
     const dimFor = st => { if (!st || !st.els || visited.has(st.id)) return; st.els().forEach(el => { if (!el) return; wrap(el).forEach(w => w.classList.remove('on')); el.classList.add('pacing'); pacingEls.push(el); }); };
@@ -1653,7 +1654,7 @@ const S2 = damped({ trigger: '.process', start: 'top top', end: 'bottom bottom' 
     const durFor = y => clamp(.95 + Math.abs(y - lenis.scroll) / innerHeight * .25, 1.05, 2.2);
     // the story, in reading order
     const sY = r => S1.st.start + r * (S1.st.end - S1.st.start);
-    const slideY = () => { const sl = $$('#slides .slide')[0]; if (!sl) return secTop('#lavori'); const b = sl.getBoundingClientRect().bottom + lenis.scroll - innerHeight + 84; return Math.max(secTop('#lavori') + 40, b); };
+    const slideY = () => { const sl = $$('#slides .slide')[0]; if (!sl) return secTop('#lavori'); const b = sl.getBoundingClientRect().bottom + lenis.scroll - innerHeight + 84; return Math.max(secTop('#lavori'), b); };
     const curSlide = () => $$('#slides .slide').findIndex(sl => { const r = sl.getBoundingClientRect(); return r.left > -innerWidth * .3 && r.left < innerWidth * .5; });
     const stepY = i => { const s2 = S2.st, n = $$('.step').length; return s2.start + (.08 + (i / (n - 1)) * .84) * (s2.end - s2.start); };
     const STOPS = () => {
@@ -1681,13 +1682,22 @@ const S2 = damped({ trigger: '.process', start: 'top top', end: 'bottom bottom' 
       } else if (els.length && !(await waitV(readMs(els), g))) return false;
       return waitV(st.hold ? st.hold() : 0, g);
     }
+    async function maniSeq(g) {   // the window opens, the manifesto is written at reading pace
+      const ws = $$('.mtext .w'), n = ws.length || 1, mt = readMs([$('#mtext')]) * (n + 3) / n;
+      if (lenis.scroll < sY(pA(.63)) && !(await glide(sY(pA(.64)), gs(1.8), io3, g))) return false;
+      const from = clamp((lenis.scroll - sY(pA(.65))) / (sY(pA(.86)) - sY(pA(.65))));   // already part-written: only what is left
+      curStart = vt; curTotal = mt * (1 - from) || 1;
+      if (lenis.scroll < sY(pA(.86)) - 2 && !(await glide(sY(pA(.86)), mt * (1 - from) / 1000 / speed, t => t, g))) return false;
+      return glide(maniY(), gs(.6), t => 1 - Math.pow(1 - t, 3), g);
+    }
     async function run(i) {
       const g = ++gen; running = true; label(); pilotEl.hidden = false;
       try {
         let list = STOPS();
         while (g === gen) {
           const st = list[i]; if (!st || st.end) break;
-          if (Math.abs(lenis.scroll - st.y) > 3 && !(await glide(st.y, .6, io3, g))) return;
+          if (st.mani && lenis.scroll < sY(pA(.85))) { if (!(await maniSeq(g))) return; }
+          else if (Math.abs(lenis.scroll - st.y) > 3 && !(await glide(st.y, .6, io3, g))) return;
           if (!(await waitV(220, g))) return;                                   // the scene finishes drawing
           if (st.slides) {                                                         // the projects, one by one
             let k = Math.max(0, curSlide()); const sl = $$('#slides .slide');
@@ -1700,13 +1710,8 @@ const S2 = damped({ trigger: '.process', start: 'top top', end: 'bottom bottom' 
           } else if (!(await read(st, g))) return;
           list = STOPS(); const nx = list[i + 1]; if (!nx) break;
           dimFor(nx);
-          if (nx.mani) {                                                          // the window opens, the manifesto is written at reading pace
-            const ws = $$('.mtext .w'), n = ws.length || 1, mt = readMs([$('#mtext')]) * (n + 3) / n;
-            if (!(await glide(sY(pA(.64)), gs(1.8), io3, g))) return;
-            curStart = vt; curTotal = mt;
-            if (!(await glide(sY(pA(.86)), mt / 1000 / speed, t => t, g))) return;
-            if (!(await glide(nx.y, gs(.6), t => 1 - Math.pow(1 - t, 3), g))) return;
-          } else if (!(await glide(nx.y, gs(nx.dur || durFor(nx.y)), io3, g))) return;
+          if (nx.mani) { if (!(await maniSeq(g))) return; }
+          else if (!(await glide(nx.y, gs(nx.dur || durFor(nx.y)), io3, g))) return;
           if (nx.end) break;
           i++;
         }
@@ -1722,14 +1727,22 @@ const S2 = damped({ trigger: '.process', start: 'top top', end: 'bottom bottom' 
       // stopped where a scene rests? the pilot takes it from there
       if (!running && !paused && live() && !snapping && !document.getElementById('loader') && now - lastScrollT > 350) {
         const y = lenis.scroll, tol = innerHeight * .12, list = STOPS();
-        const i = list.findIndex(s => !s.end && Math.abs(s.y - y) < (s.id === 'top' ? 4 : tol));
+        let i = list.findIndex(s => !s.end && Math.abs(s.y - y) < (s.id === 'top' ? 4 : tol));
+        // left between two scenes? after a breath it goes to the closest one behind, or on to the next
+        if (i < 0 && now - lastScrollT > 1200) { const endY = list[list.length - 1].y, ahead = list.findIndex(s => s.y > y);
+          if (y < endY - 4 && ahead > 0) i = userDir < 0 || list[ahead].end ? ahead - 1 : ahead; }   // the way you were going
         if (i >= 0) run(i);
       }
       requestAnimationFrame(tick);
     };
     requestAnimationFrame(tick);
-    lenis.on('scroll', () => { if (!gliding) lastScrollT = performance.now(); });
+    let userDir = 1;
+    lenis.on('scroll', l => { if (!gliding) { lastScrollT = performance.now(); if (l.direction) userDir = l.direction; } });
     addEventListener('touchstart', e => { if (e.target.closest && e.target.closest('#pilot')) return; touching = true; if (running) interrupt(); }, { capture: true, passive: true });
+    // desktop: wheel, trackpad, keys or a click take the wheel; only moving the mouse does not
+    const takeOver = e => { if (e.target && e.target.closest && e.target.closest('#pilot')) return; lastScrollT = performance.now(); if (running) interrupt(); };
+    ['wheel', 'keydown', 'mousedown'].forEach(ev => addEventListener(ev, takeOver, { capture: true, passive: true }));
+    addEventListener('focus', () => { lastT = 0; });
     addEventListener('touchend', () => { touching = false; lastScrollT = performance.now(); }, { capture: true, passive: true });
     addEventListener('touchcancel', () => { touching = false; }, { capture: true, passive: true });
     const spd = $('#pilotSpd'), showSpd = () => { spd.textContent = String(speed).replace('.', lang === 'en' ? '.' : ',') + '×'; };
