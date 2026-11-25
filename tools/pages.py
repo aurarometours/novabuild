@@ -576,13 +576,13 @@ def render(pg):
 <footer>
   <div class="wrap">
     <div class="foot">
-      <div><a class="brand" href="/"><img src="/assets/brand/mark-64.png" srcset="/assets/brand/mark-64.png 1x, /assets/brand/mark-128.png 2x" alt="" width="26" height="26">NovaSignal</a><p>Design &amp; Technology Studio a Roma.</p></div>
-      <div><h4>Servizi</h4><ul>{''.join('<li><a href="%s">%s</a></li>' % (u, E(n)) for u, n, _ in SERVICES)}</ul></div>
-      <div><h4>Per settore</h4><ul>{''.join('<li><a href="%s">%s</a></li>' % (u, E(n)) for u, n in SECTORS)}</ul></div>
-      <div><h4>Studio</h4><ul><li><a href="/#lavori">Lavori</a></li><li><a href="{AURA['url']}">Caso studio: Aura</a></li><li><a href="/risorse/quanto-costa-un-sito-web">Quanto costa un sito</a></li><li><a href="/#prezzi">Prezzi</a></li><li><a href="/#faq">FAQ</a></li></ul></div>
-      <div><h4>Contatti</h4><ul><li><a href="https://wa.me/393206891014" target="_blank" rel="noopener">WhatsApp</a></li><li><a href="mailto:studio@novasignal.it">studio@novasignal.it</a></li><li><a href="/en" hreflang="en" lang="en">English</a></li></ul></div>
+      <div class="fbrand"><a class="brand" href="/"><img src="/assets/brand/mark-64.png" srcset="/assets/brand/mark-64.png 1x, /assets/brand/mark-128.png 2x" alt="" width="26" height="26">NovaSignal</a><p>Design &amp; Technology Studio a Roma.</p></div>
+      <details class="fcol" open><summary>Servizi</summary><ul>{''.join('<li><a href="%s">%s</a></li>' % (u, E(n)) for u, n, _ in SERVICES)}</ul></details>
+      <details class="fcol" open><summary>Per settore</summary><ul>{''.join('<li><a href="%s">%s</a></li>' % (u, E(n)) for u, n in SECTORS)}</ul></details>
+      <details class="fcol" open><summary>Studio</summary><ul><li><a href="/#lavori">Lavori</a></li><li><a href="{AURA['url']}">Caso studio: Aura</a></li><li><a href="/risorse/quanto-costa-un-sito-web">Quanto costa un sito</a></li><li><a href="/#prezzi">Prezzi</a></li><li><a href="/#faq">FAQ</a></li></ul></details>
+      <details class="fcol" open><summary>Contatti</summary><ul><li><a href="https://wa.me/393206891014" target="_blank" rel="noopener">WhatsApp</a></li><li><a href="mailto:studio@novasignal.it">studio@novasignal.it</a></li></ul></details>
     </div>
-    <div class="legal"><span>© 2026 NovaSignal · P.IVA 17596721005 · Roma · <a href="/privacy">Privacy e cookie</a></span><span>Progettato e sviluppato a Roma</span></div>
+    <div class="legal"><span>© 2026 NovaSignal</span><span class="legal-r"><a href="/privacy">Privacy e cookie</a><a href="/en" hreflang="en" lang="en">English</a><span>Progettato e sviluppato a Roma</span></span></div>
   </div>
 </footer>
 <script>
@@ -609,6 +609,12 @@ def render(pg):
 </script>
 <script src="/assets/js/lenis.min.js" defer></script>
 <script>
+(function () {{ // footer groups: open on wide screens, folded on phones
+  var mq = matchMedia('(min-width:761px)'), ds = document.querySelectorAll('.fcol'), i;
+  function set() {{ for (i = 0; i < ds.length; i++) ds[i].open = mq.matches; }}
+  set(); if (mq.addEventListener) mq.addEventListener('change', set);
+  for (i = 0; i < ds.length; i++) ds[i].querySelector('summary').addEventListener('click', function (e) {{ if (mq.matches) e.preventDefault(); }});
+}})();
 (function () {{ var n = document.querySelector('.nav'); function f() {{ n.classList.toggle('solid', (window.scrollY || pageYOffset) > 40); }} addEventListener('scroll', f, {{ passive: true }}); f(); }})();
 addEventListener('DOMContentLoaded', function () {{ // the same smooth scroll as the home
   if (!window.Lenis || !window.ResizeObserver || matchMedia('(prefers-reduced-motion: reduce)').matches) return;

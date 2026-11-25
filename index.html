@@ -328,6 +328,25 @@ footer .brand img{width:30px;height:30px}
 .langhint{position:fixed;top:calc(72px + env(safe-area-inset-top));left:50%;z-index:90;transform:translate(-50%,-8px);opacity:0;display:inline-flex;align-items:center;gap:10px;height:38px;padding:0 8px 0 16px;border-radius:999px;border:1px solid rgba(245,245,247,.18);background:rgba(16,16,18,.72);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);color:var(--paper);font-size:.84rem;text-decoration:none;transition:opacity .5s var(--ease),transform .6s var(--ease)}
 .langhint.in{opacity:1;transform:translate(-50%,0)}.langhint b{font-weight:600}.langhint i{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--paper);color:#000;font-style:normal;font-size:.8rem}
 html[lang="en"] [data-only="it"]{display:none!important}
+/* footer, essential: columns on desktop, folding groups on phones (Apple-like) */
+.fcol summary{list-style:none;margin:0 0 12px;font-size:.85rem;color:var(--mute);font-weight:500;pointer-events:none}
+.fcol summary::-webkit-details-marker{display:none}
+.legal-r{display:flex;flex-wrap:wrap}
+.legal-r>*+*{margin-left:18px;padding-left:18px;border-left:1px solid var(--line)}
+.legal a{color:inherit}.legal a:hover{color:var(--paper)}
+@media (max-width:760px){
+  .foot{grid-template-columns:1fr!important;gap:0}
+  .fbrand{margin-bottom:28px}
+  .fcol{border-top:1px solid var(--line)}
+  .fcol:last-of-type{border-bottom:1px solid var(--line)}
+  .fcol summary{pointer-events:auto;cursor:pointer;margin:0;padding:15px 0;font-size:.95rem;color:var(--paper);display:flex;justify-content:space-between;align-items:center}
+  .fcol summary::after{content:"";width:8px;height:8px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:translateY(-3px) rotate(45deg);opacity:.7;transition:transform .4s var(--ease)}
+  .fcol[open] summary::after{transform:translateY(2px) rotate(-135deg)}
+  .fcol ul{padding:0 0 16px;gap:10px!important}
+  .fcol li{font-size:.92rem;color:rgba(245,245,247,.78)}
+  .legal{flex-direction:column;gap:10px}
+}
+
 @media (min-width:761px){html[lang="it"] .foot{grid-template-columns:2fr 1fr 1fr 1fr}}
 .case-link{display:table;margin:16px 0 0;padding-bottom:2px;font-weight:600;font-size:.94rem;color:var(--paper);text-decoration:none;border-bottom:1px solid rgba(245,245,247,.35)}.case-link:hover{border-color:var(--paper)}
 
@@ -916,25 +935,25 @@ footer{overflow:hidden}
 <footer>
   <div class="wrap">
     <div class="foot">
-      <div>
+      <div class="fbrand">
         <a class="brand" href="#top"><img src="assets/brand/mark-64.png" srcset="assets/brand/mark-64.png 1x, assets/brand/mark-128.png 2x" alt="" width="30" height="30">NovaSignal</a>
         <p data-i18n="foot.p">Design &amp; Technology Studio a Roma. Clienti in Italia, Europa, Regno Unito, Stati Uniti ed Emirati.</p>
       </div>
-      <div>
-        <h4 data-i18n="foot.studio">Studio</h4>
+      <details class="fcol" open>
+        <summary data-i18n="foot.studio">Studio</summary>
         <ul><li><a href="#servizi" data-i18n="nav.services">Servizi</a></li><li><a href="#lavori" data-i18n="nav.work">Lavori</a></li><li><a href="#prezzi" data-i18n="nav.pricing">Prezzi</a></li><li><a href="#faq">FAQ</a></li></ul>
-      </div>
-      <div data-only="it">
-        <h4>Servizi</h4>
+      </details>
+      <details class="fcol" open data-only="it">
+        <summary>Servizi</summary>
         <ul><li><a href="/servizi/realizzazione-siti-web-roma">Siti web su misura</a></li><li><a href="/servizi/sviluppo-software-su-misura">Software e gestionali</a></li><li><a href="/servizi/sviluppo-web-app">Web app e SaaS</a></li><li><a href="/servizi/automazioni-aziendali-ai">Automazioni e AI</a></li><li><a href="/servizi/sviluppo-app-mobile">App mobile</a></li><li><a href="/lavori/aura-rome-tours">Caso studio: Aura Rome Tours</a></li><li><a href="/risorse/quanto-costa-un-sito-web">Quanto costa un sito</a></li></ul>
-      </div>
-      <div>
-        <h4 data-i18n="foot.contact">Contatti</h4>
-        <ul><li><a href="https://wa.me/393206891014" target="_blank" rel="noopener">WhatsApp</a></li><li><a href="mailto:studio@novasignal.it">studio@novasignal.it</a></li><li><a href="/privacy" data-i18n="foot.privacy">Privacy e cookie</a></li></ul>
-      </div>
+      </details>
+      <details class="fcol" open>
+        <summary data-i18n="foot.contact">Contatti</summary>
+        <ul><li><a href="https://wa.me/393206891014" target="_blank" rel="noopener">WhatsApp</a></li><li><a href="mailto:studio@novasignal.it">studio@novasignal.it</a></li></ul>
+      </details>
     </div>
     <div class="giant" aria-hidden="true"><video muted playsinline loop preload="none" poster="assets/video/galaxy.jpg" data-src="assets/video/galaxy.mp4" data-poster-m="assets/video/galaxy-m.jpg" data-src-m="assets/video/galaxy-m.mp4"></video><span>NovaSignal</span></div>
-    <div class="legal"><span>© 2026 NovaSignal · P.IVA 17596721005 · Roma</span><span data-i18n="foot.made">Progettato e sviluppato a Roma</span></div>
+    <div class="legal"><span>© 2026 NovaSignal</span><span class="legal-r"><a href="/privacy" data-i18n="foot.privacy">Privacy e cookie</a><span data-i18n="foot.made">Progettato e sviluppato a Roma</span></span></div>
   </div>
 </footer>
 
@@ -1166,6 +1185,12 @@ if (PAGE === 'en') { META.en.d = $('meta[name="description"]').content; setLang(
     const show = () => { a.classList.add('in'); setTimeout(() => { a.classList.remove('in'); setTimeout(() => a.remove(), 700); }, 9000); };
     const wait = () => document.getElementById('loader') ? setTimeout(wait, 300) : setTimeout(show, 600); wait();
   }
+}
+{ // footer groups: open on wide screens, folded on phones
+  const wide = matchMedia('(min-width:761px)');
+  const setFoot = () => $$('.fcol').forEach(d => { d.open = wide.matches; });
+  setFoot(); wide.addEventListener('change', setFoot);
+  $$('.fcol summary').forEach(sm => sm.addEventListener('click', e => { if (wide.matches) e.preventDefault(); }));
 }
 $('#langBtn').addEventListener('click', e => {
   if (e.metaKey || e.ctrlKey || e.shiftKey) return;
