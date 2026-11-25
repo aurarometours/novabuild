@@ -7,11 +7,14 @@ SITE = 'https://novasignal.it'
 E = lambda s: html.escape(s, quote=True)
 WA = 'https://wa.me/393206891014?text='
 
+SECTORS = [('/settori/siti-web-gioiellerie', 'Gioiellerie e orafi'), ('/settori/siti-web-ottici', 'Ottici'), ('/settori/siti-web-antiquariato-design', 'Antiquariato e design')]
+
 SERVICES = [  # (url, short name, one line) — used for related links and the footer
     ('/servizi/realizzazione-siti-web-roma', 'Siti web su misura', 'Siti vetrina, e-commerce e prenotazioni, progettati da zero.'),
     ('/servizi/sviluppo-software-su-misura', 'Software e gestionali', 'Gestionali, pannelli admin e portali clienti su misura.'),
     ('/servizi/sviluppo-web-app', 'Web app e SaaS', 'Piattaforme web con utenti, abbonamenti e pagamenti.'),
     ('/servizi/automazioni-aziendali-ai', 'Automazioni e AI', 'Sito, CRM, email, WhatsApp e calendario che lavorano insieme.'),
+    ('/servizi/sviluppo-app-mobile', 'App mobile', 'App iOS e Android, dal prototipo alla pubblicazione sugli store.'),
 ]
 
 PRICES = {
@@ -204,15 +207,184 @@ PAGES = [
  ],
  'wa': 'Ciao NovaSignal, ho visto il caso Aura Rome Tours e vorrei qualcosa di simile.',
 },
+
+# ------------------------------------------------------------------------------------------------ app mobile
+{
+ 'file': 'servizi/sviluppo-app-mobile.html', 'url': '/servizi/sviluppo-app-mobile', 'c': 'var(--aqua)', 'img': 'app',
+ 'title': 'Sviluppo app mobile iOS e Android su misura | NovaSignal',
+ 'desc': 'App iOS e Android dal concept alla pubblicazione sugli store: prenotazioni, fidelizzazione, strumenti interni per il team. Anteprima prima di pagare.',
+ 'crumb': 'App mobile', 'tag': 'App mobile',
+ 'h1': 'Sviluppo app mobile iOS e Android.',
+ 'lead': 'App da installare per i tuoi clienti o per il tuo team: prenotazioni, fidelizzazione, notifiche, strumenti di lavoro. Le progettiamo, le sviluppiamo e le pubblichiamo sugli store.',
+ 'service': 'Sviluppo app mobile',
+ 'blocks': [
+  ('prose', 'Quando serve un’app', 'Quando il cliente deve tornare, non solo trovarti.', [
+    'Un sito si cerca; un’app resta sul telefono. Ha senso quando i tuoi clienti fanno qualcosa <strong>spesso</strong>: prenotano, accumulano punti, ricevono avvisi, ricomprano. Oppure quando il tuo team lavora in movimento e ha bisogno di uno strumento sempre in tasca.',
+    'Se l’obiettivo è farsi trovare e ricevere richieste, spesso basta un buon sito o una web app: te lo diciamo prima, non dopo.']),
+  ('cards', 'Cosa costruiamo', 'Dall’idea allo store.', None, [
+    ('var(--aqua)', 'iOS e Android', 'Un’unica app per entrambe le piattaforme, con lo stesso backend del tuo sito o gestionale.', []),
+    ('var(--cyan)', 'UX e prototipo', 'Le schermate principali disegnate e provate prima di scrivere il codice.', []),
+    ('var(--gold)', 'Notifiche push', 'Promemoria, offerte e aggiornamenti che arrivano al momento giusto.', []),
+    ('var(--ember)', 'Login e profili', 'Account cliente, storico, preferenze e pagamenti.', []),
+    ('var(--aqua)', 'Pubblicazione store', 'Preparazione e invio su App Store e Google Play.', []),
+    ('var(--cyan)', 'Manutenzione', 'Aggiornamenti per le nuove versioni di iOS e Android.', []),
+  ]),
+  ('steps', 'Come lavoriamo', 'Prima il prototipo, poi il codice.', None, [
+    ('Anteprima', 'Prima direzione', 'Le schermate chiave dell’app, prima di qualsiasi pagamento.'),
+    ('Prototipo', 'Si prova sul telefono', 'Un prototipo navigabile per verificare il percorso prima dello sviluppo.'),
+    ('Sviluppo', 'Versioni di prova', 'Lavori su build reali installate sul telefono, non su immagini.'),
+    ('Store', 'Pubblicazione', 'Gestiamo la preparazione e l’invio agli store.'),
+  ]),
+  ('price', 'Investimento', 'Prezzi chiari, prima di iniziare.', ['supernova', 'care']),
+  ('faq', [
+    ('Meglio un’app o una web app?', 'Se servono notifiche push, uso frequente o presenza sugli store, un’app. Se gli utenti lavorano soprattutto da computer o vuoi lanciare in fretta, una web app. Spesso si parte dalla web app e si aggiunge l’app dopo.'),
+    ('L’app è mia?', 'Sì. L’app viene pubblicata a nome della tua azienda e i dati restano tuoi.'),
+    ('Quanto costa?', 'I progetti app rientrano in Supernova, da €14.000. Il preventivo dipende da funzioni e integrazioni e lo definiamo dopo l’anteprima, a fasi.'),
+  ]),
+ ],
+ 'wa': 'Ciao NovaSignal, vorrei parlare di un’app mobile.',
+},
+# ------------------------------------------------------------------------------------------------ settore: gioiellerie
+{
+ 'file': 'settori/siti-web-gioiellerie.html', 'url': '/settori/siti-web-gioiellerie', 'c': 'var(--gold)', 'img': 'jewel',
+ 'parent': ('Siti web', '/servizi/realizzazione-siti-web-roma'),
+ 'title': 'Siti web per gioiellerie e orafi a Roma | NovaSignal',
+ 'desc': 'Siti per gioiellerie, orafi e laboratori: collezioni sempre aggiornate, richieste su WhatsApp, appuntamenti in negozio, inglese per i turisti. Da €1.900.',
+ 'crumb': 'Gioiellerie e orafi', 'tag': 'Per gioiellerie e orafi',
+ 'h1': 'Siti web per gioiellerie e orafi.',
+ 'lead': 'Un gioiello si sceglie con calma e si compra di persona. Il sito deve fare una cosa sola, bene: far innamorare delle tue creazioni e portare il cliente in negozio, o a scriverti.',
+ 'service': 'Siti web per gioiellerie',
+ 'blocks': [
+  ('prose', 'Cosa vediamo nei negozi', 'Clienti fedeli, creazioni bellissime, sito fermo.', [
+    'Visitiamo spesso gioiellerie e laboratori orafi, soprattutto a Roma. La storia si ripete: il lavoro è eccellente, Instagram è curato, ma il sito è vecchio, lento, a volte proprio offline, e chi cerca su Google un regalo importante finisce da qualcun altro.',
+    'Vendere oro e preziosi online con carrello e spedizioni è complicato e spesso non serve. Serve invece una <strong>vetrina all’altezza del banco</strong>: le collezioni fotografate bene, la storia del laboratorio, e un modo immediato per chiedere informazioni o fissare un appuntamento.']),
+  ('cards', 'Cosa mettiamo nel sito', 'Pensato per come si compra un gioiello.', None, [
+    ('var(--gold)', 'Collezioni e creazioni', 'Schede per i pezzi e le linee, facili da aggiornare quando arrivano novità.', []),
+    ('var(--ember)', 'Richieste su WhatsApp', 'Ogni pezzo ha il suo pulsante: il cliente ti scrive già sapendo cosa vuole.', []),
+    ('var(--aqua)', 'Appuntamento in negozio', 'Per anelli di fidanzamento, su misura e riparazioni, la richiesta arriva con data e motivo.', []),
+    ('var(--cyan)', 'Storia e laboratorio', 'Generazioni, mani, materiali: quello che giustifica il prezzo e non si copia.', []),
+    ('var(--gold)', 'Inglese incluso', 'Per i turisti che passano davanti alla vetrina e cercano dal telefono.', []),
+    ('var(--ember)', 'Google e mappe', 'SEO locale e scheda Google curate, per chi cerca “gioielleria” nella tua zona.', []),
+  ]),
+  ('price', 'Investimento', 'Una vetrina, non un abbonamento.', ['signal', 'nova', 'care']),
+  ('faq', [
+    ('Serve un e-commerce?', 'Di solito no: per i gioielli funziona meglio una vetrina curata con richieste dirette e appuntamenti. Se vuoi vendere online alcune linee, il pacchetto Nova include l’e-commerce.'),
+    ('Chi aggiorna le nuove creazioni?', 'Puoi farlo tu, oppure ce ne occupiamo noi: ci mandi le foto e le pubblichiamo.'),
+    ('Ho poche foto professionali.', 'Ti guidiamo su cosa fotografare e come; dove serve usiamo materiale adatto al tuo brand.'),
+    ('Lavorate solo a Roma?', 'Siamo a Roma e passiamo volentieri in negozio. Lavoriamo anche da remoto in tutta Italia.'),
+  ]),
+ ],
+ 'wa': 'Ciao NovaSignal, ho una gioielleria e vorrei un sito nuovo.',
+},
+# ------------------------------------------------------------------------------------------------ settore: ottici
+{
+ 'file': 'settori/siti-web-ottici.html', 'url': '/settori/siti-web-ottici', 'c': 'var(--cyan)', 'img': 'optic',
+ 'parent': ('Siti web', '/servizi/realizzazione-siti-web-roma'),
+ 'title': 'Siti web per ottici e negozi di occhiali | NovaSignal',
+ 'desc': 'Siti per ottici: il tuo modo di consigliare la montatura, le marche, gli esami della vista e un modo immediato per prenotare in negozio. Da €1.900.',
+ 'crumb': 'Ottici', 'tag': 'Per ottici',
+ 'h1': 'Siti web per ottici.',
+ 'lead': 'Gli occhiali si vendono con la consulenza: si prova, si confronta, ci si fida di chi ti consiglia. Il sito deve raccontare proprio questo e portare il cliente a sedersi al tuo tavolo.',
+ 'service': 'Siti web per ottici',
+ 'blocks': [
+  ('prose', 'Il punto', 'Non competere con i siti che vendono montature online.', [
+    'Le grandi catene e i portali vendono montature a catalogo. Un ottico indipendente vince su un altro terreno: <strong>esperienza, consiglio, assistenza</strong>, spesso una storia di famiglia. Un sito generico, con una galleria di marche, butta via questo vantaggio.',
+    'Il nostro primo cliente NovaSignal è proprio un’ottica storica di Roma: una landing che racconta il metodo del titolare e porta i clienti in negozio, invece di un catalogo che nessuno sfoglia.']),
+  ('cards', 'Cosa mettiamo nel sito', 'Quello che serve davvero a un ottico.', None, [
+    ('var(--cyan)', 'Il tuo metodo', 'Come scegli con il cliente la montatura giusta: è il motivo per cui viene da te.', []),
+    ('var(--aqua)', 'Prenotazione in negozio', 'Richiesta di appuntamento per consulenza, esame della vista o ritiro.', []),
+    ('var(--gold)', 'Marche e selezione', 'Le linee che tratti, presentate con gusto, senza trasformare il sito in un catalogo.', []),
+    ('var(--ember)', 'Storia del negozio', 'Generazioni, esperienza, il quartiere: la fiducia si costruisce qui.', []),
+    ('var(--cyan)', 'WhatsApp e telefono', 'Un tocco per chiamarti o scriverti dal telefono.', []),
+    ('var(--aqua)', 'Google e mappe', 'SEO locale e scheda Google per chi cerca “ottico” vicino a sé.', []),
+  ]),
+  ('price', 'Investimento', 'Prezzi chiari, prima di iniziare.', ['signal', 'care']),
+  ('faq', [
+    ('Posso vendere occhiali da sole online?', 'Sì, con il pacchetto Nova che include l’e-commerce. Per molti ottici però conviene partire da una vetrina che porta clienti in negozio.'),
+    ('Quanto tempo serve?', 'Per un sito Signal servono in media 2–3 settimane dall’anteprima al lancio.'),
+    ('Dominio e sito di chi sono?', 'Tuoi. Dominio, contenuti e sito sono intestati a te, senza vincoli.'),
+  ]),
+ ],
+ 'wa': 'Ciao NovaSignal, ho un negozio di ottica e vorrei un sito.',
+},
+# ------------------------------------------------------------------------------------------------ settore: antiquariato
+{
+ 'file': 'settori/siti-web-antiquariato-design.html', 'url': '/settori/siti-web-antiquariato-design', 'c': 'var(--ember)', 'img': 'antique',
+ 'parent': ('Siti web', '/servizi/realizzazione-siti-web-roma'),
+ 'title': 'Siti web per antiquari e gallerie di design | NovaSignal',
+ 'desc': 'Siti con catalogo per antiquari, gallerie e negozi di design del Novecento: pezzi sempre aggiornati, inglese per i compratori esteri, richieste dirette.',
+ 'crumb': 'Antiquariato e design', 'tag': 'Per antiquari e gallerie',
+ 'h1': 'Siti web per antiquari e gallerie di design.',
+ 'lead': 'Ogni pezzo è unico, il compratore può essere a Milano come a Londra o New York. Il sito diventa il tuo catalogo nel mondo: pezzi raccontati bene, in inglese, con una richiesta diretta a te.',
+ 'service': 'Siti web per antiquari',
+ 'blocks': [
+  ('prose', 'Il problema', 'I pezzi migliori finiscono sui marketplace, a nome di altri.', [
+    'Molti antiquari e negozi di design vendono attraverso marketplace internazionali: funzionano, ma il cliente resta del portale, le commissioni pesano e il tuo nome passa in secondo piano.',
+    'Un sito con <strong>catalogo proprio</strong> costruisce il tuo marchio: i collezionisti ti trovano su Google, vedono tutto quello che hai, e ti scrivono direttamente. I marketplace restano un canale in più, non l’unico.']),
+  ('cards', 'Cosa mettiamo nel sito', 'Un catalogo, non una vetrina statica.', None, [
+    ('var(--ember)', 'Catalogo dei pezzi', 'Schede con foto, epoca, designer, materiali e misure, facili da aggiornare.', []),
+    ('var(--gold)', 'Inglese per l’estero', 'Testi pensati per i compratori internazionali, non tradotti parola per parola.', []),
+    ('var(--aqua)', 'Richiesta per pezzo', 'Il cliente chiede prezzo, spedizione o disponibilità del singolo oggetto.', []),
+    ('var(--cyan)', 'Vendi e fai valutare', 'Una pagina per chi vuole proporti un pezzo o chiedere una valutazione.', []),
+    ('var(--ember)', 'SEO per nicchie', 'Pagine pensate per le ricerche di designer, epoche e categorie che tratti.', []),
+    ('var(--gold)', 'Identità', 'Logotipo e immagine coordinata, quando il marchio va rinnovato.', []),
+  ]),
+  ('price', 'Investimento', 'Prezzi chiari, prima di iniziare.', ['nova', 'signal', 'care']),
+  ('faq', [
+    ('Chi carica i nuovi arrivi?', 'Puoi farlo tu, oppure ce ne occupiamo noi con un pacchetto di caricamenti annuale.'),
+    ('Si può vendere online?', 'Sì, con e-commerce e pagamenti nel pacchetto Nova. Per i pezzi importanti molti preferiscono la richiesta diretta.'),
+    ('Posso tenere i marketplace?', 'Certo. Il sito non li sostituisce: ti dà un canale tuo, con il tuo nome.'),
+  ]),
+ ],
+ 'wa': 'Ciao NovaSignal, ho un negozio di antiquariato/design e vorrei un sito con catalogo.',
+},
+# ------------------------------------------------------------------------------------------------ risorsa: costi
+{
+ 'file': 'risorse/quanto-costa-un-sito-web.html', 'url': '/risorse/quanto-costa-un-sito-web', 'c': 'var(--gold)', 'img': 'cost',
+ 'parent': ('Prezzi', '/#prezzi'),
+ 'title': 'Quanto costa un sito web su misura nel 2026? | NovaSignal',
+ 'desc': 'Cosa determina il prezzo di un sito web su misura, cosa deve essere incluso e quanto costano i nostri pacchetti, con esempi concreti. Prezzi chiari.',
+ 'crumb': 'Quanto costa un sito web', 'tag': 'Guida ai prezzi',
+ 'h1': 'Quanto costa un sito web su misura?',
+ 'lead': 'Risposta breve: dipende da cosa deve fare il sito. Risposta utile: ecco cosa sposta il prezzo, cosa deve essere sempre incluso e quanto costa da noi, senza asterischi nascosti.',
+ 'service': None,
+ 'blocks': [
+  ('prose', 'Cosa sposta il prezzo', 'Non il numero di pagine: quello che il sito deve fare.', [
+    'Il costo di un sito su misura dipende soprattutto da <strong>tre cose</strong>: quante funzioni deve avere (una vetrina che porta contatti è diversa da un sito che vende, prenota o gestisce clienti), quanti contenuti vanno creati (testi, foto, traduzioni) e quanto deve essere curato il design (un modello adattato contro schermate disegnate apposta, con animazioni).',
+    'Il numero di pagine conta meno di quanto si pensi. Sei pagine scritte e disegnate bene valgono più di trenta pagine vuote.']),
+  ('table', 'Esempi', 'Cosa serve, e quanto costa da noi.', 'Prezzi IVA esclusa, dal nostro listino.', ['Se ti serve…', 'Pacchetto', 'Prezzo'], [
+    ('Presentare l’attività e ricevere contatti', 'Signal', '€1.900'),
+    ('Vendere online, prenotare clienti o parlare a più mercati', 'Nova', '€4.900'),
+    ('Software, web app o app mobile intorno al tuo processo', 'Supernova', 'da €14.000'),
+    ('Hosting, backup, aggiornamenti e piccole modifiche', 'Care', '€79/mese'),
+    ('SEO continuativa con report mensile', 'Orbit', '€490/mese'),
+  ], 'Tutti i dettagli di ogni pacchetto sono nella <a href="/#prezzi">sezione prezzi</a>.'),
+  ('chips', 'Sempre incluso', 'Quello che un sito professionale deve avere, a qualsiasi prezzo.', 'Se un preventivo non lo dice, chiedilo.', ['Dominio intestato a te', 'Versione mobile curata', 'Velocità di caricamento', 'SEO tecnica di base', 'Testi scritti per convertire', 'Modo chiaro per contattarti', 'Modifiche dopo il lancio', 'Nessun vincolo per cambiare fornitore']),
+  ('prose', 'Da sapere', 'Le domande da fare prima di firmare.', [
+    '<strong>Di chi è il dominio?</strong> Deve essere intestato a te. Se è intestato all’agenzia, cambiare fornitore diventa difficile.',
+    '<strong>Cosa costa ogni anno?</strong> Dominio e hosting hanno un costo annuale: fatti dire quale, e cosa include.',
+    '<strong>Chi scrive i testi?</strong> Un sito senza testi pensati per i tuoi clienti è una vetrina vuota. Da noi sono inclusi.',
+    '<strong>Posso vederlo prima di pagare?</strong> Da noi sì: l’anteprima gratuita ti mostra la direzione visiva prima di qualsiasi pagamento.']),
+  ('faq', [
+    ('Perché non un sito da poche centinaia di euro?', 'Un template economico può bastare per esserci. Un sito su misura è costruito per farti contattare: testi, struttura e velocità pensati per il tuo cliente.'),
+    ('Come si paga?', 'Anteprima gratuita, poi 50% per partire e saldo alla consegna.'),
+    ('Quanto tempo serve?', 'Per un sito Signal servono in media 2–3 settimane dall’anteprima al lancio.'),
+  ]),
+ ],
+ 'wa': 'Ciao NovaSignal, vorrei un preventivo per un sito.',
+},
 ]
 
 
 # ================================================================================================ render
+def parent(pg):
+    return pg.get('parent') or (('Lavori', '/#lavori') if pg.get('case') else ('Servizi', '/#servizi'))
+
 def ld(pg):
     url = SITE + pg['url']
     crumbs = {'@type': 'BreadcrumbList', 'itemListElement': [
         {'@type': 'ListItem', 'position': 1, 'name': 'NovaSignal', 'item': SITE + '/'},
-        {'@type': 'ListItem', 'position': 2, 'name': 'Lavori' if pg.get('case') else 'Servizi', 'item': SITE + ('/#lavori' if pg.get('case') else '/#servizi')},
+        {'@type': 'ListItem', 'position': 2, 'name': parent(pg)[0], 'item': SITE + parent(pg)[1]},
         {'@type': 'ListItem', 'position': 3, 'name': pg['crumb'], 'item': url}]}
     page = {'@type': 'WebPage', '@id': url + '#page', 'url': url, 'name': pg['title'], 'description': pg['desc'], 'inLanguage': 'it',
             'isPartOf': {'@id': SITE + '/#site'}, 'breadcrumb': crumbs}
@@ -261,6 +433,11 @@ def block(b, pg):
         return '<section class="sec"><div class="wrap"><img class="reveal" src="%s" alt="La home del sito di Aura Rome Tours" width="800" height="500" style="border-radius:18px;width:100%%;max-width:960px;height:auto;border:1px solid var(--line)"></div></section>' % AURA['img']
     if k == 'visit':
         return '<section class="sec"><div class="wrap"><div class="ctas reveal"><a class="btn btn-ghost" href="https://aurarometours.it" target="_blank" rel="noopener">Visita aurarometours.it</a><a class="btn btn-ghost" href="/servizi/realizzazione-siti-web-roma">Siti web su misura</a></div></div></section>'
+    if k == 'table':
+        _, ey, h, p, head, rows, note = b
+        th = ''.join('<th scope="col">%s</th>' % E(x) for x in head)
+        tr = ''.join('<tr>%s</tr>' % ''.join(('<th scope="row">%s</th>' if i == 0 else '<td>%s</td>') % E(c) for i, c in enumerate(r)) for r in rows)
+        return '<section class="sec"><div class="wrap">%s<div class="tbl reveal"><table><thead><tr>%s</tr></thead><tbody>%s</tbody></table></div>%s</div></section>' % (sec_head(ey, h, p, pg['c']), th, tr, '<p class="note">%s</p>' % note if note else '')
     if k == 'faq':
         _, items = b
         body = ''.join('<details><summary>%s</summary><p>%s</p></details>' % (E(q), E(a)) for q, a in items)
@@ -274,7 +451,7 @@ def render(pg):
     rel = [s for s in SERVICES if s[0] != pg['url']][:3]
     related = '<section class="sec"><div class="wrap">%s<div class="related reveal">%s</div></div></section>' % (
         sec_head('Altri servizi', 'Lavoriamo anche su:', None, pg['c']), ''.join('<a href="%s"><b>%s</b><span>%s</span></a>' % (u, E(n), E(d)) for u, n, d in rel))
-    sec_label, sec_href = ('Lavori', '/#lavori') if pg.get('case') else ('Servizi', '/#servizi')
+    sec_label, sec_href = parent(pg)
     return f'''<!doctype html>
 <!-- generated by tools/build.py from tools/pages.py: edit the text there -->
 <html lang="it">
@@ -342,7 +519,8 @@ def render(pg):
     <div class="foot">
       <div><a class="brand" href="/"><img src="/assets/brand/mark-64.png" srcset="/assets/brand/mark-64.png 1x, /assets/brand/mark-128.png 2x" alt="" width="26" height="26">NovaSignal</a><p>Design &amp; Technology Studio a Roma.</p></div>
       <div><h4>Servizi</h4><ul>{''.join('<li><a href="%s">%s</a></li>' % (u, E(n)) for u, n, _ in SERVICES)}</ul></div>
-      <div><h4>Studio</h4><ul><li><a href="/#lavori">Lavori</a></li><li><a href="{AURA['url']}">Caso studio: Aura</a></li><li><a href="/#prezzi">Prezzi</a></li><li><a href="/#faq">FAQ</a></li></ul></div>
+      <div><h4>Per settore</h4><ul>{''.join('<li><a href="%s">%s</a></li>' % (u, E(n)) for u, n in SECTORS)}</ul></div>
+      <div><h4>Studio</h4><ul><li><a href="/#lavori">Lavori</a></li><li><a href="{AURA['url']}">Caso studio: Aura</a></li><li><a href="/risorse/quanto-costa-un-sito-web">Quanto costa un sito</a></li><li><a href="/#prezzi">Prezzi</a></li><li><a href="/#faq">FAQ</a></li></ul></div>
       <div><h4>Contatti</h4><ul><li><a href="https://wa.me/393206891014" target="_blank" rel="noopener">WhatsApp</a></li><li><a href="mailto:studio@novasignal.it">studio@novasignal.it</a></li><li><a href="/en" hreflang="en" lang="en">English</a></li></ul></div>
     </div>
     <div class="legal"><span>© 2026 NovaSignal</span><span>Progettato e sviluppato a Roma</span></div>

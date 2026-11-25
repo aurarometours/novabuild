@@ -133,3 +133,10 @@ Le altre informazioni nel testo vengono dall'handoff o dallo studio:
 - Prestazioni home: LCP mobile, cioè il loader che copre il primo contenuto.
 - Coerenza dei prezzi: la home mostra ancora "+IVA" e "IVA esclusa". La presentazione usa "+ fee*". Da allineare con una decisione di Riccardo.
 - La frase "Clienti in Italia, Europa, Regno Unito, Stati Uniti ed Emirati" va confermata (handoff: verificare i claim).
+
+## 8. Aggiornamento — seconda tornata (25/11/2026, sera)
+Nuove pagine (tutte 200, un H1, title ≤ 61 caratteri, JSON-LD valido, link interni verificati su desktop e mobile):
+- /servizi/sviluppo-app-mobile
+- /settori/siti-web-gioiellerie, /settori/siti-web-ottici, /settori/siti-web-antiquariato-design (settori in cui lo studio lavora davvero e dove ha progetti in corso; nessun cliente nominato)
+- /risorse/quanto-costa-un-sito-web (prezzi solo dal listino NovaSignal, nessun dato di mercato inventato)
+Footer delle pagine contenuto: colonne "Per settore" e link alla guida prezzi. Footer della home: + App mobile, + Quanto costa un sito.

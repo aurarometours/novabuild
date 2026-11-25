@@ -1,6 +1,6 @@
 {
  "index.html": {
-  "h": "55469a86a2d66e65bb07eb88c5ac086c0165e53f",
+  "h": "1be1b738b3dd6ad1a1b65c047e8d557c0521b1f0",
   "d": "2026-11-25"
  },
  "en.html": {
@@ -8,23 +8,43 @@
   "d": "2026-11-25"
  },
  "servizi/realizzazione-siti-web-roma.html": {
-  "h": "4b2d6bebc7b0bdf9ab2e919277f04879f0bf3bdd",
+  "h": "7449b526acb435c38162471ab56b23120ad4c8a8",
   "d": "2026-11-25"
  },
  "servizi/sviluppo-software-su-misura.html": {
-  "h": "702d0f0c358a06dd1044027e3524346d62c4471e",
+  "h": "90c352b9e414224a86ae8f1c56f72b4c8546261e",
   "d": "2026-11-25"
  },
  "servizi/sviluppo-web-app.html": {
-  "h": "5bcfa5ddec99f1873bd48fc053377aa22807b3e7",
+  "h": "bf5063f624467d138f741d384daf5b200fd04ea2",
   "d": "2026-11-25"
  },
  "servizi/automazioni-aziendali-ai.html": {
-  "h": "5d9f73cd37c5d1f9885c0ca8806ec6e8e8186947",
+  "h": "852fb2023529959aedbe05bf3e17c14032c25532",
   "d": "2026-11-25"
  },
  "lavori/aura-rome-tours.html": {
-  "h": "4417451f2a769b1cc4ccd129748359ef68dc610d",
+  "h": "7e859d23110da509617e11dd04cca98e00d3a81a",
+  "d": "2026-11-25"
+ },
+ "servizi/sviluppo-app-mobile.html": {
+  "h": "c205c9fbe4b1195f928c49563ce0c882c8963758",
+  "d": "2026-11-25"
+ },
+ "settori/siti-web-gioiellerie.html": {
+  "h": "656acf886c867b41d0a8751b9058fda9bc54806b",
+  "d": "2026-11-25"
+ },
+ "settori/siti-web-ottici.html": {
+  "h": "48d067419abfdd2ef261d3140fd28f5335b85a1b",
+  "d": "2026-11-25"
+ },
+ "settori/siti-web-antiquariato-design.html": {
+  "h": "0aba57a575027036f393cffb15d13ea6050608bb",
+  "d": "2026-11-25"
+ },
+ "risorse/quanto-costa-un-sito-web.html": {
+  "h": "abdd8783136d90e2a16e95f7b0533dddb54af64a",
   "d": "2026-11-25"
  }
 }
