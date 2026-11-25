@@ -44,7 +44,7 @@ def hero_video(pg):
     v = HERO_VIDEO.get(pg['img'])
     if not v or pg.get('legal'): return ''
     src, m, l, poster = v
-    return ('<div class="hv" aria-hidden="true"><video muted playsinline loop preload="none" poster="%s" data-src="%s"%s%s></video></div>'
+    return ('<div class="hv%s" aria-hidden="true">' % (' right' if pg['img'] in ('jewel',) else '') + '<video muted playsinline loop preload="none" poster="%s" data-src="%s"%s%s></video></div>'
             % (poster, src, ' data-src-m="%s"' % m if m else '', ' data-src-l="%s"' % l if l else ''))
 
 AURA = {'url': '/lavori/aura-rome-tours', 'img': '/assets/work/aura.jpg', 'name': 'Aura Rome Tours',
