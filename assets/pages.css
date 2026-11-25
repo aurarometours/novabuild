@@ -181,7 +181,11 @@ h3{font-size:1.12rem;letter-spacing:-.02em;font-weight:600;margin:0;line-height:
 
 /* footer — essential: columns on desktop, folding groups on phones (Apple-like) */
 footer{padding:64px 0 32px;border-top:1px solid var(--line);background:linear-gradient(180deg,rgba(0,0,0,.4),#000 70%)}
-.foot{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr 1fr;grid-gap:32px}
+.foot{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));grid-gap:40px 32px}
+.fbrand{grid-column:1/-1}
+.fmore{margin:40px 0 0;font-size:.84rem;color:var(--mute);max-width:70ch;line-height:1.6}.fmore a{color:rgba(245,245,247,.86);border-bottom:1px solid rgba(245,245,247,.3)}
+.smap{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-gap:48px 40px}.smap h2.lh{font-size:1.25rem;letter-spacing:-.025em;margin:0 0 14px;max-width:none}.smap ul li{padding:8px 0;border-top:1px solid var(--line)}.smap a:hover{color:var(--gold)}
+@media (max-width:760px){.smap{grid-template-columns:1fr;grid-gap:36px}}
 .fbrand p{margin:12px 0 0;color:var(--mute);max-width:30ch;font-size:.92rem}
 .fcol summary{list-style:none;margin:0 0 12px;font-size:.82rem;color:var(--mute);font-weight:500;pointer-events:none}
 .fcol summary::-webkit-details-marker{display:none}
@@ -196,6 +200,7 @@ footer{padding:64px 0 32px;border-top:1px solid var(--line);background:linear-gr
   footer{padding:48px 0 28px}
   .foot{grid-template-columns:1fr;grid-gap:0}
   .fbrand{margin-bottom:28px}
+  .fmore{margin-top:24px}
   .fcol{border-top:1px solid var(--line)}
   .fcol:last-of-type{border-bottom:1px solid var(--line)}
   .fcol summary{pointer-events:auto;cursor:pointer;margin:0;padding:15px 0;font-size:.95rem;color:var(--paper);display:flex;justify-content:space-between;align-items:center}

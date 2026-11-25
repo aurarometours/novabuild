@@ -332,6 +332,8 @@ html[lang="en"] [data-only="it"]{display:none!important}
 .fcol summary{list-style:none;margin:0 0 12px;font-size:.85rem;color:var(--mute);font-weight:500;pointer-events:none}
 .fcol summary::-webkit-details-marker{display:none}
 .legal-r{display:flex;flex-wrap:wrap}
+.fmore{margin:40px 0 0;font-size:.84rem;color:var(--mute);max-width:70ch;line-height:1.6}.fmore a{color:rgba(245,245,247,.86);border-bottom:1px solid rgba(245,245,247,.3)}
+@media (min-width:761px){.foot{grid-template-columns:repeat(5,minmax(0,1fr))!important;row-gap:40px}.fbrand{grid-column:1/-1}}
 .legal-r>*+*{margin-left:18px;padding-left:18px;border-left:1px solid var(--line)}
 .legal a{color:inherit}.legal a:hover{color:var(--paper)}
 @media (max-width:760px){
@@ -347,7 +349,7 @@ html[lang="en"] [data-only="it"]{display:none!important}
   .legal{flex-direction:column;gap:10px}
 }
 
-@media (min-width:761px){html[lang="it"] .foot{grid-template-columns:2fr 1fr 1fr 1fr}}
+
 .case-link{display:table;margin:16px 0 0;padding-bottom:2px;font-weight:600;font-size:.94rem;color:var(--paper);text-decoration:none;border-bottom:1px solid rgba(245,245,247,.35)}.case-link:hover{border-color:var(--paper)}
 
 /* ---------- reading pilot (phones): words light at reading pace, then the page moves on ---------- */
@@ -940,20 +942,29 @@ footer{overflow:hidden}
         <p data-i18n="foot.p">Design &amp; Technology Studio a Roma. Clienti in Italia, Europa, Regno Unito, Stati Uniti ed Emirati.</p>
       </div>
       <details class="fcol" open>
-        <summary data-i18n="foot.studio">Studio</summary>
-        <ul><li><a href="#servizi" data-i18n="nav.services">Servizi</a></li><li><a href="#lavori" data-i18n="nav.work">Lavori</a></li><li><a href="#prezzi" data-i18n="nav.pricing">Prezzi</a></li><li><a href="#faq">FAQ</a></li></ul>
+        <summary data-i18n="foot.explore">Esplora</summary>
+        <ul><li><a href="#servizi" data-i18n="nav.services">Servizi</a></li><li><a href="#lavori" data-i18n="nav.work">Lavori</a></li><li><a href="#metodo" data-i18n="nav.method">Metodo</a></li><li><a href="#prezzi" data-i18n="nav.pricing">Prezzi</a></li><li><a href="#faq">FAQ</a></li><li><a href="#contatti" data-i18n="foot.brief">Inizia un progetto</a></li></ul>
       </details>
       <details class="fcol" open data-only="it">
         <summary>Servizi</summary>
-        <ul><li><a href="/servizi/realizzazione-siti-web-roma">Siti web su misura</a></li><li><a href="/servizi/sviluppo-software-su-misura">Software e gestionali</a></li><li><a href="/servizi/sviluppo-web-app">Web app e SaaS</a></li><li><a href="/servizi/automazioni-aziendali-ai">Automazioni e AI</a></li><li><a href="/servizi/sviluppo-app-mobile">App mobile</a></li><li><a href="/lavori/aura-rome-tours">Caso studio: Aura Rome Tours</a></li><li><a href="/risorse/quanto-costa-un-sito-web">Quanto costa un sito</a></li></ul>
+        <ul><li><a href="/servizi/realizzazione-siti-web-roma">Siti web su misura</a></li><li><a href="/servizi/sviluppo-software-su-misura">Software e gestionali</a></li><li><a href="/servizi/sviluppo-web-app">Web app e SaaS</a></li><li><a href="/servizi/sviluppo-app-mobile">App mobile</a></li><li><a href="/servizi/automazioni-aziendali-ai">Automazioni e AI</a></li></ul>
+      </details>
+      <details class="fcol" open data-only="it">
+        <summary>Per settore</summary>
+        <ul><li><a href="/settori/siti-web-gioiellerie">Gioiellerie e orafi</a></li><li><a href="/settori/siti-web-ottici">Ottici</a></li><li><a href="/settori/siti-web-antiquariato-design">Antiquariato e design</a></li></ul>
+      </details>
+      <details class="fcol" open data-only="it">
+        <summary>Lavori e guide</summary>
+        <ul><li><a href="/lavori/aura-rome-tours">Caso studio: Aura Rome Tours</a></li><li><a href="/risorse/quanto-costa-un-sito-web">Quanto costa un sito</a></li><li><a href="/mappa-del-sito">Mappa del sito</a></li></ul>
       </details>
       <details class="fcol" open>
         <summary data-i18n="foot.contact">Contatti</summary>
-        <ul><li><a href="https://wa.me/393206891014" target="_blank" rel="noopener">WhatsApp</a></li><li><a href="mailto:studio@novasignal.it">studio@novasignal.it</a></li></ul>
+        <ul><li><a href="https://wa.me/393206891014" target="_blank" rel="noopener">WhatsApp</a></li><li><a href="tel:+393206891014">+39 320 689 1014</a></li><li><a href="mailto:studio@novasignal.it">studio@novasignal.it</a></li></ul>
       </details>
     </div>
     <div class="giant" aria-hidden="true"><video muted playsinline loop preload="none" poster="assets/video/galaxy.jpg" data-src="assets/video/galaxy.mp4" data-poster-m="assets/video/galaxy-m.jpg" data-src-m="assets/video/galaxy-m.mp4"></video><span>NovaSignal</span></div>
-    <div class="legal"><span>© 2026 NovaSignal</span><span class="legal-r"><a href="/privacy" data-i18n="foot.privacy">Privacy e cookie</a><span data-i18n="foot.made">Progettato e sviluppato a Roma</span></span></div>
+    <p class="fmore" data-i18n="foot.more" data-html>Altri modi per contattarci: scrivici su <a href="https://wa.me/393206891014" target="_blank" rel="noopener">WhatsApp</a>, chiama il <a href="tel:+393206891014">+39 320 689 1014</a> o scrivi a <a href="mailto:studio@novasignal.it">studio@novasignal.it</a>. Studio a Roma, progetti in tutta Italia e all’estero.</p>
+    <div class="legal"><span data-i18n="foot.copy">© 2026 NovaSignal. Tutti i diritti riservati.</span><span class="legal-r"><a href="/privacy" data-i18n="foot.privacy">Privacy e cookie</a><a href="/mappa-del-sito" data-only="it">Mappa del sito</a><a class="flang" href="/en" hreflang="en" lang="en">English</a></span></div>
   </div>
 </footer>
 
@@ -1142,6 +1153,8 @@ const EN = {
   'cta.h2':'Tell us about your project.','cta.lead':'We reply within 24 business hours with a proposal and the date of your free preview.',
   'f.name':'Name and company','f.type':'What you need','f.t1':'Website','f.t3':'Software','f.t4':'Mobile app','f.t5':'Automation','f.msg':'A few lines about the project','f.send':'Send on WhatsApp',
   'f.note':'WhatsApp opens with your message ready. Prefer email? Write to <a href="mailto:studio@novasignal.it">studio@novasignal.it</a>','nav.top':'Top','f.multi':'pick as many as you like','f.pkg':'Package','f.ph.name':'e.g. Jane Smith, Smith Studio','f.ph.msg':'e.g. A Nova website for my studio: online booking, two languages, launch in March.','f.err':'Add your name so we know who to reply to.',
+  'foot.explore':'Explore','foot.brief':'Start a project','foot.copy':'© 2026 NovaSignal. All rights reserved.',
+  'foot.more':'More ways to reach us: message us on <a href="https://wa.me/393206891014" target="_blank" rel="noopener">WhatsApp</a>, call <a href="tel:+393206891014">+39 320 689 1014</a> or write to <a href="mailto:studio@novasignal.it">studio@novasignal.it</a>. Studio in Rome, projects across Italy and abroad.',
   'foot.p':'Design & Technology Studio in Rome. Clients in Italy, Europe, the UK, the US and the UAE.','foot.studio':'Studio','foot.contact':'Contact','foot.privacy':'Privacy and cookies','foot.made':'Designed and built in Rome'
 };
 const IT = Object.assign({}, window.__IT_DICT || {});   // on /en the Italian text ships as data
@@ -1157,6 +1170,7 @@ function setLang(l) {
   document.documentElement.lang = l;
   const b = $('#langBtn'); b.textContent = l === 'en' ? 'IT' : 'EN'; b.setAttribute('aria-label', l === 'en' ? 'Passa all’italiano' : 'Switch to English');
   b.href = l === 'en' ? '/' : '/en'; b.hreflang = b.lang = l === 'en' ? 'it' : 'en';
+  const fl = $('.flang'); if (fl) { fl.href = b.href; fl.hreflang = fl.lang = b.lang; fl.textContent = l === 'en' ? 'Italiano' : 'English'; }
   const M = META[l]; document.title = M.t; $('meta[name="description"]').content = M.d;
   splitWords($('#mtext'));
   relayout.forEach(f => f());

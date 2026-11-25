@@ -120,6 +120,7 @@ def build_en(src):
            ('<meta property="og:locale" content="it_IT">\n<meta property="og:locale:alternate" content="en_GB">', '<meta property="og:locale" content="en_GB">\n<meta property="og:locale:alternate" content="it_IT">'),
            ('<meta property="og:description" content="Siti web, software, app e automazioni su misura. Anteprima gratuita prima di pagare.">', '<meta property="og:description" content="Custom websites, software, apps and automation. Free preview before you pay.">'),
            ('<a class="lang" id="langBtn" href="/en" hreflang="en" lang="en" aria-label="Switch to English">EN</a>', '<a class="lang" id="langBtn" href="/" hreflang="it" lang="it" aria-label="Passa all’italiano">IT</a>'),
+           ('<a class="flang" href="/en" hreflang="en" lang="en">English</a>', '<a class="flang" href="/" hreflang="it" lang="it">Italiano</a>'),
            ('<a class="skip" href="#main" data-i18n="skip">Vai al contenuto</a>', None)]
     for a, b in rep:
         if b is None: continue

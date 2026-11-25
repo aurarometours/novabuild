@@ -428,8 +428,41 @@ PAGES = [
  ],
  'wa': 'Ciao NovaSignal, ho una domanda sulla privacy.',
 },
+
+# ------------------------------------------------------------------------------------------------ sitemap (for people)
+{
+ 'file': 'mappa-del-sito.html', 'url': '/mappa-del-sito', 'c': 'var(--gold)', 'img': 'optic', 'legal': True,
+ 'parent': ('Studio', '/'),
+ 'title': 'Mappa del sito | NovaSignal',
+ 'desc': 'Tutte le pagine di NovaSignal in un colpo d’occhio: servizi, settori, lavori, guide e contatti.',
+ 'crumb': 'Mappa del sito', 'tag': 'Tutte le pagine',
+ 'h1': 'Mappa del sito.',
+ 'lead': 'Tutto NovaSignal in un colpo d’occhio.',
+ 'service': None,
+ 'blocks': [('sitemap',)],
+ 'wa': 'Ciao NovaSignal, vorrei informazioni.',
+},
 ]
 
+
+# ------------------------------------------------------------------------------------------------ footer: the whole site at a glance
+EXPLORE = [('/#servizi', 'Servizi'), ('/#lavori', 'Lavori'), ('/#metodo', 'Metodo'), ('/#prezzi', 'Prezzi'), ('/#faq', 'FAQ'), ('/#contatti', 'Inizia un progetto')]
+GUIDES = [('/lavori/aura-rome-tours', 'Caso studio: Aura Rome Tours'), ('/risorse/quanto-costa-un-sito-web', 'Quanto costa un sito'), ('/mappa-del-sito', 'Mappa del sito')]
+CONTACT = [('https://wa.me/393206891014', 'WhatsApp'), ('tel:+393206891014', '+39 320 689 1014'), ('mailto:studio@novasignal.it', 'studio@novasignal.it')]
+def footer_groups():
+    return [('Esplora', EXPLORE), ('Servizi', [(u, n) for u, n, _ in SERVICES]), ('Per settore', SECTORS), ('Lavori e guide', GUIDES), ('Contatti', CONTACT)]
+def footer_html():
+    li = lambda u, n: '<li><a href="%s"%s>%s</a></li>' % (u, ' target="_blank" rel="noopener"' if u.startswith('https://wa') else '', E(n))
+    cols = ''.join('<details class="fcol" open><summary>%s</summary><ul>%s</ul></details>' % (E(h), ''.join(li(u, n) for u, n in items)) for h, items in footer_groups())
+    return ('<footer>\n  <div class="wrap">\n    <div class="foot">\n      <div class="fbrand"><a class="brand" href="/"><img src="/assets/brand/mark-64.png" srcset="/assets/brand/mark-64.png 1x, /assets/brand/mark-128.png 2x" alt="" width="26" height="26">NovaSignal</a><p>Design &amp; Technology Studio a Roma.</p></div>\n      '
+            + cols + '\n    </div>\n'
+            '    <p class="fmore">Altri modi per contattarci: scrivici su <a href="https://wa.me/393206891014" target="_blank" rel="noopener">WhatsApp</a>, chiama il <a href="tel:+393206891014">+39 320 689 1014</a> o scrivi a <a href="mailto:studio@novasignal.it">studio@novasignal.it</a>. Studio a Roma, progetti in tutta Italia e all’estero.</p>\n'
+            '    <div class="legal"><span>© 2026 NovaSignal. Tutti i diritti riservati.</span><span class="legal-r"><a href="/privacy">Privacy e cookie</a><a href="/mappa-del-sito">Mappa del sito</a><a href="/en" hreflang="en" lang="en">English</a></span></div>\n  </div>\n</footer>')
+
+def block_sitemap():
+    groups = [('La home', [('/', 'NovaSignal — home'), ('/en', 'NovaSignal — English')] + EXPLORE[:-1])] + footer_groups()[1:4] + [('Studio', [('/privacy', 'Privacy e cookie')])]
+    body = ''.join('<div class="smap-g" data-r><h2 class="lh">%s</h2><ul>%s</ul></div>' % (E(h), ''.join('<li><a href="%s">%s</a></li>' % (u, E(n)) for u, n in items if u != '/mappa-del-sito')) for h, items in groups)
+    return '<section class="sec"><div class="wrap"><div class="smap">%s</div></div></section>' % body
 
 # ================================================================================================ render
 def parent(pg):
@@ -487,6 +520,8 @@ def block(b, pg):
         return '<section class="sec"><div class="wrap"><img class="shot" data-r src="%s" alt="La home del sito di Aura Rome Tours" width="800" height="500"></div></section>' % AURA['img']
     if k == 'visit':
         return '<section class="sec"><div class="wrap"><div class="ctas" data-r><a class="btn btn-ghost" href="https://aurarometours.it" target="_blank" rel="noopener">Visita aurarometours.it</a><a class="btn btn-ghost" href="/servizi/realizzazione-siti-web-roma">Siti web su misura</a></div></div></section>'
+    if k == 'sitemap':
+        return block_sitemap()
     if k == 'legal':
         _, items = b
         body = ''.join('<h2 class="lh">%s</h2>%s' % (E(h), ''.join('<p>%s</p>' % x for x in paras)) for h, paras in items)
@@ -573,18 +608,7 @@ def render(pg):
   </div>
 </section>
 </main>
-<footer>
-  <div class="wrap">
-    <div class="foot">
-      <div class="fbrand"><a class="brand" href="/"><img src="/assets/brand/mark-64.png" srcset="/assets/brand/mark-64.png 1x, /assets/brand/mark-128.png 2x" alt="" width="26" height="26">NovaSignal</a><p>Design &amp; Technology Studio a Roma.</p></div>
-      <details class="fcol" open><summary>Servizi</summary><ul>{''.join('<li><a href="%s">%s</a></li>' % (u, E(n)) for u, n, _ in SERVICES)}</ul></details>
-      <details class="fcol" open><summary>Per settore</summary><ul>{''.join('<li><a href="%s">%s</a></li>' % (u, E(n)) for u, n in SECTORS)}</ul></details>
-      <details class="fcol" open><summary>Studio</summary><ul><li><a href="/#lavori">Lavori</a></li><li><a href="{AURA['url']}">Caso studio: Aura</a></li><li><a href="/risorse/quanto-costa-un-sito-web">Quanto costa un sito</a></li><li><a href="/#prezzi">Prezzi</a></li><li><a href="/#faq">FAQ</a></li></ul></details>
-      <details class="fcol" open><summary>Contatti</summary><ul><li><a href="https://wa.me/393206891014" target="_blank" rel="noopener">WhatsApp</a></li><li><a href="mailto:studio@novasignal.it">studio@novasignal.it</a></li></ul></details>
-    </div>
-    <div class="legal"><span>© 2026 NovaSignal</span><span class="legal-r"><a href="/privacy">Privacy e cookie</a><a href="/en" hreflang="en" lang="en">English</a><span>Progettato e sviluppato a Roma</span></span></div>
-  </div>
-</footer>
+{footer_html()}
 <script>
 (function () {{ // films: the niche film in the banner first, then the galaxy of the home (never on save-data or reduced motion)
   var c = navigator.connection || {{}};

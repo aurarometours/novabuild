@@ -1,54 +1,58 @@
 {
  "index.html": {
-  "h": "1b91fb70ad4e7b9c4a7af0f4ce37973870ea6bc1",
+  "h": "0b53bcd943ef2dedf622a0980171fed979eed1c4",
   "d": "2026-11-25"
  },
  "en.html": {
-  "h": "5b685148b57ff44baa63b539af166c4390054a9d",
+  "h": "939670bd43d81b582733f02c66760a740e313340",
   "d": "2026-11-25"
  },
  "servizi/realizzazione-siti-web-roma.html": {
-  "h": "b2807467bc63225938eba8c959c061ab6be6c0ef",
+  "h": "b6bdb87752518be58fc19379aeec523a20644d73",
   "d": "2026-11-25"
  },
  "servizi/sviluppo-software-su-misura.html": {
-  "h": "ba9f25309b6fc1462de7dd51a701d63acc9453a6",
+  "h": "4cd34f33659b83ee0756c608d0491118d3d430f7",
   "d": "2026-11-25"
  },
  "servizi/sviluppo-web-app.html": {
-  "h": "8c12f7acc5c119017f792f3ca7b44e9342b96976",
+  "h": "a92b77bba8be6f1c64d960db0bc1e5a9b3dcb4ca",
   "d": "2026-11-25"
  },
  "servizi/automazioni-aziendali-ai.html": {
-  "h": "6677a8245759520203c05b8001e8e204046db322",
+  "h": "f7151e0f32b47afbe34d5e6a764de978c5c03306",
   "d": "2026-11-25"
  },
  "lavori/aura-rome-tours.html": {
-  "h": "d065807f3545e3ee87950988cddf19835197e7c3",
+  "h": "5ca1a1d23ad6315a24b87f366627688c288aab89",
   "d": "2026-11-25"
  },
  "servizi/sviluppo-app-mobile.html": {
-  "h": "f2416474086d853299a89a13d4c287ae9baa8c0f",
+  "h": "abe3f3805c4b434413176d46dd4bba8fc902f774",
   "d": "2026-11-25"
  },
  "settori/siti-web-gioiellerie.html": {
-  "h": "ce9fa618c2352144d42b8087a59ee1028b12f2c1",
+  "h": "c491ebf9e3caffd257734493dacfa4dd8744da11",
   "d": "2026-11-25"
  },
  "settori/siti-web-ottici.html": {
-  "h": "af5fd43e8fbf2fb3e93ca7863b95852598e5f807",
+  "h": "6c8926df397dd8c394ddc58face5df902b577449",
   "d": "2026-11-25"
  },
  "settori/siti-web-antiquariato-design.html": {
-  "h": "d85eb6b651d6e2e7bcb542a5e65df6eb63c72d0a",
+  "h": "072a5beca824a20c49212faa563a84a452a63925",
   "d": "2026-11-25"
  },
  "risorse/quanto-costa-un-sito-web.html": {
-  "h": "2da12af0c5418bf9ba6ad1bebef788f61db848e1",
+  "h": "6c11302483ca01620284099ea816d45b3ef54a94",
   "d": "2026-11-25"
  },
  "privacy.html": {
-  "h": "bbaf2dcdc08474a2c313b484bbbabb247781fa08",
+  "h": "498bb5f4b63c772c769a1e63328d333590e18c58",
+  "d": "2026-11-25"
+ },
+ "mappa-del-sito.html": {
+  "h": "5b5d736a74e628416b21ec48ce44ec1983734df3",
   "d": "2026-11-25"
  }
 }
