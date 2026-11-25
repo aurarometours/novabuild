@@ -373,6 +373,40 @@ PAGES = [
  ],
  'wa': 'Ciao NovaSignal, vorrei un preventivo per un sito.',
 },
+
+# ------------------------------------------------------------------------------------------------ privacy
+{
+ 'file': 'privacy.html', 'url': '/privacy', 'c': 'var(--cyan)', 'img': 'optic', 'legal': True,
+ 'parent': ('Studio', '/'),
+ 'title': 'Privacy e cookie | NovaSignal',
+ 'desc': 'Come NovaSignal tratta i dati personali di chi visita novasignal.it, ci contatta o acquista un servizio, e quali cookie e tecnologie usa il sito.',
+ 'crumb': 'Privacy e cookie', 'tag': 'Informativa ai sensi degli artt. 13–14 del Regolamento UE 2016/679',
+ 'h1': 'Privacy e cookie.',
+ 'lead': 'Ultimo aggiornamento: 25 novembre 2026.',
+ 'service': None,
+ 'blocks': [
+  ('legal', [
+   ('Titolare del trattamento', ['NovaSignal di Riccardo El Ghendy, P.IVA 17596721005, Roma (Italia). Per qualsiasi richiesta sui tuoi dati: <a href="mailto:studio@novasignal.it">studio@novasignal.it</a>.']),
+   ('Quali dati trattiamo e perché', [
+     '<strong>Navigazione.</strong> Quando visiti il sito, il servizio di hosting registra dati tecnici come indirizzo IP, browser, pagina richiesta e orario. Servono a far funzionare il sito e a proteggerlo da abusi (legittimo interesse, art. 6.1.f GDPR).',
+     '<strong>Contatti.</strong> Se ci scrivi tramite WhatsApp, email o il modulo del sito (che apre WhatsApp con il messaggio già pronto), trattiamo i dati che ci mandi — nome, azienda, recapiti e contenuto del messaggio — per risponderti e preparare una proposta (misure precontrattuali, art. 6.1.b).',
+     '<strong>Acquisti.</strong> Se acquisti un servizio sul sito, il pagamento avviene tramite Stripe: i dati della carta li tratta Stripe e non arrivano a noi. Noi riceviamo nome, email, telefono, dati di fatturazione ed eventuale partita IVA, e li conserviamo nel nostro gestionale per eseguire il contratto e rispettare gli obblighi fiscali e contabili (art. 6.1.b e 6.1.c).',
+     'Non usiamo i tuoi dati per profilazione né li vendiamo a terzi.']),
+   ('Chi riceve i dati', [
+     'Usiamo fornitori che trattano dati per nostro conto, ciascuno per la parte che gli compete: Vercel (hosting del sito), Stripe (pagamenti), Railway (server e database del gestionale), Resend (invio delle email di servizio), Google (caratteri tipografici del sito, caricati dai server di Google Fonts), Meta/WhatsApp (se scegli di scriverci su WhatsApp).',
+     'Alcuni di questi fornitori hanno sede negli Stati Uniti: il trasferimento avviene sulla base dell’EU-US Data Privacy Framework o delle clausole contrattuali standard approvate dalla Commissione europea.']),
+   ('Per quanto tempo', [
+     'I dati tecnici di navigazione per il tempo previsto dal fornitore di hosting per sicurezza e diagnosi. I messaggi di contatto per il tempo necessario a gestire la richiesta e fino a 24 mesi dall’ultimo contatto. I dati di acquisto e fatturazione per 10 anni, come richiesto dalla legge.']),
+   ('Cookie e tecnologie simili', [
+     'Il sito <strong>non usa cookie di profilazione né strumenti di analisi o pubblicità</strong>, quindi non ti chiede il consenso con un banner.',
+     'Usa solo memorie tecniche nel tuo browser (localStorage) per ricordare la lingua che hai scelto e la velocità della lettura guidata. Quando apri il pagamento, Stripe può impostare cookie tecnici necessari a completare il pagamento in sicurezza e a prevenire frodi. Se apri l’anteprima di un sito di un nostro cliente, quel sito può usare i propri cookie, secondo la sua informativa.']),
+   ('I tuoi diritti', [
+     'Puoi chiedere in qualsiasi momento accesso, rettifica, cancellazione, limitazione, portabilità dei tuoi dati o opporti al trattamento (artt. 15–22 GDPR), scrivendo a <a href="mailto:studio@novasignal.it">studio@novasignal.it</a>. Hai anche il diritto di presentare reclamo al Garante per la protezione dei dati personali (<a href="https://www.garanteprivacy.it" target="_blank" rel="noopener">garanteprivacy.it</a>).']),
+   ('Modifiche', ['Se cambia il modo in cui trattiamo i dati aggiorniamo questa pagina e la data in alto.']),
+  ]),
+ ],
+ 'wa': 'Ciao NovaSignal, ho una domanda sulla privacy.',
+},
 ]
 
 
@@ -433,6 +467,10 @@ def block(b, pg):
         return '<section class="sec"><div class="wrap"><img class="reveal" src="%s" alt="La home del sito di Aura Rome Tours" width="800" height="500" style="border-radius:18px;width:100%%;max-width:960px;height:auto;border:1px solid var(--line)"></div></section>' % AURA['img']
     if k == 'visit':
         return '<section class="sec"><div class="wrap"><div class="ctas reveal"><a class="btn btn-ghost" href="https://aurarometours.it" target="_blank" rel="noopener">Visita aurarometours.it</a><a class="btn btn-ghost" href="/servizi/realizzazione-siti-web-roma">Siti web su misura</a></div></div></section>'
+    if k == 'legal':
+        _, items = b
+        body = ''.join('<h2 class="lh">%s</h2>%s' % (E(h), ''.join('<p>%s</p>' % x for x in paras)) for h, paras in items)
+        return '<section class="sec"><div class="wrap"><div class="prose legal-text">%s</div></div></section>' % body
     if k == 'table':
         _, ey, h, p, head, rows, note = b
         th = ''.join('<th scope="col">%s</th>' % E(x) for x in head)
@@ -492,18 +530,18 @@ def render(pg):
   </div>
 </header>
 <main id="main">
-<section class="p-hero">
+<section class="p-hero{' short' if pg.get('legal') else ''}">
   <div class="bg" aria-hidden="true"></div>
   <div class="wrap">
     <ol class="crumbs" aria-label="Percorso"><li><a href="/">NovaSignal</a></li><li><a href="{sec_href}">{sec_label}</a></li><li aria-current="page">{E(pg['crumb'])}</li></ol>
     <p class="tag"><i style="--c:{pg['c']}"></i>{E(pg['tag'])}</p>
     <h1>{E(pg['h1'])}</h1>
     <p class="lead">{E(pg['lead'])}</p>
-    <div class="ctas"><a class="btn btn-primary" href="#contatto"><span class="sq"></span>Richiedi l’anteprima gratuita</a>{'' if pg.get('case') else '<a class="btn btn-ghost" href="#prezzi">Vedi i prezzi</a>'}</div>
+    {'' if pg.get('legal') else '<div class="ctas"><a class="btn btn-primary" href="#contatto"><span class="sq"></span>Richiedi l’anteprima gratuita</a>' + ('' if pg.get('case') else '<a class="btn btn-ghost" href="#prezzi">Vedi i prezzi</a>') + '</div>'}
   </div>
 </section>
 {blocks}
-{'' if pg.get('case') else related}
+{'' if pg.get('case') or pg.get('legal') else related}
 <section class="cta-band" id="contatto">
   <div class="wrap">
     <p class="tag"><i style="--c:{pg['c']}"></i>Send a signal</p>
@@ -523,7 +561,7 @@ def render(pg):
       <div><h4>Studio</h4><ul><li><a href="/#lavori">Lavori</a></li><li><a href="{AURA['url']}">Caso studio: Aura</a></li><li><a href="/risorse/quanto-costa-un-sito-web">Quanto costa un sito</a></li><li><a href="/#prezzi">Prezzi</a></li><li><a href="/#faq">FAQ</a></li></ul></div>
       <div><h4>Contatti</h4><ul><li><a href="https://wa.me/393206891014" target="_blank" rel="noopener">WhatsApp</a></li><li><a href="mailto:studio@novasignal.it">studio@novasignal.it</a></li><li><a href="/en" hreflang="en" lang="en">English</a></li></ul></div>
     </div>
-    <div class="legal"><span>© 2026 NovaSignal</span><span>Progettato e sviluppato a Roma</span></div>
+    <div class="legal"><span>© 2026 NovaSignal di Riccardo El Ghendy · P.IVA 17596721005 · Roma · <a href="/privacy">Privacy e cookie</a></span><span>Progettato e sviluppato a Roma</span></div>
   </div>
 </footer>
 <script>

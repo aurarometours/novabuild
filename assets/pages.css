@@ -140,3 +140,10 @@ footer{border-top:1px solid rgba(245,245,247,.08);padding:64px 0 40px;font-size:
 .js .reveal{opacity:0;transform:translateY(18px);transition:opacity .9s var(--ease),transform 1s var(--ease)}
 .js .reveal.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.js .reveal{opacity:1;transform:none;transition:none}}
+
+.p-hero.short{min-height:0;padding-top:150px}
+.legal-text{max-width:46em}
+.legal-text h2.lh{font-size:1.32rem;letter-spacing:-.02em;margin:44px 0 12px;line-height:1.25}
+.legal-text h2.lh:first-child{margin-top:0}
+.legal-text a{color:var(--paper)}
+.legal a{color:inherit}
