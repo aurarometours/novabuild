@@ -407,7 +407,7 @@ PAGES = [
  'service': None,
  'blocks': [
   ('legal', [
-   ('Titolare del trattamento', ['NovaSignal di Riccardo El Ghendy, P.IVA 17596721005, Roma (Italia). Per qualsiasi richiesta sui tuoi dati: <a href="mailto:studio@novasignal.it">studio@novasignal.it</a>.']),
+   ('Titolare del trattamento', ['NovaSignal, ditta individuale, P.IVA 17596721005, Roma (Italia). Per qualsiasi richiesta sui tuoi dati: <a href="mailto:studio@novasignal.it">studio@novasignal.it</a>.']),
    ('Quali dati trattiamo e perché', [
      '<strong>Navigazione.</strong> Quando visiti il sito, il servizio di hosting registra dati tecnici come indirizzo IP, browser, pagina richiesta e orario. Servono a far funzionare il sito e a proteggerlo da abusi (legittimo interesse, art. 6.1.f GDPR).',
      '<strong>Contatti.</strong> Se ci scrivi tramite WhatsApp, email o il modulo del sito (che apre WhatsApp con il messaggio già pronto), trattiamo i dati che ci mandi — nome, azienda, recapiti e contenuto del messaggio — per risponderti e preparare una proposta (misure precontrattuali, art. 6.1.b).',
@@ -583,7 +583,7 @@ def render(pg):
       <div><h4>Studio</h4><ul><li><a href="/#lavori">Lavori</a></li><li><a href="{AURA['url']}">Caso studio: Aura</a></li><li><a href="/risorse/quanto-costa-un-sito-web">Quanto costa un sito</a></li><li><a href="/#prezzi">Prezzi</a></li><li><a href="/#faq">FAQ</a></li></ul></div>
       <div><h4>Contatti</h4><ul><li><a href="https://wa.me/393206891014" target="_blank" rel="noopener">WhatsApp</a></li><li><a href="mailto:studio@novasignal.it">studio@novasignal.it</a></li><li><a href="/en" hreflang="en" lang="en">English</a></li></ul></div>
     </div>
-    <div class="legal"><span>© 2026 NovaSignal di Riccardo El Ghendy · P.IVA 17596721005 · Roma · <a href="/privacy">Privacy e cookie</a></span><span>Progettato e sviluppato a Roma</span></div>
+    <div class="legal"><span>© 2026 NovaSignal · P.IVA 17596721005 · Roma · <a href="/privacy">Privacy e cookie</a></span><span>Progettato e sviluppato a Roma</span></div>
   </div>
 </footer>
 <script>
