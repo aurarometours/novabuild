@@ -451,26 +451,25 @@ def ld(pg):
     return '<script type="application/ld+json">' + json.dumps({'@context': 'https://schema.org', '@graph': graph}, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/') + '</script>'
 
 def sec_head(eyebrow, h, p=None, c=None):
-    t = '<div class="sec-h reveal"><div><p class="tag"><i%s></i>%s</p><h2>%s</h2></div>' % (' style="--c:%s"' % c if c else '', E(eyebrow), E(h))
-    return t + ('<p>%s</p></div>' % E(p) if p else '<span></span></div>')
+    t = '<header class="sec-h" data-r><p class="tag"><i%s></i>%s</p><h2>%s</h2>' % (' style="--c:%s"' % c if c else '', E(eyebrow), E(h))
+    return t + ('<p class="sub">%s</p></header>' % E(p) if p else '</header>')
 
 def block(b, pg):
     k = b[0]
     if k == 'prose':
         _, ey, h, paras = b
-        return '<section class="sec"><div class="wrap">%s<div class="prose reveal">%s</div></div></section>' % (sec_head(ey, h, c=pg['c']), ''.join('<p>%s</p>' % p for p in paras))
+        return '<section class="sec"><div class="wrap">%s<div class="prose" data-r>%s</div></div></section>' % (sec_head(ey, h, c=pg['c']), ''.join('<p>%s</p>' % p for p in paras))
     if k == 'cards':
         _, ey, h, p, cards = b
-        cls = 'grid two' if len(cards) in (2, 4) else 'grid'
-        body = ''.join('<div class="card" style="--c:%s"><h3>%s</h3><p>%s</p></div>' % (c, E(t), E(d)) for c, t, d, _ in cards)
-        return '<section class="sec"><div class="wrap">%s<div class="%s reveal">%s</div></div></section>' % (sec_head(ey, h, p, pg['c']), cls, body)
+        body = ''.join('<li data-r style="--c:%s"><h3><i></i>%s</h3><p>%s</p></li>' % (c, E(t), E(d)) for c, t, d, _ in cards)
+        return '<section class="sec"><div class="wrap">%s<ul class="feat">%s</ul></div></section>' % (sec_head(ey, h, p, pg['c']), body)
     if k == 'chips':
         _, ey, h, p, items = b
-        return '<section class="sec"><div class="wrap">%s<ul class="chips reveal">%s</ul></div></section>' % (sec_head(ey, h, p, pg['c']), ''.join('<li>%s</li>' % E(i) for i in items))
+        return '<section class="sec"><div class="wrap">%s<ul class="chips" data-r>%s</ul></div></section>' % (sec_head(ey, h, p, pg['c']), ''.join('<li>%s</li>' % E(i) for i in items))
     if k == 'steps':
         _, ey, h, p, steps = b
-        body = ''.join('<li><b>%s</b><div><h3>%s</h3><p>%s</p></div></li>' % (E(a), E(t), E(d)) for a, t, d in steps)
-        return '<section class="sec"><div class="wrap">%s<ol class="steps reveal">%s</ol></div></section>' % (sec_head(ey, h, p, pg['c']), body)
+        body = ''.join('<li data-r><b>%s</b><div><h3>%s</h3><p>%s</p></div></li>' % (E(a), E(t), E(d)) for a, t, d in steps)
+        return '<section class="sec"><div class="wrap">%s<ol class="steps">%s</ol></div></section>' % (sec_head(ey, h, p, pg['c']), body)
     if k == 'price':
         _, ey, h, keys = b
         cards = []
@@ -478,16 +477,16 @@ def block(b, pg):
             n, v, unit, d = PRICES[key]
             pre = '<span class="pre">da</span>' if unit == 'da' else ''
             suf = '<small>%s</small>' % E(unit) if unit.startswith('/') else ''
-            cards.append('<div class="pc%s"><div class="n">%s</div><div class="v">%s%s%s</div><p>%s</p></div>' % (' hl' if key in ('nova', 'supernova') else '', n, pre, v, suf, E(d)))
+            cards.append('<div class="plan" data-r><h3>%s</h3><div class="v">%s%s%s</div><p>%s</p></div>' % (n, pre, v, suf, E(d)))
         note = 'Prezzi IVA esclusa. Anteprima gratuita, poi 50% per partire e saldo alla consegna. <a href="/#prezzi">Tutti i prezzi e cosa include ogni pacchetto</a>.'
-        return '<section class="sec" id="prezzi"><div class="wrap">%s<div class="price reveal">%s</div><p class="note">%s</p></div></section>' % (sec_head(ey, h, None, pg['c']), ''.join(cards), note)
+        return '<section class="sec" id="prezzi"><div class="wrap">%s<div class="plans n%d">%s</div><p class="note" data-r>%s</p></div></section>' % (sec_head(ey, h, None, pg['c']), len(cards), ''.join(cards), note)
     if k == 'case':
-        return ('<section class="sec"><div class="wrap">%s<a class="case reveal" href="%s"><img src="%s" alt="Il sito di Aura Rome Tours" width="800" height="500" loading="lazy" decoding="async">'
-                '<div><h3>%s</h3><p class="prose">%s</p><span class="go">Leggi il caso studio</span></div></a></div></section>') % (sec_head('Già in orbita', 'Un progetto reale.', None, pg['c']), AURA['url'], AURA['img'], AURA['name'], E(AURA['line']))
+        return ('<section class="sec"><div class="wrap">%s<a class="case" data-r href="%s"><img src="%s" alt="Il sito di Aura Rome Tours" width="800" height="500" loading="lazy" decoding="async">'
+                '<div><h3>%s</h3><p>%s</p><span class="go">Leggi il caso studio <b aria-hidden="true">→</b></span></div></a></div></section>') % (sec_head('Già in orbita', 'Un progetto reale.', None, pg['c']), AURA['url'], AURA['img'], AURA['name'], E(AURA['line']))
     if k == 'shot':
-        return '<section class="sec"><div class="wrap"><img class="reveal" src="%s" alt="La home del sito di Aura Rome Tours" width="800" height="500" style="border-radius:18px;width:100%%;max-width:960px;height:auto;border:1px solid var(--line)"></div></section>' % AURA['img']
+        return '<section class="sec"><div class="wrap"><img class="shot" data-r src="%s" alt="La home del sito di Aura Rome Tours" width="800" height="500"></div></section>' % AURA['img']
     if k == 'visit':
-        return '<section class="sec"><div class="wrap"><div class="ctas reveal"><a class="btn btn-ghost" href="https://aurarometours.it" target="_blank" rel="noopener">Visita aurarometours.it</a><a class="btn btn-ghost" href="/servizi/realizzazione-siti-web-roma">Siti web su misura</a></div></div></section>'
+        return '<section class="sec"><div class="wrap"><div class="ctas" data-r><a class="btn btn-ghost" href="https://aurarometours.it" target="_blank" rel="noopener">Visita aurarometours.it</a><a class="btn btn-ghost" href="/servizi/realizzazione-siti-web-roma">Siti web su misura</a></div></div></section>'
     if k == 'legal':
         _, items = b
         body = ''.join('<h2 class="lh">%s</h2>%s' % (E(h), ''.join('<p>%s</p>' % x for x in paras)) for h, paras in items)
@@ -496,11 +495,11 @@ def block(b, pg):
         _, ey, h, p, head, rows, note = b
         th = ''.join('<th scope="col">%s</th>' % E(x) for x in head)
         tr = ''.join('<tr>%s</tr>' % ''.join(('<th scope="row">%s</th>' if i == 0 else '<td>%s</td>') % E(c) for i, c in enumerate(r)) for r in rows)
-        return '<section class="sec"><div class="wrap">%s<div class="tbl reveal"><table><thead><tr>%s</tr></thead><tbody>%s</tbody></table></div>%s</div></section>' % (sec_head(ey, h, p, pg['c']), th, tr, '<p class="note">%s</p>' % note if note else '')
+        return '<section class="sec"><div class="wrap">%s<div class="tbl" data-r><table><thead><tr>%s</tr></thead><tbody>%s</tbody></table></div>%s</div></section>' % (sec_head(ey, h, p, pg['c']), th, tr, '<p class="note">%s</p>' % note if note else '')
     if k == 'faq':
         _, items = b
         body = ''.join('<details><summary>%s</summary><p>%s</p></details>' % (E(q), E(a)) for q, a in items)
-        return '<section class="sec faq"><div class="wrap">%s<div class="reveal">%s</div></div></section>' % (sec_head('Domande', 'Domande frequenti.', None, pg['c']), body)
+        return '<section class="sec faq"><div class="wrap">%s<div data-r>%s</div></div></section>' % (sec_head('Domande', 'Domande frequenti.', None, pg['c']), body)
     raise ValueError(k)
 
 def render(pg):
@@ -508,8 +507,8 @@ def render(pg):
     url = SITE + pg['url']
     blocks = ''.join(block(b, pg) for b in pg['blocks'])
     rel = [s for s in SERVICES if s[0] != pg['url']][:3]
-    related = '<section class="sec"><div class="wrap">%s<div class="related reveal">%s</div></div></section>' % (
-        sec_head('Altri servizi', 'Lavoriamo anche su:', None, pg['c']), ''.join('<a href="%s"><b>%s</b><span>%s</span></a>' % (u, E(n), E(d)) for u, n, d in rel))
+    related = '<section class="sec"><div class="wrap">%s<ul class="rel">%s</ul></div></section>' % (
+        sec_head('Altri servizi', 'Lavoriamo anche su.', None, pg['c']), ''.join('<li data-r><a href="%s"><b>%s</b><span>%s</span><i aria-hidden="true">→</i></a></li>' % (u, E(n), E(d)) for u, n, d in rel))
     sec_label, sec_href = parent(pg)
     return f'''<!doctype html>
 <!-- generated by tools/build.py from tools/pages.py: edit the text there -->
@@ -534,7 +533,7 @@ def render(pg):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/pages.css">
+<link rel="stylesheet" href="/assets/pages.css?v=2">
 <link rel="preload" as="image" href="/assets/pages/galaxy.jpg" media="(min-aspect-ratio:4/5)">
 <link rel="preload" as="image" href="/assets/pages/galaxy-m.jpg" media="(max-aspect-ratio:4/5)">
 <script>document.documentElement.className += ' js';</script>
@@ -548,29 +547,29 @@ def render(pg):
   <div class="wrap nav-in">
     <a class="brand" href="/"><img src="/assets/brand/mark-64.png" srcset="/assets/brand/mark-64.png 1x, /assets/brand/mark-128.png 2x" alt="" width="26" height="26">NovaSignal</a>
     <nav class="nav-links" aria-label="Principale"><a href="/#servizi">Servizi</a><a href="/#lavori">Lavori</a><a href="/#metodo">Metodo</a><a href="/#prezzi">Prezzi</a><a href="/#faq">FAQ</a></nav>
-    <a class="btn btn-primary" href="#contatto"><span class="sq"></span>Parliamone</a>
+    <a class="btn btn-primary" href="#contatto"><span class="sq"></span><span class="l">Inizia il tuo progetto</span><span class="s">Parliamone</span></a>
   </div>
 </header>
 <main id="main">
 <section class="p-hero{' short' if pg.get('legal') else ''}">
   {hero_video(pg)}
   <div class="wrap">
-    <ol class="crumbs" aria-label="Percorso"><li><a href="/">NovaSignal</a></li><li><a href="{sec_href}">{sec_label}</a></li><li aria-current="page">{E(pg['crumb'])}</li></ol>
-    <p class="tag"><i style="--c:{pg['c']}"></i>{E(pg['tag'])}</p>
-    <h1>{E(pg['h1'])}</h1>
-    <p class="lead">{E(pg['lead'])}</p>
-    {'' if pg.get('legal') else '<div class="ctas"><a class="btn btn-primary" href="#contatto"><span class="sq"></span>Richiedi l’anteprima gratuita</a>' + ('' if pg.get('case') else '<a class="btn btn-ghost" href="#prezzi">Vedi i prezzi</a>') + '</div>'}
+    <ol class="crumbs" aria-label="Percorso" data-r><li><a href="/">NovaSignal</a></li><li><a href="{sec_href}">{sec_label}</a></li><li aria-current="page">{E(pg['crumb'])}</li></ol>
+    <p class="tag" data-r><i style="--c:{pg['c']}"></i>{E(pg['tag'])}</p>
+    <h1 data-r>{E(pg['h1'])}</h1>
+    <p class="lead" data-r>{E(pg['lead'])}</p>
+    {'' if pg.get('legal') else '<div class="ctas" data-r><a class="btn btn-primary" href="#contatto"><span class="sq"></span>Richiedi l’anteprima gratuita</a>' + ('' if pg.get('case') else '<a class="btn btn-ghost" href="#prezzi">Vedi i prezzi</a>') + '</div>'}
   </div>
 </section>
 {blocks}
 {'' if pg.get('case') or pg.get('legal') else related}
 <section class="cta-band" id="contatto">
   <div class="wrap">
-    <p class="tag"><i style="--c:{pg['c']}"></i>Send a signal</p>
-    <h2>Raccontaci il tuo progetto.</h2>
-    <p class="lead">Rispondiamo entro 24 ore lavorative con una proposta e la data della tua anteprima gratuita.</p>
-    <div class="ctas"><a class="btn btn-primary" href="{WA}{quote(pg['wa'])}" target="_blank" rel="noopener"><span class="sq"></span>Scrivici su WhatsApp</a><a class="btn btn-ghost" href="mailto:studio@novasignal.it">studio@novasignal.it</a></div>
-    <p class="alt">Preferisci un modulo? <a href="/#contatti">Compila il brief sul sito</a>.</p>
+    <p class="tag" data-r><i style="--c:{pg['c']}"></i>Send a signal</p>
+    <h2 data-r>Raccontaci il tuo progetto.</h2>
+    <p class="lead" data-r>Rispondiamo entro 24 ore lavorative con una proposta e la data della tua anteprima gratuita.</p>
+    <div class="ctas" data-r><a class="btn btn-primary" href="{WA}{quote(pg['wa'])}" target="_blank" rel="noopener"><span class="sq"></span>Scrivici su WhatsApp</a><a class="btn btn-ghost" href="mailto:studio@novasignal.it">studio@novasignal.it</a></div>
+    <p class="alt" data-r>Preferisci un modulo? <a href="/#contatti">Compila il brief sul sito</a>.</p>
   </div>
 </section>
 </main>
@@ -600,12 +599,27 @@ def render(pg):
   if (hv) start(hv);
   if (sp && !old) addEventListener('load', function () {{ setTimeout(function () {{ start(sp); }}, hv ? 2500 : 900); }});
 }})();
-(function () {{ // sections fade in once
-  var els = document.querySelectorAll('.reveal');
-  if (!('IntersectionObserver' in window)) {{ for (var i = 0; i < els.length; i++) els[i].classList.add('in'); return; }}
-  var io = new IntersectionObserver(function (es) {{ es.forEach(function (e) {{ if (e.isIntersecting) {{ e.target.classList.add('in'); io.unobserve(e.target); }} }}); }}, {{ rootMargin: '0px 0px -8% 0px' }});
-  for (var j = 0; j < els.length; j++) io.observe(els[j]);
+(function () {{ // content rises in as it enters, siblings one after another, like the home
+  var els = document.querySelectorAll('[data-r]'), i;
+  if (!('IntersectionObserver' in window)) {{ for (i = 0; i < els.length; i++) els[i].classList.add('in'); return; }}
+  for (i = 0; i < els.length; i++) {{ var e = els[i], k = 0, s = e.previousElementSibling; while (s) {{ if (s.hasAttribute('data-r')) k++; s = s.previousElementSibling; }} e.style.transitionDelay = Math.min(k, 6) * 70 + 'ms'; }}
+  var io = new IntersectionObserver(function (es) {{ es.forEach(function (x) {{ if (x.isIntersecting) {{ x.target.classList.add('in'); io.unobserve(x.target); }} }}); }}, {{ rootMargin: '0px 0px -6% 0px' }});
+  for (i = 0; i < els.length; i++) io.observe(els[i]);
 }})();
+</script>
+<script src="/assets/js/lenis.min.js" defer></script>
+<script>
+(function () {{ var n = document.querySelector('.nav'); function f() {{ n.classList.toggle('solid', (window.scrollY || pageYOffset) > 40); }} addEventListener('scroll', f, {{ passive: true }}); f(); }})();
+addEventListener('DOMContentLoaded', function () {{ // the same smooth scroll as the home
+  if (!window.Lenis || !window.ResizeObserver || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var touch = matchMedia('(hover: none)').matches;
+  var lenis = new Lenis({{ lerp: .085, smoothWheel: true, syncTouch: false }});
+  (function raf(t) {{ lenis.raf(t); requestAnimationFrame(raf); }})(performance.now());
+  document.querySelectorAll('a[href^="#"]').forEach(function (a) {{ a.addEventListener('click', function (e) {{
+    var id = a.getAttribute('href'); if (id.length < 2) return; var t = document.querySelector(id); if (!t) return;
+    e.preventDefault(); lenis.scrollTo(t, {{ offset: -70, duration: 1.4 }});
+  }}); }});
+}});
 </script>
 </body>
 </html>

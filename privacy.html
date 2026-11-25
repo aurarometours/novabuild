@@ -21,7 +21,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/pages.css">
+<link rel="stylesheet" href="/assets/pages.css?v=2">
 <link rel="preload" as="image" href="/assets/pages/galaxy.jpg" media="(min-aspect-ratio:4/5)">
 <link rel="preload" as="image" href="/assets/pages/galaxy-m.jpg" media="(max-aspect-ratio:4/5)">
 <script>document.documentElement.className += ' js';</script>
@@ -35,17 +35,17 @@
   <div class="wrap nav-in">
     <a class="brand" href="/"><img src="/assets/brand/mark-64.png" srcset="/assets/brand/mark-64.png 1x, /assets/brand/mark-128.png 2x" alt="" width="26" height="26">NovaSignal</a>
     <nav class="nav-links" aria-label="Principale"><a href="/#servizi">Servizi</a><a href="/#lavori">Lavori</a><a href="/#metodo">Metodo</a><a href="/#prezzi">Prezzi</a><a href="/#faq">FAQ</a></nav>
-    <a class="btn btn-primary" href="#contatto"><span class="sq"></span>Parliamone</a>
+    <a class="btn btn-primary" href="#contatto"><span class="sq"></span><span class="l">Inizia il tuo progetto</span><span class="s">Parliamone</span></a>
   </div>
 </header>
 <main id="main">
 <section class="p-hero short">
   
   <div class="wrap">
-    <ol class="crumbs" aria-label="Percorso"><li><a href="/">NovaSignal</a></li><li><a href="/">Studio</a></li><li aria-current="page">Privacy e cookie</li></ol>
-    <p class="tag"><i style="--c:var(--cyan)"></i>Informativa ai sensi degli artt. 13–14 del Regolamento UE 2016/679</p>
-    <h1>Privacy e cookie.</h1>
-    <p class="lead">Ultimo aggiornamento: 25 novembre 2026.</p>
+    <ol class="crumbs" aria-label="Percorso" data-r><li><a href="/">NovaSignal</a></li><li><a href="/">Studio</a></li><li aria-current="page">Privacy e cookie</li></ol>
+    <p class="tag" data-r><i style="--c:var(--cyan)"></i>Informativa ai sensi degli artt. 13–14 del Regolamento UE 2016/679</p>
+    <h1 data-r>Privacy e cookie.</h1>
+    <p class="lead" data-r>Ultimo aggiornamento: 25 novembre 2026.</p>
     
   </div>
 </section>
@@ -53,11 +53,11 @@
 
 <section class="cta-band" id="contatto">
   <div class="wrap">
-    <p class="tag"><i style="--c:var(--cyan)"></i>Send a signal</p>
-    <h2>Raccontaci il tuo progetto.</h2>
-    <p class="lead">Rispondiamo entro 24 ore lavorative con una proposta e la data della tua anteprima gratuita.</p>
-    <div class="ctas"><a class="btn btn-primary" href="https://wa.me/393206891014?text=Ciao%20NovaSignal%2C%20ho%20una%20domanda%20sulla%20privacy." target="_blank" rel="noopener"><span class="sq"></span>Scrivici su WhatsApp</a><a class="btn btn-ghost" href="mailto:studio@novasignal.it">studio@novasignal.it</a></div>
-    <p class="alt">Preferisci un modulo? <a href="/#contatti">Compila il brief sul sito</a>.</p>
+    <p class="tag" data-r><i style="--c:var(--cyan)"></i>Send a signal</p>
+    <h2 data-r>Raccontaci il tuo progetto.</h2>
+    <p class="lead" data-r>Rispondiamo entro 24 ore lavorative con una proposta e la data della tua anteprima gratuita.</p>
+    <div class="ctas" data-r><a class="btn btn-primary" href="https://wa.me/393206891014?text=Ciao%20NovaSignal%2C%20ho%20una%20domanda%20sulla%20privacy." target="_blank" rel="noopener"><span class="sq"></span>Scrivici su WhatsApp</a><a class="btn btn-ghost" href="mailto:studio@novasignal.it">studio@novasignal.it</a></div>
+    <p class="alt" data-r>Preferisci un modulo? <a href="/#contatti">Compila il brief sul sito</a>.</p>
   </div>
 </section>
 </main>
@@ -87,12 +87,27 @@
   if (hv) start(hv);
   if (sp && !old) addEventListener('load', function () { setTimeout(function () { start(sp); }, hv ? 2500 : 900); });
 })();
-(function () { // sections fade in once
-  var els = document.querySelectorAll('.reveal');
-  if (!('IntersectionObserver' in window)) { for (var i = 0; i < els.length; i++) els[i].classList.add('in'); return; }
-  var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { rootMargin: '0px 0px -8% 0px' });
-  for (var j = 0; j < els.length; j++) io.observe(els[j]);
+(function () { // content rises in as it enters, siblings one after another, like the home
+  var els = document.querySelectorAll('[data-r]'), i;
+  if (!('IntersectionObserver' in window)) { for (i = 0; i < els.length; i++) els[i].classList.add('in'); return; }
+  for (i = 0; i < els.length; i++) { var e = els[i], k = 0, s = e.previousElementSibling; while (s) { if (s.hasAttribute('data-r')) k++; s = s.previousElementSibling; } e.style.transitionDelay = Math.min(k, 6) * 70 + 'ms'; }
+  var io = new IntersectionObserver(function (es) { es.forEach(function (x) { if (x.isIntersecting) { x.target.classList.add('in'); io.unobserve(x.target); } }); }, { rootMargin: '0px 0px -6% 0px' });
+  for (i = 0; i < els.length; i++) io.observe(els[i]);
 })();
+</script>
+<script src="/assets/js/lenis.min.js" defer></script>
+<script>
+(function () { var n = document.querySelector('.nav'); function f() { n.classList.toggle('solid', (window.scrollY || pageYOffset) > 40); } addEventListener('scroll', f, { passive: true }); f(); })();
+addEventListener('DOMContentLoaded', function () { // the same smooth scroll as the home
+  if (!window.Lenis || !window.ResizeObserver || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var touch = matchMedia('(hover: none)').matches;
+  var lenis = new Lenis({ lerp: .085, smoothWheel: true, syncTouch: false });
+  (function raf(t) { lenis.raf(t); requestAnimationFrame(raf); })(performance.now());
+  document.querySelectorAll('a[href^="#"]').forEach(function (a) { a.addEventListener('click', function (e) {
+    var id = a.getAttribute('href'); if (id.length < 2) return; var t = document.querySelector(id); if (!t) return;
+    e.preventDefault(); lenis.scrollTo(t, { offset: -70, duration: 1.4 });
+  }); });
+});
 </script>
 </body>
 </html>
