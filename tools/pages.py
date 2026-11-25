@@ -26,6 +26,27 @@ PRICES = {
     'care': ('Care', '€79', '/mese', 'Hosting, backup, aggiornamenti e piccole modifiche.'),
 }
 
+# hero film per page (by 'img'): the home's world films where they fit, niche films in assets/pages/v-*.mp4
+# (src, mobile src or None, legacy 720p src or None, poster)
+V = '/assets/video/'; PV = '/assets/pages/'
+HERO_VIDEO = {
+    'sites':    (V + 'planet-loop.mp4', V + 'planet-m-loop.mp4', None, V + 'planet.jpg'),
+    'software': (V + 'corridor.mp4', V + 'corridor-m.mp4', V + 'corridor-l.mp4', V + 'corridor.jpg'),
+    'app':      (V + 'grid.mp4', V + 'grid-m.mp4', None, V + 'grid.jpg'),
+    'auto':     (V + 'nebula.mp4', V + 'nebula-m.mp4', V + 'nebula-l.mp4', V + 'nebula.jpg'),
+}
+import os as _os
+for _k in ('jewel', 'optic', 'antique', 'webapp', 'cost', 'aura'):
+    if _os.path.exists(_os.path.join(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))), 'assets/pages/v-%s.mp4' % _k)):
+        HERO_VIDEO[_k] = (PV + 'v-%s.mp4' % _k, None, PV + 'v-%s.mp4' % _k, PV + 'v-%s.jpg' % _k)
+
+def hero_video(pg):
+    v = HERO_VIDEO.get(pg['img'])
+    if not v or pg.get('legal'): return ''
+    src, m, l, poster = v
+    return ('<div class="hv" aria-hidden="true"><video muted playsinline loop preload="none" poster="%s" data-src="%s"%s%s></video></div>'
+            % (poster, src, ' data-src-m="%s"' % m if m else '', ' data-src-l="%s"' % l if l else ''))
+
 AURA = {'url': '/lavori/aura-rome-tours', 'img': '/assets/work/aura.jpg', 'name': 'Aura Rome Tours',
         'line': 'Tour privati in golf cart elettrico a Roma: sito, prenotazioni e pagamenti online per un servizio premium.'}
 
@@ -532,6 +553,7 @@ def render(pg):
 </header>
 <main id="main">
 <section class="p-hero{' short' if pg.get('legal') else ''}">
+  {hero_video(pg)}
   <div class="wrap">
     <ol class="crumbs" aria-label="Percorso"><li><a href="/">NovaSignal</a></li><li><a href="{sec_href}">{sec_label}</a></li><li aria-current="page">{E(pg['crumb'])}</li></ol>
     <p class="tag"><i style="--c:{pg['c']}"></i>{E(pg['tag'])}</p>
@@ -565,15 +587,18 @@ def render(pg):
   </div>
 </footer>
 <script>
-(function () {{ // the galaxy of the home, moving, once the page has loaded (never on save-data, reduced motion or old Safari)
-  var v = document.querySelector('.space video'); if (!v) return;
+(function () {{ // films: the niche film in the banner first, then the galaxy of the home (never on save-data or reduced motion)
   var c = navigator.connection || {{}};
-  if (c.saveData || /2g/.test(c.effectiveType || '') || matchMedia('(prefers-reduced-motion: reduce)').matches || !(window.CSS && CSS.supports && CSS.supports('inset', '0'))) return;
-  addEventListener('load', function () {{ setTimeout(function () {{
-    v.src = matchMedia('(max-aspect-ratio: 4/5)').matches ? v.dataset.srcM : v.dataset.src;
-    v.addEventListener('playing', function () {{ v.classList.add('on'); }}, {{ once: true }});
+  if (c.saveData || /2g/.test(c.effectiveType || '') || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var old = !(window.CSS && CSS.supports && CSS.supports('inset', '0')), tall = matchMedia('(max-aspect-ratio: 4/5)').matches;
+  function start(v) {{
+    var d = v.dataset, src = old ? d.srcL : (tall && d.srcM) || d.src; if (!src) return;
+    v.src = src; v.addEventListener('playing', function () {{ v.classList.add('on'); }}, {{ once: true }});
     var p = v.play(); if (p && p.catch) p.catch(function () {{}});
-  }}, 900); }});
+  }}
+  var hv = document.querySelector('.hv video'), sp = document.querySelector('.space video');
+  if (hv) start(hv);
+  if (sp && !old) addEventListener('load', function () {{ setTimeout(function () {{ start(sp); }}, hv ? 2500 : 900); }});
 }})();
 (function () {{ // sections fade in once
   var els = document.querySelectorAll('.reveal');

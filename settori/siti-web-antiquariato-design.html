@@ -40,6 +40,7 @@
 </header>
 <main id="main">
 <section class="p-hero">
+  
   <div class="wrap">
     <ol class="crumbs" aria-label="Percorso"><li><a href="/">NovaSignal</a></li><li><a href="/servizi/realizzazione-siti-web-roma">Siti web</a></li><li aria-current="page">Antiquariato e design</li></ol>
     <p class="tag"><i style="--c:var(--ember)"></i>Per antiquari e gallerie</p>
@@ -73,15 +74,18 @@
   </div>
 </footer>
 <script>
-(function () { // the galaxy of the home, moving, once the page has loaded (never on save-data, reduced motion or old Safari)
-  var v = document.querySelector('.space video'); if (!v) return;
+(function () { // films: the niche film in the banner first, then the galaxy of the home (never on save-data or reduced motion)
   var c = navigator.connection || {};
-  if (c.saveData || /2g/.test(c.effectiveType || '') || matchMedia('(prefers-reduced-motion: reduce)').matches || !(window.CSS && CSS.supports && CSS.supports('inset', '0'))) return;
-  addEventListener('load', function () { setTimeout(function () {
-    v.src = matchMedia('(max-aspect-ratio: 4/5)').matches ? v.dataset.srcM : v.dataset.src;
-    v.addEventListener('playing', function () { v.classList.add('on'); }, { once: true });
+  if (c.saveData || /2g/.test(c.effectiveType || '') || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var old = !(window.CSS && CSS.supports && CSS.supports('inset', '0')), tall = matchMedia('(max-aspect-ratio: 4/5)').matches;
+  function start(v) {
+    var d = v.dataset, src = old ? d.srcL : (tall && d.srcM) || d.src; if (!src) return;
+    v.src = src; v.addEventListener('playing', function () { v.classList.add('on'); }, { once: true });
     var p = v.play(); if (p && p.catch) p.catch(function () {});
-  }, 900); });
+  }
+  var hv = document.querySelector('.hv video'), sp = document.querySelector('.space video');
+  if (hv) start(hv);
+  if (sp && !old) addEventListener('load', function () { setTimeout(function () { start(sp); }, hv ? 2500 : 900); });
 })();
 (function () { // sections fade in once
   var els = document.querySelectorAll('.reveal');
