@@ -1,9 +1,15 @@
 # NovaSignal — sito
 
-Sito statico, nessuna build: si pubblica così com'è.
+Sito statico: Vercel lo pubblica così com'è. Dopo ogni modifica a `index.html` o ai testi delle pagine, esegui
+`python3 tools/build.py` e committa i file generati (`en.html`, `servizi/`, `lavori/`, `sitemap.xml`).
 
 ## Struttura
-- `index.html` — pagina unica (HTML, CSS e JS inclusi)
+- `index.html` — home in italiano (HTML, CSS e JS inclusi), sorgente di tutto
+- `en.html` — home in inglese su `/en`, **generata** da `tools/build.py` (non modificarla a mano)
+- `servizi/*.html`, `lavori/*.html` — pagine servizio e casi studio, **generate** da `tools/pages.py` (i testi si cambiano lì)
+- `assets/pages.css`, `assets/pages/` — stile e immagini delle pagine contenuto
+- `robots.txt`, `sitemap.xml` — la sitemap è generata, con `lastmod` solo quando un file cambia davvero
+- `tools/` e `docs/` non vengono pubblicati (`.vercelignore`)
 - `assets/hero/` — 240 fotogrammi della hero (desktop)
 - `assets/hero-m/` — 160 fotogrammi della hero (telefono, verticali)
 - `assets/video/` — video delle scene; i file `-m` sono le versioni verticali per telefono

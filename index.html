@@ -3,12 +3,25 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>NovaSignal — Design &amp; Technology Studio</title>
+<script>/* copies of this page on other hosts (GitHub Pages) hand over to the real address */
+if (/\.github\.io$/.test(location.hostname)) location.replace('https://novasignal.it/' + location.hash);</script>
+<title>Siti web, software e app su misura a Roma | NovaSignal</title>
 <meta name="description" content="NovaSignal progetta e sviluppa siti web, software, app e automazioni su misura. Studio a Roma, clienti in tutto il mondo. Anteprima gratuita prima di pagare.">
+<link rel="canonical" href="https://novasignal.it/">
+<link rel="alternate" hreflang="it" href="https://novasignal.it/">
+<link rel="alternate" hreflang="en" href="https://novasignal.it/en">
+<link rel="alternate" hreflang="x-default" href="https://novasignal.it/">
 <meta name="theme-color" content="#000000">
-<meta property="og:title" content="NovaSignal — Design & Technology Studio">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NovaSignal">
+<meta property="og:url" content="https://novasignal.it/">
+<meta property="og:locale" content="it_IT">
+<meta property="og:locale:alternate" content="en_GB">
+<meta property="og:title" content="NovaSignal — Design &amp; Technology Studio">
 <meta property="og:description" content="Siti web, software, app e automazioni su misura. Anteprima gratuita prima di pagare.">
 <meta property="og:image" content="https://novasignal.it/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json" id="ld">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://novasignal.it/#org","name":"NovaSignal","url":"https://novasignal.it/","logo":"https://novasignal.it/assets/brand/mark-512.png","image":"https://novasignal.it/og-image.jpg","email":"studio@novasignal.it","telephone":"+39 320 689 1014","address":{"@type":"PostalAddress","addressLocality":"Roma","addressCountry":"IT"},"contactPoint":{"@type":"ContactPoint","contactType":"sales","email":"studio@novasignal.it","telephone":"+39 320 689 1014","availableLanguage":["Italian","English"]},"hasOfferCatalog":{"@type":"OfferCatalog","name":"Pacchetti NovaSignal","itemListElement":[{"@type":"Offer","name":"Signal","description":"Sito web su misura, fino a 6 pagine","priceSpecification":{"@type":"PriceSpecification","price":1900,"priceCurrency":"EUR","valueAddedTaxIncluded":false},"itemOffered":{"@type":"Service","name":"Signal","provider":{"@id":"https://novasignal.it/#org"}}},{"@type":"Offer","name":"Nova","description":"Sito con e-commerce o prenotazioni, multilingua","priceSpecification":{"@type":"PriceSpecification","price":4900,"priceCurrency":"EUR","valueAddedTaxIncluded":false},"itemOffered":{"@type":"Service","name":"Nova","provider":{"@id":"https://novasignal.it/#org"}}},{"@type":"Offer","name":"Supernova","description":"Software, web app e app mobile su misura","priceSpecification":{"@type":"PriceSpecification","minPrice":14000,"priceCurrency":"EUR","valueAddedTaxIncluded":false},"itemOffered":{"@type":"Service","name":"Supernova","provider":{"@id":"https://novasignal.it/#org"}}}]}},{"@type":"WebSite","@id":"https://novasignal.it/#site","url":"https://novasignal.it/","name":"NovaSignal","inLanguage":["it","en"],"publisher":{"@id":"https://novasignal.it/#org"}},{"@type":"WebPage","@id":"https://novasignal.it/#page","url":"https://novasignal.it/","inLanguage":"it","isPartOf":{"@id":"https://novasignal.it/#site"},"about":{"@id":"https://novasignal.it/#org"},"name":"Siti web, software e app su misura a Roma | NovaSignal"}]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -88,7 +101,7 @@ footer .brand img{width:30px;height:30px}
 .nav .btn-primary:hover{transform:translateY(-1px);box-shadow:0 0 0 4px rgba(245,245,247,.08),0 8px 24px rgba(242,181,68,.14)}
 .lang{transition:border-color .3s,background .3s}.lang:hover{background:rgba(255,255,255,.06)}
 .nav-r{display:flex;align-items:center;gap:14px}
-.lang{font-size:.85rem;font-weight:600;width:40px;height:36px;border-radius:999px;border:1px solid var(--line)}
+.lang{display:inline-flex;align-items:center;justify-content:center;color:inherit;text-decoration:none;font-size:.85rem;font-weight:600;width:40px;height:36px;border-radius:999px;border:1px solid var(--line)}
 .lang:hover{border-color:var(--paper)}
 .nav .btn{height:40px;padding:0 18px;font-size:.9rem}
 .nav-mini{display:none;font-size:.92rem;font-weight:500}
@@ -312,13 +325,18 @@ footer .brand img{width:30px;height:30px}
 .plan .buy{display:flex;flex-direction:column;align-items:flex-start;gap:12px;margin-top:8px}
 .ck{position:fixed;top:0;right:0;bottom:0;left:0;z-index:150;display:grid;place-items:center;padding:16px;background:rgba(0,0,0,.62);-webkit-backdrop-filter:blur(10px) saturate(1.2);backdrop-filter:blur(10px) saturate(1.2);animation:ckFade .4s var(--ease) both}
 .ck[hidden]{display:none}
+.langhint{position:fixed;top:calc(72px + env(safe-area-inset-top));left:50%;z-index:90;transform:translate(-50%,-8px);opacity:0;display:inline-flex;align-items:center;gap:10px;height:38px;padding:0 8px 0 16px;border-radius:999px;border:1px solid rgba(245,245,247,.18);background:rgba(16,16,18,.72);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);color:var(--paper);font-size:.84rem;text-decoration:none;transition:opacity .5s var(--ease),transform .6s var(--ease)}
+.langhint.in{opacity:1;transform:translate(-50%,0)}.langhint b{font-weight:600}.langhint i{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--paper);color:#000;font-style:normal;font-size:.8rem}
+html[lang="en"] [data-only="it"]{display:none!important}
+@media (min-width:761px){html[lang="it"] .foot{grid-template-columns:2fr 1fr 1fr 1fr}}
+.case-link{display:table;margin:16px 0 0;padding-bottom:2px;font-weight:600;font-size:.94rem;color:var(--paper);text-decoration:none;border-bottom:1px solid rgba(245,245,247,.35)}.case-link:hover{border-color:var(--paper)}
 
 /* ---------- reading pilot (phones): words light at reading pace, then the page moves on ---------- */
 .rw{transition:opacity .42s ease}
 .pacing .rw{opacity:.24}.pacing .rw.on{opacity:1}
 .pilot{position:fixed;left:50%;bottom:calc(25px + env(safe-area-inset-bottom));z-index:79;display:inline-flex;align-items:stretch;height:34px;padding:0;border-radius:999px;border:1px solid rgba(245,245,247,.16);background:rgba(16,16,18,.62);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);color:rgba(245,245,247,.88);font:500 .76rem/1 inherit;letter-spacing:-.005em;overflow:hidden;transform:translate(-50%,0);opacity:1;transition:opacity .45s var(--ease),transform .55s var(--ease);-webkit-tap-highlight-color:transparent;cursor:pointer}
 .pilot[hidden]{display:inline-flex;opacity:0;transform:translate(-50%,14px);pointer-events:none}
-.pilot button{all:unset;display:inline-flex;align-items:center;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.pilot button{all:unset;display:inline-flex;align-items:center;white-space:nowrap;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .pilot .pmain{padding:0 12px 0 11px}.pilot .pmain svg{margin-right:8px}
 .pilot .pspd{padding:0 13px 0 12px;border-left:1px solid rgba(245,245,247,.16);font-variant-numeric:tabular-nums;font-weight:600;min-width:24px;justify-content:center}
 .pilot svg{width:12px;height:12px;fill:currentColor}
@@ -589,7 +607,7 @@ footer{overflow:hidden}
     </nav>
     <div class="nav-r">
       <a class="nav-mini" href="#lavori" data-i18n="nav.work">Lavori</a>
-      <button class="lang" id="langBtn" aria-label="Switch to English">EN</button>
+      <a class="lang" id="langBtn" href="/en" hreflang="en" lang="en" aria-label="Switch to English">EN</a>
       <a class="btn btn-primary" href="#servizi" data-go="next"><span class="sq"></span><span data-i18n="cta.start">Inizia il tuo progetto</span></a>
     </div>
   </div>
@@ -618,13 +636,13 @@ footer{overflow:hidden}
     <div class="hero-copy hero-a" id="heroA">
       <div class="wrap">
         <p class="tag"><i style="--c:var(--ember)"></i>Design &amp; Technology Studio</p>
-        <h1 class="display" data-i18n="hero.h1" data-html><span class="line"><span>Costruiamo</span></span><span class="line"><span>il segnale</span></span><span class="line"><span>del tuo business.</span></span></h1>
+        <p class="display" data-i18n="hero.h1" data-html><span class="line"><span>Costruiamo</span></span><span class="line"><span>il segnale</span></span><span class="line"><span>del tuo business.</span></span></p>
       </div>
     </div>
 
     <div class="hero-copy hero-b" id="heroB">
       <div class="wrap">
-        <h2 class="h2" data-i18n="hero.h2">Siti, software, app e automazioni.</h2>
+        <h1 class="h2" data-i18n="hero.h2">Siti web, software, app e automazioni.</h1>
         <p class="lead" data-i18n="hero.lead">Un solo team per strategia, design, sviluppo e crescita. Studio a Roma, clienti in tutto il mondo. Ti mostriamo un'anteprima gratuita prima che tu paghi.</p>
         <div class="ctas">
           <a class="btn btn-primary" href="#servizi" data-go="manifesto"><span class="sq"></span><span data-i18n="cta.start">Inizia il tuo progetto</span></a>
@@ -734,6 +752,7 @@ footer{overflow:hidden}
           <p class="lead" data-i18n="w1.p">Sito vetrina e prenotazioni per un servizio premium: atmosfera cinematografica, percorso chiaro fino alla richiesta.</p>
           <div class="chips" data-i18n="w1.chips" data-html><span>Sito web</span><span>Prenotazioni</span><span>Brand</span></div>
           <a class="btn btn-ghost" href="https://aurarometours.it" target="_blank" rel="noopener" data-i18n="work.visit">Visita il sito</a>
+          <a class="case-link" href="/lavori/aura-rome-tours" data-only="it">Leggi il caso studio</a>
         </div>
       </article>
       <article class="slide" data-slide>
@@ -904,6 +923,10 @@ footer{overflow:hidden}
       <div>
         <h4 data-i18n="foot.studio">Studio</h4>
         <ul><li><a href="#servizi" data-i18n="nav.services">Servizi</a></li><li><a href="#lavori" data-i18n="nav.work">Lavori</a></li><li><a href="#prezzi" data-i18n="nav.pricing">Prezzi</a></li><li><a href="#faq">FAQ</a></li></ul>
+      </div>
+      <div data-only="it">
+        <h4>Servizi</h4>
+        <ul><li><a href="/servizi/realizzazione-siti-web-roma">Siti web su misura</a></li><li><a href="/servizi/sviluppo-software-su-misura">Software e gestionali</a></li><li><a href="/servizi/sviluppo-web-app">Web app e SaaS</a></li><li><a href="/servizi/automazioni-aziendali-ai">Automazioni e AI</a></li><li><a href="/lavori/aura-rome-tours">Caso studio: Aura Rome Tours</a></li></ul>
       </div>
       <div>
         <h4 data-i18n="foot.contact">Contatti</h4>
@@ -1104,10 +1127,10 @@ const EN = {
   'f.note':'WhatsApp opens with your message ready. Prefer email? Write to <a href="mailto:studio@novasignal.it">studio@novasignal.it</a>','nav.top':'Top','f.multi':'pick as many as you like','f.pkg':'Package','f.ph.name':'e.g. Jane Smith, Smith Studio','f.ph.msg':'e.g. A Nova website for my studio: online booking, two languages, launch in March.','f.err':'Add your name so we know who to reply to.',
   'foot.p':'Design & Technology Studio in Rome. Clients in Italy, Europe, the UK, the US and the UAE.','foot.studio':'Studio','foot.contact':'Contact','foot.privacy':'Privacy and cookies','foot.made':'Designed and built in Rome'
 };
-const IT = {};
+const IT = Object.assign({}, window.__IT_DICT || {});   // on /en the Italian text ships as data
 $$('[data-i18n]').forEach(el => { const k = el.dataset.i18n; if (!(k in IT)) IT[k] = el.hasAttribute('data-html') || /<\w/.test(EN[k] || '') ? el.innerHTML : el.textContent; });
 IT['f.err'] = 'Inserisci il tuo nome così sappiamo a chi rispondere.';
-$$('[data-ph]').forEach(el => { IT[el.dataset.ph] = el.placeholder; });
+$$('[data-ph]').forEach(el => { if (!(el.dataset.ph in IT)) IT[el.dataset.ph] = el.placeholder; });
 let lang = 'it';
 const relayout = [];
 function setLang(l) {
@@ -1116,18 +1139,42 @@ function setLang(l) {
   $$('[data-ph]').forEach(el => { const v = dict[el.dataset.ph]; if (v != null) el.placeholder = v; });
   document.documentElement.lang = l;
   const b = $('#langBtn'); b.textContent = l === 'en' ? 'IT' : 'EN'; b.setAttribute('aria-label', l === 'en' ? 'Passa all’italiano' : 'Switch to English');
+  b.href = l === 'en' ? '/' : '/en'; b.hreflang = b.lang = l === 'en' ? 'it' : 'en';
+  const M = META[l]; document.title = M.t; $('meta[name="description"]').content = M.d;
   splitWords($('#mtext'));
   relayout.forEach(f => f());
-  try { localStorage.setItem('ns-lang', l); } catch (e) {}
   if (window.ScrollTrigger) ScrollTrigger.refresh();
 }
 function splitWords(el) { el.innerHTML = el.textContent.trim().split(/\s+/).map(w => `<span class="w">${w}</span>`).join(' '); }
 splitWords($('#mtext'));
-let saved = null; try { saved = localStorage.getItem('ns-lang'); } catch (e) {}
-const qp = new URLSearchParams(location.search).get('lang');
-const initial = qp || saved || ((navigator.language || 'it').startsWith('it') ? 'it' : 'en');
-if (initial === 'en') setLang('en');
-$('#langBtn').addEventListener('click', () => setLang(lang === 'it' ? 'en' : 'it'));
+const PAGE = document.documentElement.lang === 'en' ? 'en' : 'it';
+const META = { it: { t: 'Siti web, software e app su misura a Roma | NovaSignal', d: $('meta[name="description"]').content },
+  en: { t: 'Custom websites, software and apps from Rome | NovaSignal', d: 'NovaSignal designs and builds custom websites, software, apps and automation. Studio in Rome, clients worldwide. Free preview before you pay.' } };
+if (PAGE === 'en') { META.en.d = $('meta[name="description"]').content; setLang('en'); }
+{ // old ?lang=en links and a choice made on an earlier visit lead to the right address
+  let saved = null; try { saved = localStorage.getItem('ns-lang'); } catch (e) {}
+  const qp = new URLSearchParams(location.search).get('lang');
+  const want = qp || (document.referrer.indexOf(location.host) < 0 ? saved : null);
+  if (want && want !== PAGE && /^(it|en)$/.test(want)) location.replace((want === 'en' ? '/en' : '/') + location.hash);
+}
+{ // first visit from a browser in another language: a quiet pointer to the other version, never an automatic switch
+  let saved = null; try { saved = localStorage.getItem('ns-lang'); } catch (e) {}
+  const nav = (navigator.languages && navigator.languages[0]) || navigator.language || 'it', other = PAGE === 'it' ? 'en' : 'it';
+  if (!saved && (PAGE === 'it' ? !/^it\b/i.test(nav) : /^it\b/i.test(nav))) {
+    const a = document.createElement('a'); a.className = 'langhint'; a.href = other === 'en' ? '/en' : '/'; a.hreflang = other; a.lang = other;
+    a.innerHTML = other === 'en' ? '<span>This page is in Italian. <b>View in English</b></span><i aria-hidden="true">→</i>' : '<span>Questa pagina è in inglese. <b>Versione italiana</b></span><i aria-hidden="true">→</i>';
+    a.addEventListener('click', () => { try { localStorage.setItem('ns-lang', other); } catch (e) {} });
+    document.body.appendChild(a);
+    const show = () => { a.classList.add('in'); setTimeout(() => { a.classList.remove('in'); setTimeout(() => a.remove(), 700); }, 9000); };
+    const wait = () => document.getElementById('loader') ? setTimeout(wait, 300) : setTimeout(show, 600); wait();
+  }
+}
+$('#langBtn').addEventListener('click', e => {
+  if (e.metaKey || e.ctrlKey || e.shiftKey) return;
+  e.preventDefault(); const l = lang === 'it' ? 'en' : 'it'; setLang(l);
+  try { localStorage.setItem('ns-lang', l); } catch (err) {}
+  try { history.replaceState(null, '', (l === 'en' ? '/en' : '/') + location.hash); } catch (err) {}
+});
 
 /* ======================= frame sequences ======================= */
 const WEBP = new Promise(r => { const t = new Image(); t.onload = () => r(t.width === 1); t.onerror = () => r(false);
