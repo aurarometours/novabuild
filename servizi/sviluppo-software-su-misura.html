@@ -22,13 +22,14 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/pages.css">
-<link rel="preload" as="image" href="/assets/pages/software.jpg" media="(min-width:801px)">
-<link rel="preload" as="image" href="/assets/pages/software-800.jpg" media="(max-width:800px)">
+<link rel="preload" as="image" href="/assets/pages/galaxy.jpg" media="(min-aspect-ratio:4/5)">
+<link rel="preload" as="image" href="/assets/pages/galaxy-m.jpg" media="(max-aspect-ratio:4/5)">
 <script>document.documentElement.className += ' js';</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://novasignal.it/servizi/sviluppo-software-su-misura#page","url":"https://novasignal.it/servizi/sviluppo-software-su-misura","name":"Sviluppo software e gestionali su misura | NovaSignal","description":"Gestionali, pannelli admin, portali clienti e database costruiti intorno a come lavori davvero. Studio a Roma, progetti su misura da €14.000.","inLanguage":"it","isPartOf":{"@id":"https://novasignal.it/#site"},"breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"NovaSignal","item":"https://novasignal.it/"},{"@type":"ListItem","position":2,"name":"Servizi","item":"https://novasignal.it/#servizi"},{"@type":"ListItem","position":3,"name":"Software e gestionali","item":"https://novasignal.it/servizi/sviluppo-software-su-misura"}]}},{"@type":"Service","@id":"https://novasignal.it/servizi/sviluppo-software-su-misura#service","name":"Sviluppo software su misura","serviceType":"Sviluppo software su misura","description":"Gestionali, pannelli admin, portali clienti e database costruiti intorno a come lavori davvero. Studio a Roma, progetti su misura da €14.000.","provider":{"@type":"Organization","@id":"https://novasignal.it/#org","name":"NovaSignal","url":"https://novasignal.it/"},"areaServed":{"@type":"Country","name":"Italia"},"url":"https://novasignal.it/servizi/sviluppo-software-su-misura"}]}</script>
-<style>.p-hero .bg{background-image:url(/assets/pages/software.jpg)}@media (max-width:800px){.p-hero .bg{background-image:url(/assets/pages/software-800.jpg)}}</style>
+
 </head>
 <body>
+<div class="space" aria-hidden="true"><video muted playsinline loop preload="none" data-src="/assets/video/galaxy.mp4" data-src-m="/assets/video/galaxy-m.mp4"></video></div>
 <a class="skip" href="#main">Vai al contenuto</a>
 <header class="nav">
   <div class="wrap nav-in">
@@ -39,7 +40,6 @@
 </header>
 <main id="main">
 <section class="p-hero">
-  <div class="bg" aria-hidden="true"></div>
   <div class="wrap">
     <ol class="crumbs" aria-label="Percorso"><li><a href="/">NovaSignal</a></li><li><a href="/#servizi">Servizi</a></li><li aria-current="page">Software e gestionali</li></ol>
     <p class="tag"><i style="--c:var(--gold)"></i>Software su misura</p>
@@ -73,7 +73,17 @@
   </div>
 </footer>
 <script>
-(function () { // sections fade in once; nothing else runs on these pages
+(function () { // the galaxy of the home, moving, once the page has loaded (never on save-data, reduced motion or old Safari)
+  var v = document.querySelector('.space video'); if (!v) return;
+  var c = navigator.connection || {};
+  if (c.saveData || /2g/.test(c.effectiveType || '') || matchMedia('(prefers-reduced-motion: reduce)').matches || !(window.CSS && CSS.supports && CSS.supports('inset', '0'))) return;
+  addEventListener('load', function () { setTimeout(function () {
+    v.src = matchMedia('(max-aspect-ratio: 4/5)').matches ? v.dataset.srcM : v.dataset.src;
+    v.addEventListener('playing', function () { v.classList.add('on'); }, { once: true });
+    var p = v.play(); if (p && p.catch) p.catch(function () {});
+  }, 900); });
+})();
+(function () { // sections fade in once
   var els = document.querySelectorAll('.reveal');
   if (!('IntersectionObserver' in window)) { for (var i = 0; i < els.length; i++) els[i].classList.add('in'); return; }
   var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { rootMargin: '0px 0px -8% 0px' });

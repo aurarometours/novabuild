@@ -514,13 +514,14 @@ def render(pg):
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/pages.css">
-<link rel="preload" as="image" href="/assets/pages/{pg['img']}.jpg" media="(min-width:801px)">
-<link rel="preload" as="image" href="/assets/pages/{pg['img']}-800.jpg" media="(max-width:800px)">
+<link rel="preload" as="image" href="/assets/pages/galaxy.jpg" media="(min-aspect-ratio:4/5)">
+<link rel="preload" as="image" href="/assets/pages/galaxy-m.jpg" media="(max-aspect-ratio:4/5)">
 <script>document.documentElement.className += ' js';</script>
 {ld(pg)}
-<style>.p-hero .bg{{background-image:url(/assets/pages/{pg['img']}.jpg)}}@media (max-width:800px){{.p-hero .bg{{background-image:url(/assets/pages/{pg['img']}-800.jpg)}}}}</style>
+
 </head>
 <body>
+<div class="space" aria-hidden="true"><video muted playsinline loop preload="none" data-src="/assets/video/galaxy.mp4" data-src-m="/assets/video/galaxy-m.mp4"></video></div>
 <a class="skip" href="#main">Vai al contenuto</a>
 <header class="nav">
   <div class="wrap nav-in">
@@ -531,7 +532,6 @@ def render(pg):
 </header>
 <main id="main">
 <section class="p-hero{' short' if pg.get('legal') else ''}">
-  <div class="bg" aria-hidden="true"></div>
   <div class="wrap">
     <ol class="crumbs" aria-label="Percorso"><li><a href="/">NovaSignal</a></li><li><a href="{sec_href}">{sec_label}</a></li><li aria-current="page">{E(pg['crumb'])}</li></ol>
     <p class="tag"><i style="--c:{pg['c']}"></i>{E(pg['tag'])}</p>
@@ -565,7 +565,17 @@ def render(pg):
   </div>
 </footer>
 <script>
-(function () {{ // sections fade in once; nothing else runs on these pages
+(function () {{ // the galaxy of the home, moving, once the page has loaded (never on save-data, reduced motion or old Safari)
+  var v = document.querySelector('.space video'); if (!v) return;
+  var c = navigator.connection || {{}};
+  if (c.saveData || /2g/.test(c.effectiveType || '') || matchMedia('(prefers-reduced-motion: reduce)').matches || !(window.CSS && CSS.supports && CSS.supports('inset', '0'))) return;
+  addEventListener('load', function () {{ setTimeout(function () {{
+    v.src = matchMedia('(max-aspect-ratio: 4/5)').matches ? v.dataset.srcM : v.dataset.src;
+    v.addEventListener('playing', function () {{ v.classList.add('on'); }}, {{ once: true }});
+    var p = v.play(); if (p && p.catch) p.catch(function () {{}});
+  }}, 900); }});
+}})();
+(function () {{ // sections fade in once
   var els = document.querySelectorAll('.reveal');
   if (!('IntersectionObserver' in window)) {{ for (var i = 0; i < els.length; i++) els[i].classList.add('in'); return; }}
   var io = new IntersectionObserver(function (es) {{ es.forEach(function (e) {{ if (e.isIntersecting) {{ e.target.classList.add('in'); io.unobserve(e.target); }} }}); }}, {{ rootMargin: '0px 0px -8% 0px' }});
