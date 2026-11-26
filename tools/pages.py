@@ -455,9 +455,8 @@ def footer_groups():
 def footer_html():
     li = lambda u, n: '<li><a href="%s"%s>%s</a></li>' % (u, ' target="_blank" rel="noopener"' if u.startswith('https://wa') else '', E(n))
     cols = ''.join('<details class="fcol" open><summary>%s</summary><ul>%s</ul></details>' % (E(h), ''.join(li(u, n) for u, n in items)) for h, items in footer_groups())
-    return ('<footer>\n  <div class="wrap">\n    <div class="foot">\n      <div class="fbrand"><a class="brand" href="/"><img src="/assets/brand/mark-64.png" srcset="/assets/brand/mark-64.png 1x, /assets/brand/mark-128.png 2x" alt="" width="26" height="26">NovaSignal</a><p>Design &amp; Technology Studio a Roma.</p></div>\n      '
+    return ('<footer>\n  <div class="wrap">\n    <div class="foot">\n      <div class="fbrand"><a class="brand" href="/"><img src="/assets/brand/mark-64.png" srcset="/assets/brand/mark-64.png 1x, /assets/brand/mark-128.png 2x" alt="" width="26" height="26">NovaSignal</a><p>Design &amp; Technology Studio a Roma. Clienti in Italia, Europa, Regno Unito, Stati Uniti, Emirati e Asia.</p></div>\n      '
             + cols + '\n    </div>\n'
-            '    <p class="fmore">Altri modi per contattarci: scrivici su <a href="https://wa.me/393206891014" target="_blank" rel="noopener">WhatsApp</a>, chiama il <a href="tel:+393206891014">+39 320 689 1014</a> o scrivi a <a href="mailto:studio@novasignal.it">studio@novasignal.it</a>. Studio a Roma, progetti in tutta Italia e all’estero.</p>\n'
             '    <div class="legal"><span>© 2026 NovaSignal. Tutti i diritti riservati.</span><span class="legal-r"><a href="/privacy">Privacy e cookie</a><a href="#" data-consent>Preferenze cookie</a><a href="/mappa-del-sito">Mappa del sito</a><a href="/en" hreflang="en" lang="en">English</a></span></div>\n  </div>\n</footer>')
 
 def block_sitemap():
@@ -635,12 +634,7 @@ def render(pg):
 <script src="/assets/js/lenis.min.js" defer></script>
 <script src="/assets/consent.js" defer></script>
 <script>
-(function () {{ // footer groups: open on wide screens, folded on phones
-  var mq = matchMedia('(min-width:761px)'), ds = document.querySelectorAll('.fcol'), i;
-  function set() {{ for (i = 0; i < ds.length; i++) ds[i].open = mq.matches; }}
-  set(); if (mq.addEventListener) mq.addEventListener('change', set);
-  for (i = 0; i < ds.length; i++) ds[i].querySelector('summary').addEventListener('click', function (e) {{ if (mq.matches) e.preventDefault(); }});
-}})();
+(function () {{ var q = document.querySelectorAll('.fcol summary'), i; for (i = 0; i < q.length; i++) q[i].addEventListener('click', function (e) {{ e.preventDefault(); }}); }})();
 (function () {{ var n = document.querySelector('.nav'); function f() {{ n.classList.toggle('solid', (window.scrollY || pageYOffset) > 40); }} addEventListener('scroll', f, {{ passive: true }}); f(); }})();
 addEventListener('DOMContentLoaded', function () {{ // the same smooth scroll as the home
   if (!window.Lenis || !window.ResizeObserver || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
