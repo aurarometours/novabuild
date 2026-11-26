@@ -1,22 +1,27 @@
 /* NovaSignal — cookie consent + Google Tag Manager.
-   Nothing from Google loads until the visitor accepts (Garante privacy, Italy). The choice is kept in
+   Google Consent Mode v2: no analytics cookies until the visitor accepts; before that, anonymous cookieless pings only. The choice is kept in
    localStorage for 6 months; any element with [data-consent] reopens the banner. ES5 on purpose (old iPads). */
 (function () {
   var GTM = 'GTM-PH33HJKR', GA = 'G-1V60CXXQL4', KEY = 'ns-consent', MAX = 182 * 864e5;
   var en = (document.documentElement.lang || 'it').indexOf('en') === 0;
   var T = en
-    ? { p: 'We use analytics cookies to understand how the site is used, only if you agree.', more: 'Privacy & cookies', ok: 'Accept', no: 'Decline', href: '/privacy' }
-    : { p: 'Usiamo cookie di analisi per capire come viene usato il sito, solo se sei d’accordo.', more: 'Privacy e cookie', ok: 'Accetta', no: 'Rifiuta', href: '/privacy' };
+    ? { p: 'We use analytics cookies to improve the site. If you decline, we only measure anonymous visits, without cookies.', more: 'Privacy & cookies', ok: 'Accept', no: 'Decline', href: '/privacy' }
+    : { p: 'Usiamo cookie di analisi per migliorare il sito. Se rifiuti, misuriamo solo visite anonime, senza cookie.', more: 'Privacy e cookie', ok: 'Accetta', no: 'Rifiuta', href: '/privacy' };
 
   function read() { try { var v = JSON.parse(localStorage.getItem(KEY) || 'null'); return v && Date.now() - v.t < MAX ? v.v : null; } catch (e) { return null; } }
   function save(v) { try { localStorage.setItem(KEY, JSON.stringify({ v: v, t: Date.now() })); } catch (e) {} }
 
+  /* Consent Mode v2 "advanced": Google always loads. Until the visitor accepts, analytics_storage is denied,
+     so GA sets no cookies and sends only anonymous cookieless pings; after Accept it switches to full measurement.
+     Both choices are recorded as a consent_choice event. */
   var loaded = false;
-  function loadGTM() {
+  function gtag() { window.dataLayer.push(arguments); }
+  function loadGTM(v) {
     if (loaded) return; loaded = true;
     window.dataLayer = window.dataLayer || [];
-    window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
-    window.gtag('consent', 'default', { ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'granted' });
+    window.gtag = window.gtag || gtag;
+    window.gtag('consent', 'default', { ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: v === 'granted' ? 'granted' : 'denied' });
+    window.gtag('set', 'ads_data_redaction', true);
     window.gtag('js', new Date());
     window.gtag('config', GA);
     var g = document.createElement('script'); g.async = true; g.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA;
@@ -44,13 +49,19 @@
     box.innerHTML = '<p>' + T.p + ' <a href="' + T.href + '">' + T.more + '</a></p><div class="b"><button type="button" class="n">' + T.no + '</button><button type="button" class="y">' + T.ok + '</button></div>';
     document.body.appendChild(box);
     requestAnimationFrame(function () { requestAnimationFrame(function () { box.classList.add('in'); }); });
-    box.querySelector('.y').onclick = function () { save('granted'); hide(); loadGTM(); };
-    box.querySelector('.n').onclick = function () { var was = read() === 'granted'; save('denied'); hide(); if (was) location.reload(); };
+    box.querySelector('.y').onclick = function () { choose('granted'); };
+    box.querySelector('.n').onclick = function () { choose('denied'); };
   }
   function hide() { if (!box) return; var b = box; box = null; b.classList.remove('in'); setTimeout(function () { b.remove(); }, 600); }
 
+  function choose(c) {
+    save(c); hide(); loadGTM(c);
+    window.gtag('consent', 'update', { analytics_storage: c });
+    window.gtag('event', 'consent_choice', { choice: c === 'granted' ? 'accept' : 'decline' });
+  }
+
   var v = read();
-  if (v === 'granted') loadGTM();
+  loadGTM(v);
   function ready() {
     if (v === null) setTimeout(show, 2000);
     document.addEventListener('click', function (e) { var a = e.target.closest && e.target.closest('[data-consent]'); if (a) { e.preventDefault(); show(); } });
