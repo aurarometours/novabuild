@@ -69,6 +69,11 @@
       "source": "/presentazione/:path*",
       "destination": "/signum",
       "permanent": false
+    },
+    {
+      "source": "/en/privacy",
+      "destination": "/privacy",
+      "permanent": true
     }
   ]
 }

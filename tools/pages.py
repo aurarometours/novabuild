@@ -403,7 +403,7 @@ PAGES = [
  'desc': 'Come NovaSignal tratta i dati personali di chi visita novasignal.it, ci contatta o acquista un servizio, e quali cookie e tecnologie usa il sito.',
  'crumb': 'Privacy e cookie', 'tag': 'Informativa ai sensi degli artt. 13–14 del Regolamento UE 2016/679',
  'h1': 'Privacy e cookie.',
- 'lead': 'Ultimo aggiornamento: 25 novembre 2026.',
+ 'lead': 'Ultimo aggiornamento: 26 novembre 2026.',
  'service': None,
  'blocks': [
   ('legal', [
@@ -411,15 +411,16 @@ PAGES = [
    ('Quali dati trattiamo e perché', [
      '<strong>Navigazione.</strong> Quando visiti il sito, il servizio di hosting registra dati tecnici come indirizzo IP, browser, pagina richiesta e orario. Servono a far funzionare il sito e a proteggerlo da abusi (legittimo interesse, art. 6.1.f GDPR).',
      '<strong>Contatti.</strong> Se ci scrivi tramite WhatsApp, email o il modulo del sito (che apre WhatsApp con il messaggio già pronto), trattiamo i dati che ci mandi — nome, azienda, recapiti e contenuto del messaggio — per risponderti e preparare una proposta (misure precontrattuali, art. 6.1.b).',
+     '<strong>Statistiche di visita (solo con il tuo consenso).</strong> Se accetti i cookie di analisi, il sito carica Google Tag Manager e Google Analytics per misurare in forma aggregata quante persone visitano le pagine, da quali canali arrivano e quali contenuti funzionano. Senza il tuo consenso questi strumenti non vengono caricati (consenso, art. 6.1.a GDPR).',
      '<strong>Acquisti.</strong> Se acquisti un servizio sul sito, il pagamento avviene tramite Stripe: i dati della carta li tratta Stripe e non arrivano a noi. Noi riceviamo nome, email, telefono, dati di fatturazione ed eventuale partita IVA, e li conserviamo nel nostro gestionale per eseguire il contratto e rispettare gli obblighi fiscali e contabili (art. 6.1.b e 6.1.c).',
      'Non usiamo i tuoi dati per profilazione né li vendiamo a terzi.']),
    ('Chi riceve i dati', [
-     'Usiamo fornitori che trattano dati per nostro conto, ciascuno per la parte che gli compete: Vercel (hosting del sito), Stripe (pagamenti), Railway (server e database del gestionale), Resend (invio delle email di servizio), Google (caratteri tipografici del sito, caricati dai server di Google Fonts), Meta/WhatsApp (se scegli di scriverci su WhatsApp).',
+     'Usiamo fornitori che trattano dati per nostro conto, ciascuno per la parte che gli compete: Vercel (hosting del sito), Stripe (pagamenti), Railway (server e database del gestionale), Resend (invio delle email di servizio), Google (caratteri tipografici del sito, caricati dai server di Google Fonts; Google Tag Manager e Google Analytics, solo se accetti i cookie di analisi), Meta/WhatsApp (se scegli di scriverci su WhatsApp).',
      'Alcuni di questi fornitori hanno sede negli Stati Uniti: il trasferimento avviene sulla base dell’EU-US Data Privacy Framework o delle clausole contrattuali standard approvate dalla Commissione europea.']),
    ('Per quanto tempo', [
      'I dati tecnici di navigazione per il tempo previsto dal fornitore di hosting per sicurezza e diagnosi. I messaggi di contatto per il tempo necessario a gestire la richiesta e fino a 24 mesi dall’ultimo contatto. I dati di acquisto e fatturazione per 10 anni, come richiesto dalla legge.']),
    ('Cookie e tecnologie simili', [
-     'Il sito <strong>non usa cookie di profilazione né strumenti di analisi o pubblicità</strong>, quindi non ti chiede il consenso con un banner.',
+     'Il sito <strong>non usa cookie di profilazione né di pubblicità</strong>. Usa cookie di analisi di Google Analytics solo se li accetti dal banner che compare alla prima visita; puoi cambiare scelta in qualsiasi momento da <a href="#" data-consent>Preferenze cookie</a>, in fondo a ogni pagina. La scelta viene ricordata per 6 mesi.',
      'Usa solo memorie tecniche nel tuo browser (localStorage) per ricordare la lingua che hai scelto e la velocità della lettura guidata. Quando apri il pagamento, Stripe può impostare cookie tecnici necessari a completare il pagamento in sicurezza e a prevenire frodi. Se apri l’anteprima di un sito di un nostro cliente, quel sito può usare i propri cookie, secondo la sua informativa.']),
    ('I tuoi diritti', [
      'Puoi chiedere in qualsiasi momento accesso, rettifica, cancellazione, limitazione, portabilità dei tuoi dati o opporti al trattamento (artt. 15–22 GDPR), scrivendo a <a href="mailto:studio@novasignal.it">studio@novasignal.it</a>. Hai anche il diritto di presentare reclamo al Garante per la protezione dei dati personali (<a href="https://www.garanteprivacy.it" target="_blank" rel="noopener">garanteprivacy.it</a>).']),
@@ -457,7 +458,7 @@ def footer_html():
     return ('<footer>\n  <div class="wrap">\n    <div class="foot">\n      <div class="fbrand"><a class="brand" href="/"><img src="/assets/brand/mark-64.png" srcset="/assets/brand/mark-64.png 1x, /assets/brand/mark-128.png 2x" alt="" width="26" height="26">NovaSignal</a><p>Design &amp; Technology Studio a Roma.</p></div>\n      '
             + cols + '\n    </div>\n'
             '    <p class="fmore">Altri modi per contattarci: scrivici su <a href="https://wa.me/393206891014" target="_blank" rel="noopener">WhatsApp</a>, chiama il <a href="tel:+393206891014">+39 320 689 1014</a> o scrivi a <a href="mailto:studio@novasignal.it">studio@novasignal.it</a>. Studio a Roma, progetti in tutta Italia e all’estero.</p>\n'
-            '    <div class="legal"><span>© 2026 NovaSignal. Tutti i diritti riservati.</span><span class="legal-r"><a href="/privacy">Privacy e cookie</a><a href="/mappa-del-sito">Mappa del sito</a><a href="/en" hreflang="en" lang="en">English</a></span></div>\n  </div>\n</footer>')
+            '    <div class="legal"><span>© 2026 NovaSignal. Tutti i diritti riservati.</span><span class="legal-r"><a href="/privacy">Privacy e cookie</a><a href="#" data-consent>Preferenze cookie</a><a href="/mappa-del-sito">Mappa del sito</a><a href="/en" hreflang="en" lang="en">English</a></span></div>\n  </div>\n</footer>')
 
 def block_sitemap():
     groups = [('La home', [('/', 'NovaSignal — home'), ('/en', 'NovaSignal — English')] + EXPLORE[:-1])] + footer_groups()[1:4] + [('Studio', [('/privacy', 'Privacy e cookie')])]
@@ -632,6 +633,7 @@ def render(pg):
 }})();
 </script>
 <script src="/assets/js/lenis.min.js" defer></script>
+<script src="/assets/consent.js" defer></script>
 <script>
 (function () {{ // footer groups: open on wide screens, folded on phones
   var mq = matchMedia('(min-width:761px)'), ds = document.querySelectorAll('.fcol'), i;
