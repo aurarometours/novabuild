@@ -2,7 +2,7 @@
    Nothing from Google loads until the visitor accepts (Garante privacy, Italy). The choice is kept in
    localStorage for 6 months; any element with [data-consent] reopens the banner. ES5 on purpose (old iPads). */
 (function () {
-  var GTM = 'GTM-PH33HJKR', KEY = 'ns-consent', MAX = 182 * 864e5;
+  var GTM = 'GTM-PH33HJKR', GA = 'G-1V60CXXQL4', KEY = 'ns-consent', MAX = 182 * 864e5;
   var en = (document.documentElement.lang || 'it').indexOf('en') === 0;
   var T = en
     ? { p: 'We use analytics cookies to understand how the site is used, only if you agree.', more: 'Privacy & cookies', ok: 'Accept', no: 'Decline', href: '/privacy' }
@@ -17,6 +17,10 @@
     window.dataLayer = window.dataLayer || [];
     window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
     window.gtag('consent', 'default', { ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', analytics_storage: 'granted' });
+    window.gtag('js', new Date());
+    window.gtag('config', GA);
+    var g = document.createElement('script'); g.async = true; g.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA;
+    document.head.appendChild(g);
     window.dataLayer.push({ 'gtm.start': Date.now(), event: 'gtm.js' });
     var s = document.createElement('script'); s.async = true; s.src = 'https://www.googletagmanager.com/gtm.js?id=' + GTM;
     document.head.appendChild(s);
